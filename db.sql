@@ -1,7 +1,7 @@
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE 'user' (
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   'username' varchar(255) NOT NULL,
   'password' varchar(255) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE 'admin'(
 );
 
 CREATE TABLE 'department' (
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
@@ -41,13 +41,13 @@ CREATE TABLE 'link_departments'(
 );
 
 CREATE TABLE 'statuses'(
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
 
 CREATE TABLE 'ticket' (
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'author_id' int(11) NOT NULL,
   'department_id' int(11) NOT NULL,
   'agent_id' int(11),
@@ -55,13 +55,13 @@ CREATE TABLE 'ticket' (
   'content' text NOT NULL,
   'status' int(11) NOT NULL,
   'date' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  'priority' enum('low', 'medium', 'high') DEFAULT 'low',
+  'priority' int(1) DEFAULT 0,
   PRIMARY KEY ('id'),
   FOREIGN KEY ('status') REFERENCES 'statuses' ('id')
 );
 
 CREATE TABLE 'hashtags'(
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
@@ -74,14 +74,14 @@ CREATE TABLE 'link_hashtags'(
 );
 
 CREATE TABLE 'faq'(
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'question' varchar(255) NOT NULL,
   'answer' text NOT NULL,
   PRIMARY KEY ('id')
 );
 
 CREATE TABLE 'document'(
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'url' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
@@ -94,7 +94,7 @@ CREATE TABLE 'link_documents'(
 );
 
 CREATE TABLE 'comment'(
-  'id' int(11) NOT NULL AUTO_INCREMENT,
+  'id' int(11) NOT NULL,
   'ticket_id' int(11) NOT NULL,
   'author_id' int(11) NOT NULL,
   'content' text NOT NULL,
