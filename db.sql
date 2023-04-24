@@ -6,6 +6,7 @@ CREATE TABLE 'user' (
   'username' varchar(255) NOT NULL,
   'password' varchar(255) NOT NULL,
   'email' varchar(255) NOT NULL,
+  'image_url' varchar(255) NOT NULL DEFAULT '../images/default_user.png',
   PRIMARY KEY ('id')
 );
 
