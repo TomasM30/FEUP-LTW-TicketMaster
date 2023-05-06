@@ -14,53 +14,57 @@ DROP TABLE IF EXISTS document;
 DROP TABLE IF EXISTS link_documents;
 DROP TABLE IF EXISTS comment;
 
-CREATE TABLE user (
+CREATE TABLE User (
+  'UserId' int(11) NOT NULL,
   'username' varchar(255) NOT NULL,
   'name' varchar(255) NOT NULL,
   'password' varchar(255) NOT NULL,
   'email' varchar(255) NOT NULL,
   'image_url' varchar(255) NOT NULL DEFAULT '../images/default_user.png',
-  PRIMARY KEY ('username')
+  PRIMARY KEY ('UserId')
 );
 
-CREATE TABLE client(
+CREATE TABLE Client(
+  'client_id' int(11) NOT NULL,
   'client_username' varchar(255) NOT NULL,
-  FOREIGN KEY ('client_username') REFERENCES 'user' ('username')
-  PRIMARY KEY ('client_username')
+  FOREIGN KEY ('client_id') REFERENCES 'User' ('UserId')
+  PRIMARY KEY ('client_id')
 );
 
-CREATE TABLE agent(
+CREATE TABLE Agent(
+  'agent_id' int(11) NOT NULL,
   'agent_username' varchar(255) NOT NULL,
-  FOREIGN KEY ('agent_username') REFERENCES 'user' ('username')
-  PRIMARY KEY ('agent_username')
+  FOREIGN KEY ('agent_id') REFERENCES 'User' ('UserId')
+  PRIMARY KEY ('agent_id')
 );
 
-CREATE TABLE admin(
+CREATE TABLE Admin(
+  'admin_id' int(11) NOT NULL,
   'admin_username' varchar(255) NOT NULL,
-  FOREIGN KEY ('admin_username') REFERENCES 'user' ('username')
-  PRIMARY KEY ('admin_username')
+  FOREIGN KEY ('admin_id') REFERENCES 'User' ('UserId')
+  PRIMARY KEY ('admin_id')
 );
 
-CREATE TABLE department (
+CREATE TABLE Department (
   'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
 
-CREATE TABLE link_departments(
+CREATE TABLE Link_departments(
   'department_id' int(11) NOT NULL,
-  'user_username' varchar(255) NOT NULL,
+  'UserId' varchar(255) NOT NULL,
   FOREIGN KEY ('department_id') REFERENCES 'department' ('id'),
-  FOREIGN KEY ('user_username') REFERENCES 'user' ('username')
+  FOREIGN KEY ('UserId') REFERENCES 'User' ('UserId')
 );
 
-CREATE TABLE statuses(
+CREATE TABLE Statuses(
   'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
 
-CREATE TABLE ticket (
+CREATE TABLE Ticket (
   'id' int(11) NOT NULL,
   'author_username' varchar(255) NOT NULL,
   'department_id' int(11) NOT NULL,
@@ -74,47 +78,64 @@ CREATE TABLE ticket (
   FOREIGN KEY ('status') REFERENCES 'statuses' ('id')
 );
 
-CREATE TABLE hashtags(
+CREATE TABLE Hashtags(
   'id' int(11) NOT NULL,
   'name' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
 
-CREATE TABLE link_hashtags(
+CREATE TABLE Link_hashtags(
   'ticket_id' int(11) NOT NULL,
   'hashtag_id' int(11) NOT NULL,
   FOREIGN KEY ('ticket_id') REFERENCES 'ticket' ('id'),
   FOREIGN KEY ('hashtag_id') REFERENCES 'hashtags' ('id')
 );
 
-CREATE TABLE faq(
+CREATE TABLE Faq(
   'id' int(11) NOT NULL,
   'question' varchar(255) NOT NULL,
   'answer' text NOT NULL,
   PRIMARY KEY ('id')
 );
 
-CREATE TABLE document(
+CREATE TABLE Document(
   'id' int(11) NOT NULL,
   'url' varchar(255) NOT NULL,
   PRIMARY KEY ('id')
 );
 
-CREATE TABLE link_documents(
+CREATE TABLE Link_documents(
   'ticket_id' int(11) NOT NULL,
   'document_id' int(11) NOT NULL,
   FOREIGN KEY ('ticket_id') REFERENCES 'ticket' ('id'),
   FOREIGN KEY ('document_id') REFERENCES 'document' ('id')
 );
 
-CREATE TABLE comment(
+CREATE TABLE Comment(
   'id' int(11) NOT NULL,
   'ticket_id' int(11) NOT NULL,
-  'author_username' varchar(255) NOT NULL,
+  'UserId' varchar(255) NOT NULL,
   'content' text NOT NULL,
   'date' timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY ('id'),
   FOREIGN KEY ('ticket_id') REFERENCES 'ticket' ('id'),
-  FOREIGN KEY ('author_username') REFERENCES 'user' ('username')
+  FOREIGN KEY ('UserId') REFERENCES 'User' ('UserId')
 );
 
+INSERT INTO 'User' ('UserId', 'username', 'name', 'password', 'email', 'image_url') VALUES
+(1, 'john1', 'John_1', 'john1', 'john1@gmail.com', '../images/default_user.png'),
+(2, 'john2', 'John_2', 'john2', 'john2@gmail.com', '../images/default_user.png'),
+(3, 'john3', 'John_3', 'john3', 'john3@gmail,com', '../images/default_user.png'),
+(4, 'john4', 'John_4', 'john4', 'john4@gmail.com', '../images/default_user.png'),
+(5, 'john5', 'John_5', 'john5', 'john5@gmail.com', '../images/default_user.png');
+
+INSERT INTO 'Client' ('client_id', 'client_username') VALUES
+(1, 'john1'),
+(2, 'john2');
+
+INSERT INTO 'Agent' ('agent_id', 'agent_username') VALUES
+(3, 'john3'),
+(4, 'john4');
+
+INSERT INTO 'Admin' ('admin_id', 'admin_username') VALUES
+(5, 'john5');
