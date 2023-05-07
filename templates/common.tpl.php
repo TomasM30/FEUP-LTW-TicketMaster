@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../database/user.class.php');
+require_once(__DIR__ . '/../database/user.php');
 
 ?>
 
-<?php function drawHeader(int $id)
+<?php function drawHeader(string $username)
 { ?>
     <!DOCTYPE html>
     <html lang="en-US">
@@ -13,6 +13,7 @@ require_once(__DIR__ . '/../database/user.class.php');
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/cards.css">
     </head>
     <body>
     <input type="checkbox" id="hamburger">
@@ -43,8 +44,7 @@ require_once(__DIR__ . '/../database/user.class.php');
         </div>
         <div class="user">
             <a class="username" href="/">
-                <p><?= User::getUserName(getDatabaseConnection(), $id) ?></p>
-
+                <p><?= User::getName(getDatabaseConnection(), $username) ?></p>
             </a>
             <a class="userImage" href="/">
                 <img src="../images/default_user.png" alt="User" width="50" height="50">

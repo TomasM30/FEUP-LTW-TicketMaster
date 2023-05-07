@@ -3,12 +3,12 @@ body {
     margin: 1em auto;
 }
 
-header {
+body > header {
     background-size: cover;
     background-image: url("../images/banner.jpg");
     height: 80px;
     display: grid;
-    grid-template-columns: 15% 1fr 1fr 20%;
+    grid-template-columns: 15% 1fr 1fr 15%;
     grid-template-rows: 100%;
     border-radius: 25px;
 }
@@ -107,10 +107,13 @@ footer a{
     align-self: center;
     justify-self: center;
     color: white;
-    font-size: 1rem;
+    font-size: 1.2vw;
+    font-family: "Source Code Pro", monospace;
+    margin-right: 1vw;
 }
 
 .userImage{
+    margin-right: 1em;
     grid-column: 2/3;
     align-self: center;
     justify-self: center;
@@ -138,13 +141,13 @@ footer a{
         align-items: center;
     }
 
-    header{
+    body > header{
         grid-template-columns: 15% 1fr 1fr 15%;
     }
 }
 
 @media (max-width: 750px) {
-    header {
+    body > header {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 55% 1fr;
@@ -185,7 +188,7 @@ footer a{
         font-size: 3vw;
     }
 
-    #hamburger:checked ~header .options{
+    #hamburger:checked ~ header .options{
         grid-column: 1/1;
         grid-row: 2/3;
     }
