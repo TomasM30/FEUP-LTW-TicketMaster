@@ -10,11 +10,10 @@ function drawTicketPreview(string $username)
     <a href="/">
         <div class="container">
             <?php
-            $tickets = ticket::getUserTickets(getDatabaseConnection(), $username);
+            $tickets = ticket::getClientTickets(getDatabaseConnection(), $username);
             foreach ($tickets as $ticket) {
                 ?>
                 <div class="card">
-
                     <div class="content">
                         <header>
                             <h2 class="status"><?= ticket::getStatus(getDatabaseConnection(), $ticket['status']) ?></h2>

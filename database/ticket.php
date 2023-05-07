@@ -24,8 +24,15 @@ class ticket
         $this->priorityId = $priorityId;
     }
 
-    static function getUserTickets($db, $username){
+    static function getClientTickets($db, $username){
         $stmt = $db->prepare('SELECT * FROM ticket WHERE author_username = :username');
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    static function getAgentTickets($db, $username){
+        $stmt = $db->prepare('SELECT * FROM ticket WHERE agent_username = :username');
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         return $stmt->fetchAll();
