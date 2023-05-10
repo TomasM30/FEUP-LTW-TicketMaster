@@ -38,6 +38,12 @@
 
             $stmt->execute(array($user->username, $user->name, $hashed_pw, strtolower($user->email)));
         }
+        static function getName(PDO $db, $username){
+            $stmt = $db->prepare('SELECT name FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch()['name'];
+        }
         
         public function deleteUser($username){
             global $db;
@@ -103,5 +109,3 @@
         }
     }
 ?>
-
-

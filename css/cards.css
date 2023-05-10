@@ -1,0 +1,137 @@
+.container {
+    display: flex;
+    overflow-x: scroll;
+    padding: 24px;
+    width: 200px;
+    height: 300px;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 24px;
+    border-radius: 8px;
+    gap: 12px;
+    margin: 2rem auto;
+    align-items: center;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.card {
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    width: 190px;
+    height: 254px;
+    background: rgba(96, 13, 13, 0.74);
+    border: 2px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    flex: 0 0 100%;
+    padding: 24px;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+}
+
+.card:hover {
+    border: 2px solid #ffffff;
+    transform: scale(1.05);
+}
+
+.card:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+}
+
+.content {
+    display: grid;
+    grid-template-rows: 15% 1fr;
+    height: 100%;
+    width: 100%;
+    gap: 0.5rem;
+    font-family: "Source Code Pro", monospace, Arial, sans-serif;
+    color: white;
+}
+
+#stat_card {
+    background: linear-gradient(to right, #434343, #000000);
+}
+
+#statistics header {
+    grid-template-columns: 1fr;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content header {
+    grid-row: 1/2;
+    display: grid;
+    grid-template-columns: 1fr 30%;
+}
+
+#statistics h1 {
+    font-family: Impact, Arial, sans-serif;
+    color: white;
+    font-weight: normal;
+}
+
+.content header h1 {
+    margin: 0;
+    padding: 0;
+    justify-content: left;
+    align-items: center;
+    display: flex;
+    grid-row: 1/2;
+    font-size: 1.15em;
+    color: black;
+}
+
+
+.container a {
+    text-decoration: none;
+}
+
+.content header h2 {
+    grid-column: 2/3;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+}
+
+
+#statistics article {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+}
+
+
+.content article {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    grid-row: 2/3;
+    overflow: hidden;
+    font-size: 1em;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+
+
+
+
+
