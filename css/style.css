@@ -5,8 +5,6 @@ body {
 
 main{
     display: flex;
-    align-items: center;
-    justify-content: left;
 }
 
 body::-webkit-scrollbar{
@@ -20,7 +18,6 @@ body > header {
     display: grid;
     grid-template-columns: 15% 1fr 1fr 15%;
     grid-template-rows: 100%;
-    border-radius: 25px;
 }
 
 footer{
@@ -30,11 +27,10 @@ footer{
     align-items: center;
     justify-content: left;
     height: 30px;
-    border-radius: 25px;
 }
 
 footer a{
-    font-family: "Source Code Pro", monospace;
+    font-family: "Source Code Pro", monospace, Arial, sans-serif;
     color: white;
     margin-left: 20px;
     text-decoration: none;
@@ -46,7 +42,7 @@ footer a{
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    font-family: "Source Code Pro", monospace;
+    font-family: "Source Code Pro", monospace, Arial, sans-serif;
     font-size: 0.5rem;
     color: white;
 }
@@ -65,8 +61,7 @@ footer a{
     list-style: none;
 }
 .links a {
-    font-family: "Source Code Pro", monospace;
-    text-decoration: none;
+    font-family: "Source Code Pro", monospace, Arial, sans-serif;    text-decoration: none;
     color: white;
     font-size: 1.3rem;
     padding: 5px;
@@ -118,8 +113,7 @@ footer a{
     justify-self: center;
     color: white;
     font-size: 1.2vw;
-    font-family: "Source Code Pro", monospace;
-    margin-right: 1vw;
+    font-family: "Source Code Pro", monospace, Arial, sans-serif;    margin-right: 1vw;
 }
 
 .userImage{

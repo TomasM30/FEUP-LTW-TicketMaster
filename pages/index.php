@@ -10,5 +10,6 @@ $db = getDatabaseConnection();
 
 drawHeader('john1');
 drawTicketPreview('john1');
+drawUserTicketStats('john1');
 drawFooter();
 ?>
