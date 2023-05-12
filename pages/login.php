@@ -9,16 +9,14 @@
         <link rel="stylesheet" href="">
     </head>
     <header>
-        <img src="../images/logo.svg" alt="" width="400" height="400">
+        <img src="/../images/logo.svg" alt="" width="400" height="400">
         <h1>Ticket Master</h1>
         <h3>World's number one ticketing solution for your company</h3>
     </header>
     <body>
-        <form action="../actions/action_login.php" method="post">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" placeholder="Enter your username">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter your password">
+        <form action="/../actions/action_login.php" method="post">
+            <input type="text" name="username" id="username" placeholder="Username">
+            <input type="password" name="password" id="password" placeholder="Password">
             <input type="submit" value="Login">
         </form>
         <p>

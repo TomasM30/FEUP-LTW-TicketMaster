@@ -69,7 +69,7 @@ CREATE TABLE Hashtags(
 CREATE TABLE Ticket (
   'id' int(6) NOT NULL,
   'author_username' varchar(255) NOT NULL,
-  'department_id' int(11) NOT NULL,
+  'department_id' int(11),
   'agent_username' varchar(255),
   'subject' varchar(255) NOT NULL,
   'content' text NOT NULL,
