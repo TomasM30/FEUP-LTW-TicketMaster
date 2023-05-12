@@ -211,10 +211,10 @@ require_once(__DIR__ . '/../database/ticket.php');
                 <label for="psw">New password</label>
                 <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
             </div>
-            <span id="email-error">
+            <span id="password_error">
                 <?php
-                if (isset($_GET['error']) && $_GET['error'] == 1) {
-                    echo "Email already in use";
+                if (isset($_GET['error']) && $_GET['error'] == 2) {
+                    echo "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number";
                 }
                 ?>
             </span>

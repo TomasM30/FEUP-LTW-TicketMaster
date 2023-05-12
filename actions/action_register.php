@@ -8,6 +8,7 @@
 
     $user = User::getUser($db, $_POST['username']);
     $email = User::getEmail($db, $_POST['email']);
+    $errors = array();
 
     if ($user){
         header('Location: ../pages/register.php?error=1');
@@ -21,9 +22,27 @@
         header('Location: ../pages/register.php?error=3');
         die();
     }
+    elseif (!user::checkPassword($_POST['password'], $errors)) {
+        if (!empty($errors)) {
+            $error_message = "";
+            foreach ($errors as $error) {
+                $error_message .= $error . "\\n";
+            }
+            ?>
+            <script>
+                window.alert("<?php echo $error_message ?>");
+                window.location.href = "../pages/register.php?error=4";
+            </script>
+            <?php
+            exit;
+        }
+    }
 
     $newUser = new User($_POST['username'], $_POST['password'], $_POST['email'], $_POST['name']);
     User::insertUser($db, $newUser);
     header('Location: ../pages/login.php?success=1');
+
+
+
 
 ?>
