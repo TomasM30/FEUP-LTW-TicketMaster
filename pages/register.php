@@ -38,6 +38,8 @@
                         echo "Email is already in use, please use another one";
                     } elseif ($_GET['error'] == 3) {
                         echo "Passwords do not match, please try again";
+                    } elseif ($_GET['error'] == 4) {
+                        echo "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number";
                     }
                 }
                 ?></p>

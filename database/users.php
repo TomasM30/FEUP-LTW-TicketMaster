@@ -40,6 +40,14 @@
             $stmt->bindParam(':new_email', $new_email);
             $stmt->execute();
         }
+
+        static public function changePassword($db, $username, $new_psw){
+            $hashed_pw = password_hash($new_psw, PASSWORD_DEFAULT, ['cost' => 10]);
+            $stmt = $db->prepare('UPDATE user SET password = :new_psw WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':new_psw', $hashed_pw);
+            $stmt->execute();
+        }
         static public function insertUser(PDO $db, User $user){
             
             $hashed_pw = password_hash($user->password, PASSWORD_DEFAULT, ['cost' => 10]);
@@ -119,6 +127,24 @@
             else {
                 return null;
             }
+        }
+
+        static public function checkPassword($pwd, &$errors) {
+            $errors_init = $errors;
+
+            if (strlen($pwd) < 8) {
+                $errors[] = "Password too short!";
+            }
+
+            if (!preg_match("#[0-9]+#", $pwd)) {
+                $errors[] = "Password must include at least one number!";
+            }
+
+            if (!preg_match("#[a-zA-Z]+#", $pwd)) {
+                $errors[] = "Password must include at least one letter!";
+            }
+
+            return ($errors == $errors_init);
         }
     }
 ?>

@@ -7,17 +7,23 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 
-$email = User::getEmail($db, $_POST['email']);
+$errors = array();
 
-if($email){
-    ?>
-    <script>
-        window.alert("Email already in use");
-        window.location.href = "../pages/profile.php?error=1";
-    </script>
-    <?php
-    exit();
+if (!user::checkPassword($_POST['psw'], $errors)) {
+    if (!empty($errors)) {
+        $error_message = "";
+        foreach ($errors as $error) {
+            $error_message .= $error . "\\n";
+        }
+        ?>
+        <script>
+            window.alert("<?php echo $error_message ?>");
+            window.location.href = "../pages/profile.php?error=2";
+        </script>
+        <?php
+        exit;
+    }
 }
-user::changeEmail($db, '123', $_POST['email']);
-header('Location: ../pages/login.php?success=2');
+user::changePassword($db, '123', $_POST['password']);
+header('Location: ../pages/login.php?success=3');
 ?>
