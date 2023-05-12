@@ -2,20 +2,19 @@
     display: flex;
     overflow-x: scroll;
     padding: 24px;
-    width: 200px;
-    height: 300px;
+    width: 240px;
+    height: 330px;
     scroll-snap-type: x mandatory;
     scroll-padding: 24px;
     border-radius: 8px;
     gap: 12px;
     margin: 2rem auto;
     align-items: center;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 
 .container::-webkit-scrollbar {
-    display: none;
+    width: 0;
+    background: transparent;
 }
 
 .card {

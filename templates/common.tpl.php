@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../database/user.php');
+require_once(__DIR__ . '/../database/users.php');
 
 ?>
 
@@ -33,7 +33,7 @@ require_once(__DIR__ . '/../database/user.php');
             <nav>
                 <div class="links">
                     <ul>
-                        <li><a href="/">Tickets</a></li>
+                        <li><a href="/../pages/create_ticket.php">Tickets</a></li>
                         <li><a href="/">Departments</a></li>
                         <li><a href="/">Team</a></li>
                         <li><a href="/">FAQ</a></li>
