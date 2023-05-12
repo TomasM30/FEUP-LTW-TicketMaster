@@ -1,5 +1,3 @@
-<?php include_once(__DIR__ . '/database/users.php'); ?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +9,7 @@
         <link rel="stylesheet" href="">
     </head>
     <header>
-        <img src="/../images/logo.png" alt="" width="400" height="400">
+        <img src="/../images/logo.svg" alt="" width="400" height="400">
         <h1>Ticket Master</h1>
         <h3>World's number one ticketing solution for your company</h3>
     </header>
@@ -21,8 +19,22 @@
             <input type="password" name="password" id="password" placeholder="Password">
             <input type="submit" value="Login">
         </form>
-        <p><?php if ($_GET['error'] == 1){echo "Invalid username or password";} 
-                elseif ($_GET['success'] == 1) {echo "Account succesfully created! Please login";}?></p>
-        <a href="/../pages/register.php">Register</a>
+        <p>
+            <?php
+            if (isset($_GET['error']) && $_GET['error'] == 1){
+                echo "Invalid username or password";
+            }
+            elseif (isset($_GET['success']) && $_GET['success'] == 1) {
+                echo "Account successfully created! Please login";
+            }
+            elseif (isset($_GET['success']) && $_GET['success'] == 2) {
+                echo "Email changed successfully! Please login";
+            } elseif (isset($_GET['success']) && $_GET['success'] == 3) {
+                echo "Password changed successfully! Please login";
+            }
+            ?>
+        </p>
+
+        <a href="../pages/register.php">Register</a>
     </body>
 </html>

@@ -2,7 +2,7 @@
     display: flex;
     overflow-x: scroll;
     padding: 24px;
-    width: 240px;
+    width: 260px;
     height: 330px;
     scroll-snap-type: x mandatory;
     scroll-padding: 24px;
@@ -20,16 +20,12 @@
 .card {
     scroll-snap-align: start;
     box-sizing: border-box;
-    width: 190px;
-    height: 254px;
-    background: rgba(96, 13, 13, 0.74);
-    border: 2px solid white;
-    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
-    backdrop-filter: blur(6px);
+    width: 260px;
+    height: 320px;
+    background: #252525;
     border-radius: 17px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.5s;
     display: flex;
     flex: 0 0 100%;
     padding: 24px;
@@ -37,30 +33,15 @@
     justify-content: center;
     user-select: none;
     font-weight: bolder;
-    color: black;
 }
-
-.card:hover {
-    border: 2px solid #ffffff;
-    transform: scale(1.05);
-}
-
-.card:active {
-    transform: scale(0.95) rotateZ(1.7deg);
-}
-
 .content {
     display: grid;
     grid-template-rows: 15% 1fr;
     height: 100%;
     width: 100%;
     gap: 0.5rem;
-    font-family: "Source Code Pro", monospace, Arial, sans-serif;
-    color: white;
-}
-
-#stat_card {
-    background: linear-gradient(to right, #434343, #000000);
+    font-family: Arial, Helvetica, sans-serif;
+    color: #929292;
 }
 
 #statistics header {
@@ -77,9 +58,9 @@
 }
 
 #statistics h1 {
-    font-family: Impact, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     color: white;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .content header h1 {
@@ -90,7 +71,7 @@
     display: flex;
     grid-row: 1/2;
     font-size: 1.15em;
-    color: black;
+    color: white;
 }
 
 

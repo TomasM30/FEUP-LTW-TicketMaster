@@ -1,0 +1,234 @@
+.profileContainer{
+    display: grid;
+    grid-template-columns: 25% 1fr;
+}
+
+.settingsColumn{
+    grid-column: 1/2;
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileCard{
+    width: 190px;
+    height: 254px;
+    box-shadow: 1px 4px 26px -4px rgba(0, 0, 0, 0.37);
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    padding: 24px;
+    margin: 1em;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    color: #3d3d3d;
+}
+
+.cardBody h5{
+    font-size: 1em;
+    font-weight: bold;
+    color: #545454;
+}
+
+.userImg{
+    width: 150px;
+    border-radius: 50%;
+}
+
+
+.userInfoColumn{
+    grid-column: 2/3;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+#profileInfoCard{
+    width: 75%;
+    height: 25%;
+}
+
+#profileInfoCard .cardBody{
+    width: 95%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#profileInfoCard .cardBody .row{
+    display: grid;
+    grid-template-columns: 25% 1fr;
+    width: 100%;
+    border-bottom: lightgrey 1px solid;
+    margin: 0.5em;
+}
+
+.titleColumn{
+    display: flex;
+    justify-content: left;
+}
+
+.infoColumn{
+    display: flex;
+    justify-content: left;
+}
+
+.title{
+    color: black;
+}
+
+.info{
+    color: #7a7a7a;
+}
+
+.previewTickets{
+    margin-top: 2em;
+    width: 75%;
+    height: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.previewTickets .container{
+    margin: 0;
+    padding: 0;
+    width: 280px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+}
+
+.previewTickets .container:first-of-type{
+    grid-column: 1/2;
+    margin-left: 2px;
+}
+.previewTickets .container:nth-child(2) {
+    margin-left: 11vh;
+    grid-column: 2/3;
+}
+
+#settingsCard{
+    margin-bottom: 45%;
+    height: 150px;
+}
+
+#settingsCard ul{
+    height: auto;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#settingsCard li{
+    margin: 0.5em;
+}
+
+.optionsBody{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.changeInfoB {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: #252525;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.changeInfoB .email-box, .changeInfoB .psw-box {
+    position: relative;
+}
+
+.changeInfoB .email-box input, .changeInfoB .psw-box input {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 15px;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.changeInfoB .email-box label, .changeInfoB .psw-box label {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+}
+.btn {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+    color: #FAFAFA;
+    border: 1px solid #FAFAFA;
+    background: #252525;
+    box-shadow: 1px 1px #fafafa;
+    padding: 3px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn:active, .btn:hover, .openButton:active, .openButton:hover{
+    box-shadow: none;
+    transform: translate(3px, 3px);
+}
+
+.cancel, .submit{
+    position: relative;
+    top: 25px;
+    left: 200px;
+}
+
+.submit{
+    left: 190px;
+}
+
+#email-error, #password_error{
+    position: absolute;
+    top: 100px;
+    left: 40px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: underline;
+    font-weight: normal;
+}
+
+.openButton {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+    color: #252525;
+    border-radius: 10px;
+    border: 1px solid #252525;
+    background: white;
+    box-shadow: 2px 2px #252525;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.button{
+    width: 100%;
+    height: 100%;
+}

@@ -7,12 +7,13 @@ require_once(__DIR__ . '/../database/ticket.php');
 <?php
 function drawTicketPreview(string $username)
 { ?>
+<div class="ticketPrev">
     <div class="container">
 
         <?php
         $tickets = ticket::getClientTickets(getDatabaseConnection(), $username);
-        foreach ($tickets as $ticket) {
-            ?>
+        if(!empty($tickets)){
+        foreach ($tickets as $ticket) {?>
             <a href="/">
                 <div class="card">
                     <div class="content">
@@ -29,9 +30,24 @@ function drawTicketPreview(string $username)
 
             <?php
         }
+        } else{
         ?>
-
-
+        <a href="/">
+            <div class="card">
+                <div class="content">
+                    <header>
+                        <h2 class="status"></h2>
+                        <h1>No tickets</h1>
+                    </header>
+                    <article>
+                        You still don't have any tickets
+                    </article>
+                </div>
+            </div>
+        </a>
+            <?php
+        }
+        ?>
     </div>
 
     <?php
@@ -120,5 +136,7 @@ function drawUserTicketStats(string $username)
             </div>
         </a>
     </div>
-    <?php
+</div>
+
+<?php
 } ?>

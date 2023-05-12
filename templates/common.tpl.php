@@ -14,6 +14,8 @@ require_once(__DIR__ . '/../database/users.php');
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/cards.css">
+        <link rel="stylesheet" href="../css/userP.css">
+        <script src="../javascript/form_actions.js" defer></script>
     </head>
     <body>
     <input type="checkbox" id="hamburger">
@@ -24,7 +26,7 @@ require_once(__DIR__ . '/../database/users.php');
     </label>
     <header>
         <div class='logo'>
-            <a href="/">
+            <a href="../pages/index.php">
                 <img src="../images/logo.svg" alt="Logo" width="50">
                 <h1>Ticket Master</h1>
             </a>
@@ -37,16 +39,16 @@ require_once(__DIR__ . '/../database/users.php');
                         <li><a href="/">Departments</a></li>
                         <li><a href="/">Team</a></li>
                         <li><a href="/">FAQ</a></li>
-                        <li class="userProfile"><a href="/">Account</a></li>
+                        <li class="userProfile"><a href="../pages/profile.php">Account</a></li>
                     </ul>
                 </div>
             </nav>
         </div>
         <div class="user">
-            <a class="username" href="/">
+            <a class="username" href="../pages/profile.php">
                 <p><?= User::getName(getDatabaseConnection(), $username) ?></p>
             </a>
-            <a class="userImage" href="/">
+            <a class="userImage" href="../pages/profile.php">
                 <img src="../images/default_user.png" alt="User" width="50" height="50">
             </a>
         </div>

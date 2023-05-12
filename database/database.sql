@@ -125,7 +125,7 @@ CREATE TABLE Comment(
 
 INSERT INTO 'User' ('username', 'name', 'password', 'email', 'image_url') VALUES
 ('john1', 'John_1', 'john1', 'john1@gmail.com', '../images/default_user.png'),
-('john6', 'John_112121212121212121', 'john1', 'john1@gmail.com', '../images/default_user.png'),
+('john6', 'John_112121212121212121', 'john1', 'john6@gmail.com', '../images/default_user.png'),
 ('john2', 'John_2', 'john2', 'john2@gmail.com', '../images/default_user.png'),
 ('john3', 'John_3', 'john3', 'john3@gmail,com', '../images/default_user.png'),
 ('john4', 'John_4', 'john4', 'john4@gmail.com', '../images/default_user.png'),
