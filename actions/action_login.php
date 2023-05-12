@@ -8,7 +8,7 @@
     $user = User::getUserUsernamePassword($_POST['username'], $_POST['password']);
 
     if ($user){
-        header('Location: ../pages/register.php');
+        header('Location: ../pages/index.php');
         die();
     }
     header('Location: ../pages/login.php?error=1');

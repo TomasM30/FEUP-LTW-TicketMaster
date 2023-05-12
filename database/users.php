@@ -26,13 +26,26 @@
             $stmt->execute();
             return $stmt->fetch();
         }
+
+        static public function getUserEmail($db, $username){
+            $stmt = $db->prepare('SELECT email FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch()['email'];
+        }
+
+        static public function changeEmail($db, $username, $new_email){
+            $stmt = $db->prepare('UPDATE user SET email = :new_email WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':new_email', $new_email);
+            $stmt->execute();
+        }
         static public function insertUser(PDO $db, User $user){
             
             $hashed_pw = password_hash($user->password, PASSWORD_DEFAULT, ['cost' => 10]);
 
             $searched_user = User::getUser($db, $user->username);
             if ($searched_user != null){return "The username provided is already in use, please use another";}
-            print($user->username);
 
             $stmt = $db->prepare('INSERT INTO user (username, name, password, email) VALUES (?, ?, ?, ?)');
 
