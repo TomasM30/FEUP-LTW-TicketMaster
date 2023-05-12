@@ -1,6 +1,7 @@
 .container {
     display: flex;
     overflow-x: scroll;
+    overflow-y: hidden;
     padding: 24px;
     width: 260px;
     height: 330px;
@@ -19,10 +20,11 @@
 
 .card {
     scroll-snap-align: start;
+    border: 2px solid #252525;
     box-sizing: border-box;
     width: 260px;
     height: 320px;
-    background: #252525;
+    background: white;
     border-radius: 17px;
     text-align: center;
     cursor: pointer;
@@ -59,7 +61,7 @@
 
 #statistics h1 {
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    color: #252525;
     font-weight: bold;
 }
 
@@ -71,7 +73,7 @@
     display: flex;
     grid-row: 1/2;
     font-size: 1.15em;
-    color: white;
+    color: #252525;
 }
 
 

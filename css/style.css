@@ -1,8 +1,13 @@
 body {
     width: 90%;
     margin: 0 auto 0 auto;
+}
 
-
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .ticketPrev{
     width: 100%;
@@ -194,7 +199,7 @@ footer a{
     }
 
     #hamburger:checked ~ header .options .links a {
-        font-size: 3vw;
+        font-size: 3.5vw;
     }
 
     #hamburger:checked ~ header .options{

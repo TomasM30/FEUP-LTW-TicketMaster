@@ -20,4 +20,3 @@
     }
     user::changeEmail($db, '123', $_POST['email']);
     header('Location: ../pages/login.php?success=2');
-?>

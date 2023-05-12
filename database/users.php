@@ -48,6 +48,7 @@
             $stmt->bindParam(':new_psw', $hashed_pw);
             $stmt->execute();
         }
+
         static public function insertUser(PDO $db, User $user){
             
             $hashed_pw = password_hash($user->password, PASSWORD_DEFAULT, ['cost' => 10]);
@@ -129,7 +130,7 @@
             }
         }
 
-        static public function checkPassword($pwd, &$errors) {
+        static public function checkPassword($pwd, &$errors): bool{
             $errors_init = $errors;
 
             if (strlen($pwd) < 8) {
@@ -145,6 +146,30 @@
             }
 
             return ($errors == $errors_init);
+        }
+
+        static public function samePassword($db, $username, $new_psw): bool{
+            $hashed_pw = password_hash($new_psw, PASSWORD_DEFAULT, ['cost' => 10]);
+            $stmt = $db->prepare('SELECT password FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch()['password'];
+            return password_verify($hashed_pw, $result);
+        }
+
+        static public function sameName($db, $username, $newName): bool{
+            $stmt = $db->prepare('SELECT name FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch()['name'];
+            return $result == $newName;
+        }
+
+        static public function changeInfo($db, $username, $newName){
+            $stmt = $db->prepare('UPDATE user SET name = :newName WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newName', $newName);
+            $stmt->execute();
         }
     }
 ?>

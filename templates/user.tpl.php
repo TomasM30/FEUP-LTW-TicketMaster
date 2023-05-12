@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../database/ticket.php');
                 <div class="cardBody">
                     <img src="../images/default_user.png" alt="userImg"
                          class="userImg">
-                    <h5 class="username">
+                    <h5 class="usernameP">
                         <?php
                         echo $username;
                         ?>
@@ -27,9 +27,9 @@ require_once(__DIR__ . '/../database/ticket.php');
                         <li class="button">
                             <button class="openButton" onclick="openPswForm()">Change password</button>
                         <li class="button">
-                            <button class="openButton" onclick="openForm()">Change information</button>
+                            <button class="openButton" onclick="openInfoForm()">Change information</button>
                         <li class="button">
-                            <button class="openButton" onclick="openForm()">Logout</button>
+                            <button class="openButton" onclick="window.location.href = '../actions/action_logout.php'">Logout</button>
                         </li>
                     </ul>
                 </div>
@@ -65,7 +65,7 @@ require_once(__DIR__ . '/../database/ticket.php');
                 </div>
             </div>
             <div class="previewTickets">
-                <div class="container">
+                <div class="container" id = 'profileTickets'>
                     <?php
                     $tickets = Ticket::getClientTickets(getDatabaseConnection(), $username);
                     if(!empty($tickets)){
@@ -104,7 +104,7 @@ require_once(__DIR__ . '/../database/ticket.php');
                     }
                     ?>
                 </div>
-                <div class="container">
+                <div class="container" id = 'profileTickets'>
                     <a href="/">
                         <div class="card" id="stat_card">
                             <div class="content" id="statistics">
@@ -214,7 +214,9 @@ require_once(__DIR__ . '/../database/ticket.php');
             <span id="password_error">
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 2) {
-                    echo "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number";
+                    echo "Must contain at least 8 Char, 1 up/lowercase letter and 1 number";
+                } elseif(isset($_GET['error']) && $_GET['error'] == 3){
+                    echo "Insert a different password!";
                 }
                 ?>
             </span>
@@ -222,4 +224,23 @@ require_once(__DIR__ . '/../database/ticket.php');
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     </div>
+
+    <div class="changeInfoB" id="popupInfo">
+        <form action="../actions/change_info.php" method="post">
+            <div class="info-box">
+                <label for="info">New name</label>
+                <input type="text" placeholder="Enter Name" name="info" id="info" required>
+            </div>
+            <span id="info_error">
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 4) {
+                    echo "Insert a different name!";
+                }
+                ?>
+            </span>
+            <button type="submit" class="btn submit">Submit</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
 <?php } ?>

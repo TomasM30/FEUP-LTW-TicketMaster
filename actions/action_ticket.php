@@ -15,4 +15,3 @@
     $documents = $_POST['documents'];
 
     ticket::addTicket($db, $session->getUsername(),$department, $title, $content, $hashtags, $documents);
-?>

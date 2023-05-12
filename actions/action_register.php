@@ -41,8 +41,3 @@
     $newUser = new User($_POST['username'], $_POST['password'], $_POST['email'], $_POST['name']);
     User::insertUser($db, $newUser);
     header('Location: ../pages/login.php?success=1');
-
-
-
-
-?>
