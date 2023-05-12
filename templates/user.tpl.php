@@ -22,10 +22,10 @@ require_once(__DIR__ . '/../database/ticket.php');
                 <div class="optionsBody">
                     <ul class="userSettings">
                         <li class="button">
-                            <button class="openButton" onclick="openForm()">Change email</button>
+                            <button class="openButton" onclick="openEmailForm()">Change email</button>
                         </li>
                         <li class="button">
-                            <button class="openButton" onclick="openForm()">Change password</button>
+                            <button class="openButton" onclick="openPswForm()">Change password</button>
                         <li class="button">
                             <button class="openButton" onclick="openForm()">Change information</button>
                         <li class="button">
@@ -187,11 +187,29 @@ require_once(__DIR__ . '/../database/ticket.php');
             </div>
         </div>
     </div>
-    <div class="changeEmailB" id="popup">
-        <form action="../actions/change_info.php" method="post" id="change-email-form">
+    <div class="changeInfoB" id="popupEmail">
+        <form action="../actions/change_email.php" method="post">
             <div class="email-box">
                 <label for="email">New e-mail</label>
                 <input type="email" placeholder="Enter Email" name="email" id="email" required>
+            </div>
+            <span id="email-error">
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 1) {
+                    echo "Email already in use";
+                }
+                ?>
+            </span>
+            <button type="submit" class="btn submit">Submit</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
+    <div class="changeInfoB" id="popupPsw">
+        <form action="../actions/change_password.php" method="post">
+            <div class="psw-box">
+                <label for="psw">New password</label>
+                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
             </div>
             <span id="email-error">
                 <?php

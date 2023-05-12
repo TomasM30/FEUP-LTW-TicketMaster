@@ -138,7 +138,7 @@
     height: 100%;
 }
 
-.changeEmailB {
+.changeInfoB {
     display: none;
     position: absolute;
     top: 50%;
@@ -151,11 +151,11 @@
     border-radius: 10px;
 }
 
-.changeEmailB .email-box {
+.changeInfoB .email-box {
     position: relative;
 }
 
-.changeEmailB .email-box input {
+.changeInfoB .email-box input {
     width: 100%;
     padding: 10px 0;
     margin-top: 15px;
@@ -168,7 +168,7 @@
     background: transparent;
 }
 
-.changeEmailB .email-box label {
+.changeInfoB .email-box label, .changeInfoB .psw-box label {
     position: absolute;
     top: -30px;
     left: 0;
