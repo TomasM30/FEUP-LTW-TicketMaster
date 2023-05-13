@@ -25,13 +25,25 @@ function openPswForm() {
 
 function openInfoForm(){
     opacityPointerA();
-    document.getElementById('popupInfo').style.display = 'block';
+    document.getElementById('popupName').style.display = 'block';
+}
+function openUserNameForm(){
+    opacityPointerA();
+    document.getElementById('popupUserName').style.display = 'block';
 }
 
 function closeForm() {
     opacityPointerD();
     document.getElementById('popupEmail').style.display = 'none';
     document.getElementById('popupPsw').style.display = 'none';
-    document.getElementById('popupInfo').style.display = 'none';
+    document.getElementById('popupName').style.display = 'none';
+    document.getElementById('popupUserName').style.display = 'none';
+}
+
+function scrollHContainer(scrollAmount,direction,container) {
+    if(direction === 'left')
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    else
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 }
 

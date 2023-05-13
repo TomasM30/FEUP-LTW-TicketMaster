@@ -1,21 +1,28 @@
 body {
     width: 90%;
     margin: 0 auto 0 auto;
-}
-
-main{
+    min-width: 345px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
+.container{
+    outline: blue solid 1px;
+}
+main{
+    outline: chartreuse solid 1px;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
 .ticketPrev{
     width: 100%;
     height: 100%;
     display: flex;
-}
-body::-webkit-scrollbar{
-    display: none;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 body > header {
@@ -24,7 +31,7 @@ body > header {
     background-image: url("../images/banner.jpg");
     height: 80px;
     display: grid;
-    grid-template-columns: 15% 1fr 1fr 15%;
+    grid-template-columns: 15% 1fr 1fr 150px;
     grid-template-rows: 100%;
 }
 
@@ -35,6 +42,7 @@ footer{
     align-items: center;
     justify-content: left;
     height: 30px;
+    width: 100%;
 }
 
 footer a{
@@ -112,25 +120,27 @@ footer a{
 
 .user {
     grid-column: 4/5;
-    display: grid;
-    grid-template-columns: 50% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .username{
     text-decoration: none;
-    grid-column: 1/2;
-    align-self: center;
-    justify-self: center;
     color: white;
-    font-size: 1.2vw;
+    font-size: 100%;
     font-family: Arial, Helvetica, sans-serif;
-    margin-right: 1vw;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .userImage{
     margin-right: 1em;
-    grid-column: 2/3;
-    align-self: center;
-    justify-self: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .userImage img{
@@ -143,7 +153,7 @@ footer a{
     display: none;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1000px) {
     .username{
         display: none;
     }
@@ -153,6 +163,10 @@ footer a{
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .userImage{
+        margin-right: 0;
     }
 
     body > header{
@@ -213,8 +227,8 @@ footer a{
 
     .hamburger {
         position: absolute;
-        top: 30px;
-        right: 14%;
+        top: 28px;
+        right: 10%;
         width: 40px;
         height: 40px;
         cursor: pointer;
@@ -268,4 +282,14 @@ footer a{
         transform: rotate(180deg);
     }
 
+}
+
+@media (max-width: 358px) {
+    #hamburger:checked ~ header .options .links a {
+        font-size: 4vw;
+    }
+
+    .hamburger{
+        left: 280px;
+    }
 }

@@ -11,7 +11,6 @@
     align-items: center;
     justify-content: center;
 }
-
 .profileCard{
     width: 190px;
     height: 254px;
@@ -82,6 +81,7 @@
 }
 
 .info{
+    margin-left: 1em;
     color: #7a7a7a;
 }
 
@@ -95,19 +95,14 @@
     align-items: center;
 }
 
-.previewTickets .container{
-    margin: 0;
-    padding: 0;
-    width: 280px;
-    height: 350px;
-    display: flex;
-    align-items: center;
+#slideBRP{
+    margin-right: 1em;
 }
 
 
 #settingsCard{
     margin-bottom: 45%;
-    height: 150px;
+    height: 200px;
 }
 
 #settingsCard ul{
@@ -145,11 +140,11 @@
     border-radius: 10px;
 }
 
-.changeInfoB .email-box, .changeInfoB .psw-box, .changeInfoB .info-box {
+.changeInfoB .email-box, .changeInfoB .psw-box, .changeInfoB .name-box, .changeInfoB .username-box {
     position: relative;
 }
 
-.changeInfoB .email-box input, .changeInfoB .psw-box input, .changeInfoB .info-box input {
+.changeInfoB .email-box input, .changeInfoB .psw-box input, .changeInfoB .name-box input, .changeInfoB .username-box input {
     width: 100%;
     padding: 10px 0;
     margin-top: 15px;
@@ -162,7 +157,7 @@
     background: transparent;
 }
 
-.changeInfoB .email-box label, .changeInfoB .psw-box label, .changeInfoB .info-box label {
+.changeInfoB .email-box label, .changeInfoB .psw-box label, .changeInfoB .name-box label, .changeInfoB .username-box label {
     position: absolute;
     top: -30px;
     left: 0;
@@ -199,7 +194,7 @@
     left: 190px;
 }
 
-#email-error, #password_error, #info_error{
+#email-error, #password_error, #name_error, #username_error{
     position: absolute;
     top: 100px;
     left: 40px;
@@ -225,10 +220,6 @@
 .button{
     width: 100%;
     height: 100%;
-}
-
-#profileTickets{
-    width: 270px;
 }
 
 @media (max-width: 1100px) {

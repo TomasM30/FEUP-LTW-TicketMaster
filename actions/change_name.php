@@ -8,9 +8,8 @@ require_once(__DIR__ . '/../utils/session.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
-$errors = array();
 
-if(user::sameName($db,$session->getUsername(),$_POST['info'])){
+if(user::sameName($db,$session->getUsername(),$_POST['name'])){
     ?>
     <script>
     window.alert("Insert a different name from the previous one!");
@@ -20,5 +19,5 @@ if(user::sameName($db,$session->getUsername(),$_POST['info'])){
     exit;
 }
 
-user::changeInfo($db,$session->getUsername(), $_POST['info']);
+user::changeName($db,$session->getUsername(), $_POST['name']);
 header('Location: ../pages/profile.php?');

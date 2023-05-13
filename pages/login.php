@@ -31,6 +31,8 @@
                 echo "Email changed successfully! Please login";
             } elseif (isset($_GET['success']) && $_GET['success'] == 3) {
                 echo "Password changed successfully! Please login";
+            }elseif (isset($_GET['success']) && $_GET['success'] == 4) {
+                echo "Username changed successfully! Please login";
             }
             ?>
         </p>
