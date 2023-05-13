@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+require_once(__DIR__ . '/../utils/session.php');
+$session = new Session();
+
 require_once(__DIR__ . '/../database/users.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 
@@ -24,6 +27,6 @@ if (!user::checkPassword($_POST['psw'], $errors)) {
         exit;
     }
 }
-user::changePassword($db, '123', $_POST['password']);
+user::changePassword($db, $session->getUsername(), $_POST['psw']);
 header('Location: ../pages/login.php?success=3');
 ?>

@@ -110,7 +110,7 @@
         static public function getUserUsernamePassword($username, $password) : ?User{
             global $db;
             $stmt = $db->prepare('
-            SELECT * FROM User WHERE lower(username) = ?
+                SELECT * FROM User WHERE lower(username) = ?
             ');
 
             $stmt->execute(array(strtolower($username)));
