@@ -15,4 +15,3 @@
         die();
     }
     header('Location: ../pages/login.php?error=1');
-?>

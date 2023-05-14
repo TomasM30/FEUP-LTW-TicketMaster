@@ -10,9 +10,9 @@ $session = new Session();
 
 $db = getDatabaseConnection();
 
+
 drawHeader($session->getUsername());
 drawTicketPreview($session->getUsername());
-drawUserTicketStats($session->getUsername());
 drawFooter();
 
 if (isset($_GET['success']) && $_GET['success'] == 1){

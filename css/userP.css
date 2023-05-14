@@ -1,4 +1,5 @@
 .profileContainer{
+    width: 100%;
     display: grid;
     grid-template-columns: 25% 1fr;
 }
@@ -10,7 +11,6 @@
     align-items: center;
     justify-content: center;
 }
-
 .profileCard{
     width: 190px;
     height: 254px;
@@ -26,7 +26,6 @@
     font-size: 1.2em;
     color: #3d3d3d;
 }
-
 .cardBody h5{
     font-size: 1em;
     font-weight: bold;
@@ -82,38 +81,28 @@
 }
 
 .info{
+    margin-left: 1em;
     color: #7a7a7a;
 }
 
 .previewTickets{
     margin-top: 2em;
-    width: 75%;
+    width: 85%;
     height: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-.previewTickets .container{
-    margin: 0;
-    padding: 0;
-    width: 280px;
-    height: 350px;
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
 }
 
-.previewTickets .container:first-of-type{
-    grid-column: 1/2;
-    margin-left: 2px;
+#slideBRP{
+    margin-right: 1em;
 }
-.previewTickets .container:nth-child(2) {
-    margin-left: 11vh;
-    grid-column: 2/3;
-}
+
 
 #settingsCard{
     margin-bottom: 45%;
-    height: 150px;
+    height: 200px;
 }
 
 #settingsCard ul{
@@ -151,11 +140,11 @@
     border-radius: 10px;
 }
 
-.changeInfoB .email-box, .changeInfoB .psw-box {
+.changeInfoB .email-box, .changeInfoB .psw-box, .changeInfoB .name-box, .changeInfoB .username-box {
     position: relative;
 }
 
-.changeInfoB .email-box input, .changeInfoB .psw-box input {
+.changeInfoB .email-box input, .changeInfoB .psw-box input, .changeInfoB .name-box input, .changeInfoB .username-box input {
     width: 100%;
     padding: 10px 0;
     margin-top: 15px;
@@ -168,7 +157,7 @@
     background: transparent;
 }
 
-.changeInfoB .email-box label, .changeInfoB .psw-box label {
+.changeInfoB .email-box label, .changeInfoB .psw-box label, .changeInfoB .name-box label, .changeInfoB .username-box label {
     position: absolute;
     top: -30px;
     left: 0;
@@ -205,7 +194,7 @@
     left: 190px;
 }
 
-#email-error, #password_error{
+#email-error, #password_error, #name_error, #username_error{
     position: absolute;
     top: 100px;
     left: 40px;
@@ -232,3 +221,86 @@
     width: 100%;
     height: 100%;
 }
+
+@media (max-width: 1100px) {
+    .profileContainer{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+
+    .settingsColumn{
+        grid-column: 1/2;
+        grid-row: 1/2;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
+
+    #settingsCard{
+        margin: 0;
+    }
+
+    .userInfoColumn{
+        grid-column: 1/2;
+        grid-row: 2/4;
+    }
+
+    #profileInfoCard{
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+
+    .previewTickets{
+        width: 85%;
+        height: 100%;
+        grid-column: 1/2;
+        grid-row: 3/4;
+        margin-bottom: 1em;
+    }
+}
+@media (max-width: 850px) {
+    .previewTickets{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1em;
+    }
+}
+
+@media (max-width: 600px) {
+    .profileCard{
+        height: 45%;
+    }
+
+    #profileInfoCard{
+        margin-top: 2em;
+    }
+
+    .settingsColumn{
+        flex-direction: column;
+        margin-bottom: 1em;
+    }
+}
+
+@media (max-width: 415px) {
+    .changeInfoB{
+        width: 275px;
+    }
+
+    .cancel, .submit{
+        position: relative;
+        top: 25px;
+        left: 80px;
+    }
+
+    .submit{
+        left: 70px;
+    }
+
+    #password_error{
+    }
+}
+
+
+

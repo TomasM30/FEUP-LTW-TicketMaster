@@ -14,6 +14,7 @@ function drawTicketPreview(string $username)
         $tickets = ticket::getClientTickets(getDatabaseConnection(), $username);
         if(!empty($tickets)){
         foreach ($tickets as $ticket) {?>
+            <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
             <a href="/">
                 <div class="card">
                     <div class="content">
@@ -27,7 +28,7 @@ function drawTicketPreview(string $username)
                     </div>
                 </div>
             </a>
-
+            <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
             <?php
         }
         } else{
@@ -49,14 +50,8 @@ function drawTicketPreview(string $username)
         }
         ?>
     </div>
-
-    <?php
-} ?>
-
-<?php
-function drawUserTicketStats(string $username)
-{ ?>
     <div class="container">
+        <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
         <a href="/">
             <div class="card" id="stat_card">
                 <div class="content" id="statistics">
@@ -72,6 +67,8 @@ function drawUserTicketStats(string $username)
                 </div>
             </div>
         </a>
+        <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+        <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
         <a href="/">
             <div class="card" id="stat_card">
                 <div class="content" id="statistics">
@@ -93,6 +90,8 @@ function drawUserTicketStats(string $username)
                 </div>
             </div>
         </a>
+        <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+        <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
         <a href="/">
             <div class="card" id="stat_card">
                 <div class="content" id="statistics">
@@ -114,6 +113,8 @@ function drawUserTicketStats(string $username)
                 </div>
             </div>
         </a>
+        <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+        <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
         <a href="/">
             <div class="card" id="stat_card">
                 <div class="content" id="statistics">
@@ -135,8 +136,9 @@ function drawUserTicketStats(string $username)
                 </div>
             </div>
         </a>
+        <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
     </div>
 </div>
 
-<?php
+    <?php
 } ?>
