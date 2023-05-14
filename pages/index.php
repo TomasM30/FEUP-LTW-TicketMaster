@@ -14,4 +14,8 @@ $db = getDatabaseConnection();
 drawHeader($session->getUsername());
 drawTicketPreview($session->getUsername());
 drawFooter();
+
+if (isset($_GET['success']) && $_GET['success'] == 1){
+    echo "<script>alert('Succesfully created the ticket!');</script>";
+}
 ?>

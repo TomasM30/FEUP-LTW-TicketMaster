@@ -48,8 +48,7 @@ class ticket
             Misc::addHashtagToTicket($db, $ht, $id);
         }
 
-        $seperatedDocuments = explode(' ', $documents);
-        foreach($seperatedDocuments as $doc){
+        foreach($documents as $doc){
             Misc::addDocumentToTicket($db, $doc, $id);
         }
     }

@@ -28,7 +28,7 @@
         </select>
         <input type="text" id="hashtags" name="hashtags" placeholder="#">
         <label for="documents"> Annex documents: </label>
-        <input type="file" id="documents" name="documents" multiple> 
+        <input type="file" id="documents" name="documents[]" multiple> 
         <input type="submit" value="Create Ticket">
     </form>
 </div>
