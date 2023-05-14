@@ -11,7 +11,7 @@
 
     drawHeader($session->getUsername());
 ?>
-<div class="ticket-form">
+    <div class="ticket-form">
     <form action="/../actions/action_ticket.php" method="post" enctype="multipart/form-data">
         <input type="text" name="title" id="title" placeholder="Title">
         <textarea name="content" id="content" cols="30" rows="10" placeholder="content"></textarea>

@@ -69,7 +69,7 @@ require_once(__DIR__ . '/../database/ticket.php');
             <div class="previewTickets">
                 <div class="container" id = 'profileTickets'>
                     <?php
-                    $tickets = Ticket::getClientTickets(getDatabaseConnection(), $username);
+                    $tickets = ticket::getClientTickets(getDatabaseConnection(), $username);
                     if(!empty($tickets)){
                         foreach ($tickets as $ticket) {?>
                             <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
