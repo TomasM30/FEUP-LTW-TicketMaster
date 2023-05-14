@@ -36,8 +36,8 @@ require_once(__DIR__ . '/../database/users.php');
                 <div class="links">
                     <ul>
                         <li><a href="/../pages/create_ticket.php">Tickets</a></li>
-                        <li><a href="/">Departments</a></li>
-                        <li><a href="/">Team</a></li>
+                        <li><a href="/../pages/departments.php">Departments</a></li>
+                        <li><a href="/../pages/agents.php">Team</a></li>
                         <li><a href="/">FAQ</a></li>
                         <li class="userProfile"><a href="../pages/profile.php">Account</a></li>
                     </ul>
