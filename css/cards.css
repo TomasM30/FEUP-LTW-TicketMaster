@@ -1,28 +1,51 @@
 .container {
     display: flex;
     overflow-x: scroll;
+    overflow-y: hidden;
     padding: 24px;
     width: 260px;
     height: 330px;
     scroll-snap-type: x mandatory;
-    scroll-padding: 24px;
+    scroll-padding: 22px;
     border-radius: 8px;
-    gap: 12px;
-    margin: 2rem auto;
     align-items: center;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .container::-webkit-scrollbar {
-    width: 0;
-    background: transparent;
+    display: none;
+}
+
+.slideB:last-of-type, .slideB:first-of-type {
+    display: none;
+}
+
+.slideB {
+    border-radius: 17px;
+    height: 100%;
+    opacity: 18%;
+    cursor: pointer;
+}
+#slideBR{
+    border-right: white;
+    margin-right: 0.5em;
+}
+#slideBL {
+    border-left: white;
+}
+.slideB:hover {
+    opacity: 50%;
+    transition: opacity 0.5s ease-in;
 }
 
 .card {
     scroll-snap-align: start;
+    border: 2px solid #252525;
     box-sizing: border-box;
     width: 260px;
     height: 320px;
-    background: #252525;
+    background: white;
     border-radius: 17px;
     text-align: center;
     cursor: pointer;
@@ -34,6 +57,7 @@
     user-select: none;
     font-weight: bolder;
 }
+
 .content {
     display: grid;
     grid-template-rows: 15% 1fr;
@@ -59,7 +83,7 @@
 
 #statistics h1 {
     font-family: Arial, Helvetica, sans-serif;
-    color: white;
+    color: #252525;
     font-weight: bold;
 }
 
@@ -71,12 +95,14 @@
     display: flex;
     grid-row: 1/2;
     font-size: 1.15em;
-    color: white;
+    color: #252525;
 }
 
 
 .container a {
     text-decoration: none;
+    margin-right: 1em;
+    margin-left: 1em;
 }
 
 .content header h2 {

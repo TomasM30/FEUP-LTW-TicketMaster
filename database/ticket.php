@@ -52,4 +52,25 @@ class ticket
             Misc::addDocumentToTicket($db, $doc, $id);
         }
     }
+    static function addTicketWDoc($db, $author, $department, $subject, $content, $hashtags){
+
+        $getLastId = $db->prepare('SELECT id FROM Ticket ORDER BY id DESC LIMIT 1');
+        $getLastId->execute();
+        $lastId = $getLastId->fetch()['id'];
+        $id = $lastId + 1;
+
+
+        $stmt = $db->prepare('INSERT INTO Ticket (id, author_username, department_id, subject, content, status) VALUES (:id, :author, :department, :subject, :content, 1)');
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':author', $author);
+        $stmt->bindParam(':department', $department);
+        $stmt->bindParam(':subject', $subject);
+        $stmt->bindParam(':content', $content);
+        $stmt->execute();
+
+        $seperatedHashtags = explode(' ', $hashtags);
+        foreach($seperatedHashtags as $ht){
+            Misc::addHashtagToTicket($db, $ht, $id);
+        }
+    }
 }

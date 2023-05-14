@@ -15,7 +15,7 @@ require_once(__DIR__ . '/../database/users.php');
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/cards.css">
         <link rel="stylesheet" href="../css/userP.css">
-        <script src="../javascript/form_actions.js" defer></script>
+        <script src="../javascript/scripts.js" defer></script>
     </head>
     <body>
     <input type="checkbox" id="hamburger">
@@ -46,7 +46,7 @@ require_once(__DIR__ . '/../database/users.php');
         </div>
         <div class="user">
             <a class="username" href="../pages/profile.php">
-                <p><?= User::getName(getDatabaseConnection(), $username) ?></p>
+                <p>Account</p>
             </a>
             <a class="userImage" href="../pages/profile.php">
                 <img src="../images/default_user.png" alt="User" width="50" height="50">

@@ -48,6 +48,7 @@
             $stmt->bindParam(':new_psw', $hashed_pw);
             $stmt->execute();
         }
+
         static public function insertUser(PDO $db, User $user){
             
             $hashed_pw = password_hash($user->password, PASSWORD_DEFAULT, ['cost' => 10]);
@@ -56,8 +57,10 @@
             if ($searched_user != null){return "The username provided is already in use, please use another";}
 
             $stmt = $db->prepare('INSERT INTO User (username, name, password, email) VALUES (?, ?, ?, ?)');
-
             $stmt->execute(array($user->username, $user->name, $hashed_pw, strtolower($user->email)));
+            $stmt = $db->prepare('INSERT INTO Client (client_username) VALUES (?)');
+            $stmt->execute(array($user->username));
+
         }
         static function getName(PDO $db, $username){
             $stmt = $db->prepare('SELECT name FROM User WHERE username = :username');
@@ -129,7 +132,7 @@
             }
         }
 
-        static public function checkPassword($pwd, &$errors) {
+        static public function checkPassword($pwd, &$errors): bool{
             $errors_init = $errors;
 
             if (strlen($pwd) < 8) {
@@ -145,6 +148,73 @@
             }
 
             return ($errors == $errors_init);
+        }
+
+        static public function samePassword($db, $username, $new_psw): bool{
+            $hashed_pw = password_hash($new_psw, PASSWORD_DEFAULT, ['cost' => 10]);
+            $stmt = $db->prepare('SELECT password FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch()['password'];
+            return password_verify($hashed_pw, $result);
+        }
+
+        static public function sameName($db, $username, $newName): bool{
+            $stmt = $db->prepare('SELECT name FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch()['name'];
+            return $result == $newName;
+        }
+        static public function sameUName($db, $username, $newUName): bool{
+            $stmt = $db->prepare('SELECT username FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch()['username'];
+            return $result == $newUName;
+        }
+
+        static public function changeName($db, $username, $newName){
+            $stmt = $db->prepare('UPDATE user SET name = :newName WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newName', $newName);
+            $stmt->execute();
+        }
+
+
+        static public function changeUName($db, $username, $newUName){
+            $stmt = $db->prepare('UPDATE user SET username = :newUName WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE client SET client_username = :newUName WHERE client_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE agent SET agent_username = :newUName WHERE agent_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE admin SET admin_username = :newUName WHERE admin_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE Link_departments SET username = :newUName WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE Ticket SET author_username = :newUName WHERE author_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE Ticket SET agent_username = :newUName WHERE agent_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
+            $stmt = $db->prepare('UPDATE Comment SET username = :newUName WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':newUName', $newUName);
+            $stmt->execute();
         }
     }
 ?>

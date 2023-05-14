@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../database/ticket.php');
                 <div class="cardBody">
                     <img src="../images/default_user.png" alt="userImg"
                          class="userImg">
-                    <h5 class="username">
+                    <h5 class="usernameP">
                         <?php
                         echo $username;
                         ?>
@@ -27,9 +27,11 @@ require_once(__DIR__ . '/../database/ticket.php');
                         <li class="button">
                             <button class="openButton" onclick="openPswForm()">Change password</button>
                         <li class="button">
-                            <button class="openButton" onclick="openForm()">Change information</button>
+                            <button class="openButton" onclick="openInfoForm()">Change Name</button>
                         <li class="button">
-                            <button class="openButton" onclick="openForm()">Logout</button>
+                            <button class="openButton" onclick="openUserNameForm()">Change Username</button>
+                        <li class="button">
+                            <button class="openButton" onclick="window.location.href = '../actions/action_logout.php'">Logout</button>
                         </li>
                     </ul>
                 </div>
@@ -65,11 +67,12 @@ require_once(__DIR__ . '/../database/ticket.php');
                 </div>
             </div>
             <div class="previewTickets">
-                <div class="container">
+                <div class="container" id = 'profileTickets'>
                     <?php
                     $tickets = Ticket::getClientTickets(getDatabaseConnection(), $username);
                     if(!empty($tickets)){
                         foreach ($tickets as $ticket) {?>
+                            <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                         <a href="/">
                             <div class="card">
                                 <div class="content">
@@ -83,6 +86,7 @@ require_once(__DIR__ . '/../database/ticket.php');
                                 </div>
                             </div>
                         </a>
+                            <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
                         <?php
                         }
                     } else{
@@ -104,7 +108,8 @@ require_once(__DIR__ . '/../database/ticket.php');
                     }
                     ?>
                 </div>
-                <div class="container">
+                <div class="container" id = 'profileTickets'>
+                    <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                     <a href="/">
                         <div class="card" id="stat_card">
                             <div class="content" id="statistics">
@@ -120,6 +125,8 @@ require_once(__DIR__ . '/../database/ticket.php');
                             </div>
                         </div>
                     </a>
+                    <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+                    <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                     <a href="/">
                         <div class="card" id="stat_card">
                             <div class="content" id="statistics">
@@ -141,6 +148,8 @@ require_once(__DIR__ . '/../database/ticket.php');
                             </div>
                         </div>
                     </a>
+                    <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+                    <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                     <a href="/">
                         <div class="card" id="stat_card">
                             <div class="content" id="statistics">
@@ -162,6 +171,8 @@ require_once(__DIR__ . '/../database/ticket.php');
                             </div>
                         </div>
                     </a>
+                    <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+                    <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                     <a href="/">
                         <div class="card" id="stat_card">
                             <div class="content" id="statistics">
@@ -183,6 +194,8 @@ require_once(__DIR__ . '/../database/ticket.php');
                             </div>
                         </div>
                     </a>
+                    <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+                    <button class="slideB" id="slideBL"  onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                 </div>
             </div>
         </div>
@@ -214,7 +227,9 @@ require_once(__DIR__ . '/../database/ticket.php');
             <span id="password_error">
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 2) {
-                    echo "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number";
+                    echo "Must contain at least 8 Char, 1 up/lowercase letter and 1 number";
+                } elseif(isset($_GET['error']) && $_GET['error'] == 3){
+                    echo "Insert a different password!";
                 }
                 ?>
             </span>
@@ -222,4 +237,43 @@ require_once(__DIR__ . '/../database/ticket.php');
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     </div>
+
+    <div class="changeInfoB" id="popupName">
+        <form action="../actions/change_name.php" method="post">
+            <div class="name-box">
+                <label for="name">New name</label>
+                <input type="text" placeholder="Enter Name" name="name" id="name" required>
+            </div>
+            <span id="name_error">
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 4) {
+                    echo "Insert a different name!";
+                }
+                ?>
+            </span>
+            <button type="submit" class="btn submit">Submit</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
+    <div class="changeInfoB" id="popupUserName">
+        <form action="../actions/change_username.php" method="post">
+            <div class="username-box">
+                <label for="username">New username</label>
+                <input type="text" placeholder="Enter Username" name="username" id="username" required>
+            </div>
+            <span id="username_error">
+                <?php
+                if (isset($_GET['error']) && $_GET['error'] == 5) {
+                    echo "Insert a different name!";
+                } elseif (isset($_GET['error']) && $_GET['error'] == 6) {
+                    echo "Username already in use!";
+                }
+                ?>
+            </span>
+            <button type="submit" class="btn submit">Submit</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
 <?php } ?>
