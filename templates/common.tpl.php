@@ -66,7 +66,7 @@ require_once(__DIR__ . '/../database/users.php');
 
     <footer>
         <p>
-            <a href="/">
+            <a href="../pages/index.php">
                 &copy; 2023 Ticket Master
             </a>
         </p>
