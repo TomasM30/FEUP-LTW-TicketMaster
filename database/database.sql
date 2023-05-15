@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS admin;
 DROP TABLE IF EXISTS department;
 DROP TABLE IF EXISTS link_departments;
 DROP TABLE IF EXISTS statuses;
+DROP TABLE IF EXISTS priority;
 DROP TABLE IF EXISTS ticket;
 DROP TABLE IF EXISTS hashtags;
 DROP TABLE IF EXISTS link_hashtags;
@@ -61,6 +62,12 @@ CREATE TABLE Statuses(
   PRIMARY KEY ('id')
 );
 
+CREATE TABLE Priority(
+  'id' int(1) NOT NULL,
+  'name' varchar(255) NOT NULL,
+  PRIMARY KEY ('id')
+);
+
 CREATE TABLE Hashtags(
   'id' int(6) NOT NULL,
   'name' varchar(255) NOT NULL,
@@ -74,7 +81,7 @@ CREATE TABLE Ticket (
   'agent_username' varchar(255),
   'subject' varchar(255) NOT NULL,
   'content' text NOT NULL,
-  'status' int(1) NOT NULL,
+  'status' int(1) DEFAULT 0,
   'date' datetime DEFAULT CURRENT_TIMESTAMP,
   'priority' int(1) DEFAULT 0,
   PRIMARY KEY ('id'),
@@ -159,9 +166,15 @@ INSERT INTO 'Link_departments' ('department_id', 'username') VALUES
 (5, 'john1');
 
 INSERT INTO 'Statuses' ('id', 'name') VALUES
-(1, 'Open'),
-(2, 'Assigned'),
-(3, 'Closed');
+(0, 'Open'),
+(1, 'Assigned'),
+(2, 'Closed');
+
+INSERT INTO 'Priority' ('id', 'name') VALUES
+(0, 'None'),
+(1, 'Low'),
+(2, 'Medium'),
+(3, 'High');
 
 INSERT INTO 'Ticket' ('id', 'author_username', 'department_id', 'agent_username', 'subject', 'content', 'status', 'date', 'priority') VALUES
 (1, 'john1', 1, 'john3', 'Subject_1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a placerat sem. Nunc euismod nec orci cursus sagittis. In ac tortor et eros ultricies posuere. Phasellus tortor erat, rutrum ac placerat sed, laoreet ac ex. In porttitor, felis nec consequat gravida, ex magna eleifend tortor, ut imperdiet magna enim eget nisi. Nam non faucibus lectus. Nullam nec odio et tellus ultrices tristique. Nam vitae massa ut massa malesuada iaculis. Suspendisse efficitur finibus massa, eget luctus sem. Phasellus tempus aliquam lacus in cursus. Etiam et sem id arcu convallis venenatis.

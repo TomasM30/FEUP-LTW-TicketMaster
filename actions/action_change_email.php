@@ -17,6 +17,20 @@
         </script>
         <?php
         exit();
+    }elseif (!user::checkEmail($_POST['email'], $errors)) {
+        if (!empty($errors)) {
+            $error_message = "";
+            foreach ($errors as $error) {
+                $error_message .= $error . "\\n";
+            }
+            ?>
+            <script>
+                window.alert("<?php echo $error_message ?>");
+                window.location.href = "../pages/profile.php?error=8";
+            </script>
+            <?php
+            exit;
+        }
     }
     user::changeEmail($db, '123', $_POST['email']);
     header('Location: ../pages/login.php?success=2');

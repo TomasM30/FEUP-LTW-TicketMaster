@@ -15,6 +15,8 @@ require_once(__DIR__ . '/../database/users.php');
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/cards.css">
         <link rel="stylesheet" href="../css/userP.css">
+        <link rel="stylesheet" href="../css/ticket.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="../javascript/scripts.js" defer></script>
     </head>
     <body>
@@ -35,9 +37,9 @@ require_once(__DIR__ . '/../database/users.php');
             <nav>
                 <div class="links">
                     <ul>
-                        <li><a href="/../pages/create_ticket.php">Tickets</a></li>
-                        <li><a href="/../pages/departments.php">Departments</a></li>
-                        <li><a href="/../pages/agents.php">Team</a></li>
+                        <li><a href="../pages/ticketPage.php">Tickets</a></li>
+                        <li><a href="/">Departments</a></li>
+                        <li><a href="/">Team</a></li>
                         <li><a href="/">FAQ</a></li>
                         <li class="userProfile"><a href="../pages/profile.php">Account</a></li>
                     </ul>
@@ -46,7 +48,9 @@ require_once(__DIR__ . '/../database/users.php');
         </div>
         <div class="user">
             <a class="username" href="../pages/profile.php">
-                <p>Account</p>
+                <p><?php
+                    echo $username;
+                    ?></p>
             </a>
             <a class="userImage" href="../pages/profile.php">
                 <img src="../images/default_user.png" alt="User" width="50" height="50">
@@ -62,7 +66,7 @@ require_once(__DIR__ . '/../database/users.php');
 
     <footer>
         <p>
-            <a href="/">
+            <a href="../pages/index.php">
                 &copy; 2023 Ticket Master
             </a>
         </p>

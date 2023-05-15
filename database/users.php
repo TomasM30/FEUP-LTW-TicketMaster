@@ -150,6 +150,31 @@
             return ($errors == $errors_init);
         }
 
+        static public function checkUsername($username, &$errors): bool {
+            $errors_init = $errors;
+
+            if (strlen($username) > 11) {
+                $errors[] = "Username must not exceed 11 characters!";
+            }
+
+            if (!preg_match("/^[a-zA-Z0-9]+$/", $username)) {
+                $errors[] = "Username must only contain letters and numbers!";
+            }
+
+            return ($errors == $errors_init);
+        }
+
+        static public function checkEmail($email, &$errors): bool {
+            $errors_init = $errors;
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "Invalid email format!";
+            }
+
+            return ($errors == $errors_init);
+        }
+
+
         static public function samePassword($db, $username, $new_psw): bool{
             $hashed_pw = password_hash($new_psw, PASSWORD_DEFAULT, ['cost' => 10]);
             $stmt = $db->prepare('SELECT password FROM user WHERE username = :username');
@@ -215,6 +240,19 @@
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':newUName', $newUName);
             $stmt->execute();
+        }
+
+        static public function isAgent($db, $username): bool{
+            $stmt = $db->prepare('SELECT * FROM agent WHERE agent_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch() != null;
+        }
+
+        static public function getAllAgents($db): array{
+            $stmt = $db->prepare('SELECT * FROM agent');
+            $stmt->execute();
+            return $stmt->fetchAll();
         }
     }
 ?>
