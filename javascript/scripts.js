@@ -47,3 +47,37 @@ function scrollHContainer(scrollAmount,direction,container) {
     container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
 }
 
+function openStatusMenu(){
+    var form = document.getElementById('statusChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+function openAgentsMenu(){
+    var form = document.getElementById('agentChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+function openDepartmentMenu(){
+    var form = document.getElementById('departmentChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+function openPriorityMenu(){
+    var form = document.getElementById('priorityChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+
+

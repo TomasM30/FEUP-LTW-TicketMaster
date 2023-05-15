@@ -9,10 +9,17 @@ require_once(__DIR__ . '/../utils/session.php');
 $session = new Session();
 
 $db = getDatabaseConnection();
-
+if (user::isAgent($db, $session->getUsername())) {
+    $tickets = ticket::getAgentTickets($db, $session->getUsername());
+    $agentUsername = $session->getUsername();
+    $clientTickets = ticket::getClientTickets($db, $agentUsername);
+    $tickets = array_merge($tickets, $clientTickets);
+} else {
+    $tickets = ticket::getClientTickets($db, $session->getUsername());
+}
 
 drawHeader($session->getUsername());
-drawTicketPreview($session->getUsername());
+drawTicketPreview($db,$tickets);
 drawFooter();
 
 if (isset($_GET['success']) && $_GET['success'] == 1){

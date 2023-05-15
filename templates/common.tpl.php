@@ -15,6 +15,8 @@ require_once(__DIR__ . '/../database/users.php');
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/cards.css">
         <link rel="stylesheet" href="../css/userP.css">
+        <link rel="stylesheet" href="../css/ticket.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="../javascript/scripts.js" defer></script>
     </head>
     <body>
@@ -35,7 +37,7 @@ require_once(__DIR__ . '/../database/users.php');
             <nav>
                 <div class="links">
                     <ul>
-                        <li><a href="../pages/ticketpage.php">Tickets</a></li>
+                        <li><a href="../pages/ticketPage.php">Tickets</a></li>
                         <li><a href="/">Departments</a></li>
                         <li><a href="/">Team</a></li>
                         <li><a href="/">FAQ</a></li>

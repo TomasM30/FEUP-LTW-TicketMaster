@@ -241,5 +241,18 @@
             $stmt->bindParam(':newUName', $newUName);
             $stmt->execute();
         }
+
+        static public function isAgent($db, $username): bool{
+            $stmt = $db->prepare('SELECT * FROM agent WHERE agent_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch() != null;
+        }
+
+        static public function getAllAgents($db): array{
+            $stmt = $db->prepare('SELECT * FROM agent');
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
     }
 ?>
