@@ -17,7 +17,7 @@
     $hashtags = $_POST['hashtags'];
     $department = $_POST['department'];
 
-    $documents = Upload::uploadFile($session->getUsername());
+    $documents = Upload::uploadFile($session->getUsername(), false);
 
     ticket::addTicket($db, $session->getUsername(),$department, $title, $content, $hashtags, $documents);
 

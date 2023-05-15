@@ -12,8 +12,9 @@ require_once(__DIR__ . '/../utils/session.php');
 $session = new Session();
 
 $db = getDatabaseConnection();
+$pfp = User::getPfp($db, $session->getUsername());
 
 drawHeader($session->getUsername());
-drawProfileForm($session->getUsername());
+drawProfileForm($session->getUsername(), $pfp);
 drawFooter();
 ?>

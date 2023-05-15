@@ -216,5 +216,12 @@
             $stmt->bindParam(':newUName', $newUName);
             $stmt->execute();
         }
+        static public function getPfp(PDO $db, string $username){
+            $stmt = $db->prepare('SELECT image_url FROM User WHERE username=:username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch()['image_url'];
+        }
     }
+
 ?>

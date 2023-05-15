@@ -20,7 +20,7 @@ CREATE TABLE User (
   'name' varchar(255) NOT NULL,
   'password' varchar(255) NOT NULL,
   'email' varchar(255) NOT NULL,
-  'image_url' varchar(255) NOT NULL DEFAULT '../images/default_user.png',
+  'image_url' blob NOT NULL DEFAULT '../images/default_user.png',
   PRIMARY KEY ('username')
 );
 
@@ -102,7 +102,7 @@ CREATE TABLE Faq(
 
 CREATE TABLE Document(
   'id' int(6) NOT NULL,
-  'url' varchar(255) NOT NULL,
+  'file' mediumblob NOT NULL,
   PRIMARY KEY ('id')
 );
 

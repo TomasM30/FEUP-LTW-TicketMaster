@@ -37,7 +37,6 @@
 
             $add = $db->prepare('INSERT INTO Document (id, url) VALUES (:id, :url)');
             $add->bindParam(':id', $docId);
-            password_hash($document, PASSWORD_DEFAULT, ['cost' => 10]);
             $add->bindParam(':url', $document);
             $add->execute();
             

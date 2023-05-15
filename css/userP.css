@@ -35,6 +35,7 @@
 .userImg{
     width: 150px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 
@@ -302,5 +303,14 @@
     }
 }
 
+input#pfp{
+    display: none;
+}
+form:invalid input[type="submit"]{
+    display: none;
+}
+form:valid input[type="submit"]{
+    display: inline-block;
+}
 
 

@@ -3,14 +3,17 @@ require_once(__DIR__ . '/../database/ticket.php');
 ?>
 
 
-<?php function drawProfileForm(string $username)
+<?php function drawProfileForm(string $username, string $pfp_url)
 { ?>
     <div class="profileContainer" id="profilePage">
         <div class="settingsColumn">
             <div class="profileCard">
                 <div class="cardBody">
-                    <img src="../images/default_user.png" alt="userImg"
-                         class="userImg">
+                    <form action="/../actions/action_upload_pfp.php" method="post" enctype="multipart/form-data">
+                        <label for="pfp"><img src="<?= $pfp_url ?>" alt="userImg" class="userImg"></label>
+                        <input type="file" id="pfp" name="pfp" required="required" accept="image/*">
+                        <input type="submit" id="submit" value="Submit changes!" class="openButton">
+                    </form>
                     <h5 class="usernameP">
                         <?php
                         echo $username;
