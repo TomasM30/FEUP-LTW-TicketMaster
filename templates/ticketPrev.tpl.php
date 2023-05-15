@@ -9,7 +9,6 @@ function drawTicketPreview(PDO $db, array $tickets)
 { ?>
     <div class="ticketPrev">
         <div class="container">
-
             <?php
             if (!empty($tickets)) {
                 foreach ($tickets as $ticket) { ?>
@@ -19,10 +18,10 @@ function drawTicketPreview(PDO $db, array $tickets)
                             <div class="content">
                                 <header>
                                     <h2 class="status"><?= ticket::getStatus($db, $ticket['status']) ?></h2>
-                                    <h1><?= $ticket['subject'] ?></h1>
+                                    <h1><?= strlen($ticket['subject']) > 10 ? substr($ticket['subject'], 0, 10) . "..." : $ticket['subject'] ?></h1>
                                 </header>
                                 <article>
-                                    <?= $ticket['content'] ?>
+                                    <?= strlen($ticket['content']) > 282 ? substr($ticket['content'], 0, 282) . "..." : $ticket['content'] ?>
                                 </article>
                             </div>
                         </div>
@@ -79,7 +78,7 @@ function drawTicketPreview(PDO $db, array $tickets)
 
                             $open = 0;
                             foreach ($tickets as $ticket) {
-                                if ($ticket['status'] == 1) {
+                                if ($ticket['status'] == 0) {
                                     $open++;
                                 }
                             }
@@ -102,7 +101,7 @@ function drawTicketPreview(PDO $db, array $tickets)
 
                             $inProgress = 0;
                             foreach ($tickets as $ticket) {
-                                if ($ticket['status'] == 2) {
+                                if ($ticket['status'] == 1) {
                                     $inProgress++;
                                 }
                             }
@@ -125,7 +124,7 @@ function drawTicketPreview(PDO $db, array $tickets)
 
                             $closed = 0;
                             foreach ($tickets as $ticket) {
-                                if ($ticket['status'] == 3) {
+                                if ($ticket['status'] == 2) {
                                     $closed++;
                                 }
                             }

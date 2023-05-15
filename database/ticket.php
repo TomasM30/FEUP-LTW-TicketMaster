@@ -66,7 +66,7 @@ class ticket
         $id = $lastId + 1;
         
 
-        $stmt = $db->prepare('INSERT INTO Ticket (id, author_username, department_id, subject, content, status) VALUES (:id, :author, :department, :subject, :content, 1)');
+        $stmt = $db->prepare('INSERT INTO Ticket (id, author_username, department_id, subject, content, status) VALUES (:id, :author, :department, :subject, :content, 0)');
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':author', $author);
         $stmt->bindParam(':department', $department);
@@ -98,8 +98,21 @@ class ticket
         return $stmt->fetchColumn();
     }
 
+    static public function getPriorityName(PDO $db, int $priorityId): string {
+        $stmt = $db->prepare("SELECT name FROM Priority WHERE id = :priority_id");
+        $stmt->bindValue(":priority_id", $priorityId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
     static public function getAllStatuses(PDO $db): array {
         $stmt = $db->prepare("SELECT * FROM Statuses");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    static public function getAllPriorities(PDO $db): array {
+        $stmt = $db->prepare("SELECT * FROM Priority");
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -140,6 +153,20 @@ class ticket
         $stmt = $db->prepare('UPDATE Ticket SET agent_username = :agent WHERE id = :ticketId');
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':agent', $agent);
+        $stmt->execute();
+    }
+
+    static public function changeDepartment($db, $ticketId, $department){
+        $stmt = $db->prepare('UPDATE Ticket SET department_id = :department WHERE id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->bindParam(':department', $department);
+        $stmt->execute();
+    }
+
+    static public function changePriority($db, $ticketId, $priority){
+        $stmt = $db->prepare('UPDATE Ticket SET priority = :priority WHERE id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->bindParam(':priority', $priority);
         $stmt->execute();
     }
 }
