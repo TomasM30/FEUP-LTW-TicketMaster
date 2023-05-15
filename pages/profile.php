@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 require_once(__DIR__ . '/../utils/session.php');
 $session = new Session();
@@ -17,70 +17,73 @@ $db = getDatabaseConnection();
 $tickets = Misc::getTickets($db, $session->getUsername());
 $username = $session->getUsername();
 
-drawHeader($session->getUsername());?>
-<div class="profileContainer" id="profilePage">
-    <div class="settingsColumn">
-        <div class="profileCard">
-            <div class="cardBody">
-                <img src="../images/default_user.png" alt="userImg"
-                     class="userImg">
-                <h5 class="usernameP">
-                    <?php
-                    echo $username;
-                    ?>
-                </h5>
-            </div>
-        </div>
-        <div class="profileCard" id="settingsCard">
-            <div class="optionsBody">
-                <ul class="userSettings">
-                    <li class="button">
-                        <button class="openButton" onclick="openEmailForm()">Change email</button>
-                    </li>
-                    <li class="button">
-                        <button class="openButton" onclick="openPswForm()">Change password</button>
-                    <li class="button">
-                        <button class="openButton" onclick="openInfoForm()">Change Name</button>
-                    <li class="button">
-                        <button class="openButton" onclick="openUserNameForm()">Change Username</button>
-                    <li class="button">
-                        <button class="openButton" onclick="window.location.href = '../actions/action_logout.php'">Logout</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="userInfoColumn">
-        <div class="profileCard" id="profileInfoCard">
-            <div class="cardBody">
-                <div class="row">
-                    <div class="titleColumn">
-                        <p class="title">Name</p>
-                    </div>
-                    <div class="infoColumn">
-                        <p class="info">
-                            <?php
-                            echo User::getName($db, $username);
-                            ?>
-                        </p>
-                    </div>
+drawHeader($session->getUsername()); ?>
+    <div class="profileContainer" id="profilePage">
+        <div class="settingsColumn">
+            <div class="profileCard">
+                <div class="cardBody">
+                    <img src="../images/default_user.png" alt="userImg"
+                         class="userImg">
+                    <h5 class="usernameP">
+                        <?php
+                        echo $username;
+                        ?>
+                    </h5>
                 </div>
-                <div class="row">
-                    <div class="titleColumn">
-                        <p class="title">Email</p>
-                    </div>
-                    <div class="infoColumn">
-                        <p class="info">
-                            <?php
-                            echo User::getUserEmail($db, $username);
-                            ?>
-                        </p>
-                    </div>
+            </div>
+            <div class="profileCard" id="settingsCard">
+                <div class="optionsBody">
+                    <ul class="userSettings">
+                        <li class="button">
+                            <button class="openButton" onclick="openEmailForm()">Change email</button>
+                        </li>
+                        <li class="button">
+                            <button class="openButton" onclick="openPswForm()">Change password</button>
+                        <li class="button">
+                            <button class="openButton" onclick="openInfoForm()">Change Name</button>
+                        <li class="button">
+                            <button class="openButton" onclick="openUserNameForm()">Change Username</button>
+                        <li class="button">
+                            <button class="openButton" onclick="window.location.href = '../actions/action_logout.php'">
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div class="previewTickets">
-            <?php drawTicketPreview($db,$tickets) ?>
+        <div class="userInfoColumn">
+            <div class="profileCard" id="profileInfoCard">
+                <div class="cardBody">
+                    <div class="row">
+                        <div class="titleColumn">
+                            <p class="title">Name</p>
+                        </div>
+                        <div class="infoColumn">
+                            <p class="info">
+                                <?php
+                                echo User::getName($db, $username);
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="titleColumn">
+                            <p class="title">Email</p>
+                        </div>
+                        <div class="infoColumn">
+                            <p class="info">
+                                <?php
+                                echo User::getUserEmail($db, $username);
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="previewTickets">
+                <?php drawTicketPreview($db, $tickets) ?>
+            </div>
         </div>
     </div>
     <div class="changeInfoB" id="popupEmail">
@@ -93,7 +96,7 @@ drawHeader($session->getUsername());?>
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 1) {
                     echo "Email already in use";
-                }elseif(isset($_GET['error']) && $_GET['error'] == 8){
+                } elseif (isset($_GET['error']) && $_GET['error'] == 8) {
                     echo "Invalid Email!";
                 }
                 ?>
@@ -113,7 +116,7 @@ drawHeader($session->getUsername());?>
                 <?php
                 if (isset($_GET['error']) && $_GET['error'] == 2) {
                     echo "Must contain at least 8 Char, 1 up/lowercase letter and 1 number";
-                } elseif(isset($_GET['error']) && $_GET['error'] == 3){
+                } elseif (isset($_GET['error']) && $_GET['error'] == 3) {
                     echo "Insert a different password!";
                 }
                 ?>
@@ -140,7 +143,6 @@ drawHeader($session->getUsername());?>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     </div>
-
     <div class="changeInfoB" id="popupUserName">
         <form action="../actions/action_change_username.php" method="post">
             <div class="username-box">
@@ -163,5 +165,5 @@ drawHeader($session->getUsername());?>
         </form>
     </div>
 <?php
-    drawFooter();
+drawFooter();
 ?>

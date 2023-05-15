@@ -14,7 +14,7 @@ function drawTicketPreview(PDO $db, array $tickets)
             if (!empty($tickets)) {
                 foreach ($tickets as $ticket) { ?>
                     <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
-                    <a href="/">
+                    <a href="../pages/ticket_details.php?id=<?php echo $ticket['id']?>">
                         <div class="card">
                             <div class="content">
                                 <header>
@@ -33,7 +33,7 @@ function drawTicketPreview(PDO $db, array $tickets)
                 }
             } else {
                 ?>
-                <a href="/">
+                <a href="../pages/ticketPage.php">
                     <div class="card">
                         <div class="content">
                             <header>
@@ -52,7 +52,7 @@ function drawTicketPreview(PDO $db, array $tickets)
         </div>
         <div class="container">
             <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
-            <a href="/">
+            <a href="../pages/ticketPage.php">
                 <div class="card" id="stat_card">
                     <div class="content" id="statistics">
                         <header>
@@ -60,7 +60,6 @@ function drawTicketPreview(PDO $db, array $tickets)
                         </header>
                         <article>
                             <?php
-
                             echo count($tickets);
                             ?>
                         </article>
@@ -69,7 +68,7 @@ function drawTicketPreview(PDO $db, array $tickets)
             </a>
             <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
             <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
-            <a href="/">
+            <a href="../pages/ticketPage.php">
                 <div class="card" id="stat_card">
                     <div class="content" id="statistics">
                         <header>
@@ -92,7 +91,7 @@ function drawTicketPreview(PDO $db, array $tickets)
             </a>
             <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
             <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
-            <a href="/">
+            <a href="../pages/ticketPage.php">
                 <div class="card" id="stat_card">
                     <div class="content" id="statistics">
                         <header>
@@ -103,7 +102,7 @@ function drawTicketPreview(PDO $db, array $tickets)
 
                             $inProgress = 0;
                             foreach ($tickets as $ticket) {
-                                if ($ticket['status'] == 3) {
+                                if ($ticket['status'] == 2) {
                                     $inProgress++;
                                 }
                             }
@@ -115,7 +114,7 @@ function drawTicketPreview(PDO $db, array $tickets)
             </a>
             <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
             <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
-            <a href="/">
+            <a href="../pages/ticketPage.php">
                 <div class="card" id="stat_card">
                     <div class="content" id="statistics">
                         <header>
@@ -126,7 +125,7 @@ function drawTicketPreview(PDO $db, array $tickets)
 
                             $closed = 0;
                             foreach ($tickets as $ticket) {
-                                if ($ticket['status'] == 2) {
+                                if ($ticket['status'] == 3) {
                                     $closed++;
                                 }
                             }
