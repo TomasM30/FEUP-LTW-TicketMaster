@@ -40,6 +40,10 @@
                         echo "Passwords do not match, please try again";
                     } elseif ($_GET['error'] == 4) {
                         echo "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter and 1 number";
+                    }elseif ($_GET['error'] == 5) {
+                        echo "Invalid Username!";
+                    }elseif ($_GET['error'] == 6) {
+                        echo "Invalid Email!";
                     }
                 }
                 ?></p>

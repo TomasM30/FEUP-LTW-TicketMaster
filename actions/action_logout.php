@@ -1,9 +1,6 @@
 <?php
-include_once('../utils/session.php');
-
-session_destroy();
-session_start();
-
-$_SESSION['messages'][] = array('type' => 'success', 'content' => 'Logged out!');
+require_once('../utils/session.php');
+$session = new Session();
+$session->logout();
 
 die(header('Location: ../pages/login.php'));

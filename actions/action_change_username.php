@@ -27,6 +27,20 @@ if(user::sameUName($db,$session->getUsername(),$_POST['username'])){
     </script>
     <?php
     exit;
+}elseif (!user::checkUsername($_POST['username'], $errors)) {
+    if (!empty($errors)) {
+        $error_message = "";
+        foreach ($errors as $error) {
+            $error_message .= $error . "\\n";
+        }
+        ?>
+        <script>
+            window.alert("<?php echo $error_message ?>");
+            window.location.href = "../pages/profile.php?error=7";
+        </script>
+        <?php
+        exit;
+    }
 }
 
 user::changeUName($db,$session->getUsername(), $_POST['username']);

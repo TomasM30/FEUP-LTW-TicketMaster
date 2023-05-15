@@ -13,5 +13,8 @@
         public function isLoggedIn() : bool {
             return isset($_SESSION['username']);
         }
+        public function logout() {
+            session_destroy();
+        }
     }
 ?>

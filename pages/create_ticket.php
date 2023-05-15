@@ -5,13 +5,15 @@
     require_once(__DIR__ . '/../templates/common.tpl.php');
     require_once(__DIR__ . '/../utils/session.php');
     require_once(__DIR__ . '/../utils/misc.php');
+    require_once(__DIR__ . '/../templates/drawTicketSequence.php');
 
     $session = new Session();
     $db = getDatabaseConnection();
 
     drawHeader($session->getUsername());
+    drawNavBarTicket();
 ?>
-<div class="ticket-form">
+    <div class="ticket-form">
     <form action="/../actions/action_ticket.php" method="post" enctype="multipart/form-data">
         <input type="text" name="title" id="title" placeholder="Title">
         <textarea name="content" id="content" cols="30" rows="10" placeholder="content"></textarea>

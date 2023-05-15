@@ -13,10 +13,38 @@
     if ($user){
         header('Location: ../pages/register.php?error=1');
         die();
+    } elseif (!user::checkUsername($_POST['username'], $errors)) {
+        if (!empty($errors)) {
+            $error_message = "";
+            foreach ($errors as $error) {
+                $error_message .= $error . "\\n";
+            }
+            ?>
+            <script>
+                window.alert("<?php echo $error_message ?>");
+                window.location.href = "../pages/register.php?error=5";
+            </script>
+            <?php
+            exit;
+        }
     }
     elseif($email){
         header('Location: ../pages/register.php?error=2');
         die();
+    } elseif (!user::checkEmail($_POST['email'], $errors)) {
+        if (!empty($errors)) {
+            $error_message = "";
+            foreach ($errors as $error) {
+                $error_message .= $error . "\\n";
+            }
+            ?>
+            <script>
+                window.alert("<?php echo $error_message ?>");
+                window.location.href = "../pages/register.php?error=6";
+            </script>
+            <?php
+            exit;
+        }
     }
     elseif($_POST['password'] != $_POST['password2']){
         header('Location: ../pages/register.php?error=3');

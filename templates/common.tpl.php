@@ -1,11 +1,13 @@
 <?php
 declare(strict_types=1);
 require_once(__DIR__ . '/../database/users.php');
-
+require_once(__DIR__ . '/../database/connection.db.php');
 ?>
 
-<?php function drawHeader(string $username)
-{ ?>
+<?php function drawHeader(string $username){ 
+    $db = getDatabaseConnection();
+    $pfp = User::getPfp($db,$username);
+    ?>
     <!DOCTYPE html>
     <html lang="en-US">
     <head>
@@ -15,6 +17,8 @@ require_once(__DIR__ . '/../database/users.php');
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/cards.css">
         <link rel="stylesheet" href="../css/userP.css">
+        <link rel="stylesheet" href="../css/ticket.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="../javascript/scripts.js" defer></script>
     </head>
     <body>
@@ -35,7 +39,7 @@ require_once(__DIR__ . '/../database/users.php');
             <nav>
                 <div class="links">
                     <ul>
-                        <li><a href="/../pages/create_ticket.php">Tickets</a></li>
+                        <li><a href="../pages/ticketPage.php">Tickets</a></li>
                         <li><a href="/../pages/departments.php">Departments</a></li>
                         <li><a href="/../pages/agents.php">Team</a></li>
                         <li><a href="/">FAQ</a></li>
@@ -46,10 +50,12 @@ require_once(__DIR__ . '/../database/users.php');
         </div>
         <div class="user">
             <a class="username" href="../pages/profile.php">
-                <p>Account</p>
+                <p><?php
+                    echo $username;
+                    ?></p>
             </a>
             <a class="userImage" href="../pages/profile.php">
-                <img src="../images/default_user.png" alt="User" width="50" height="50">
+                <img src="<?= $pfp ?>" alt="User" width="50" height="50">
             </a>
         </div>
     </header>
@@ -62,7 +68,7 @@ require_once(__DIR__ . '/../database/users.php');
 
     <footer>
         <p>
-            <a href="/">
+            <a href="../pages/index.php">
                 &copy; 2023 Ticket Master
             </a>
         </p>
