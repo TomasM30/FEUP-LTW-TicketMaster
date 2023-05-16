@@ -1,15 +1,10 @@
 <?php
 declare(strict_types=1);
-
-require_once(__DIR__ . '/../utils/session.php');
-$session = new Session();
-
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/ticketPrev.tpl.php');
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../utils/misc.php');
-
 
 $session = new Session();
 
@@ -17,6 +12,8 @@ $db = getDatabaseConnection();
 $pfp = User::getPfp($db, $session->getUsername());
 $tickets = Misc::getTickets($db, $session->getUsername());
 $username = $session->getUsername();
+
+if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
 
 drawHeader($session->getUsername()); ?>
     <div class="profileContainer" id="profilePage">

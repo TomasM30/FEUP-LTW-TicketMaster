@@ -10,6 +10,8 @@ require_once(__DIR__ . '/../utils/misc.php');
 $session = new Session();
 
 $db = getDatabaseConnection();
+if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
+
 $tickets = misc::getTickets($db, $session->getUsername());
 
 drawHeader($session->getUsername());
