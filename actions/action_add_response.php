@@ -7,17 +7,12 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
-$content = $_POST['comment'];
-$ticketId = $_POST['ticket_id'];
+$content = $_GET['content'];
+$ticketId = $_GET['ticket_id'];
 if (trim($content) == '') {
-    ?>
-    <script>
-        window.location.href = "../pages/ticket_details.php?id=<?php echo $ticketId; ?>";
-        window.alert("Please write something!");
-    </script>
-    <?php
-    exit();
+    echo json_encode('Content cannot be empty');
 } else {
     ticket::addResponse($db, $ticketId, $session->getUsername(), $content);
-    header('Location: ../pages/ticket_details.php?id=' . $ticketId);
+    echo json_encode('');
+    exit();
 }

@@ -46,9 +46,7 @@ class ticket
         $getLastId->execute();
         $lastId = $getLastId->fetch()['id'];
         $id = $lastId + 1;
-
         $content = trim($content);
-
         $stmt = $db->prepare('INSERT INTO comment (id, ticket_id, username, content) VALUES (:id,:ticketId,:username, :content)');
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':ticketId', $ticketId);
@@ -98,9 +96,37 @@ class ticket
         return $stmt->fetchColumn();
     }
 
+    static public function getStatusId(PDO $db, string $statusName): int {
+        $stmt = $db->prepare("SELECT id FROM Statuses WHERE name = :status_name");
+        $stmt->bindValue(":status_name", $statusName);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    static public function getDepartmentId(PDO $db, string $departmentName): int {
+        $stmt = $db->prepare("SELECT id FROM Department WHERE name = :department_name");
+        $stmt->bindValue(":department_name", $departmentName);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    static public function getDepartmentName(PDO $db, int $departmentId): string {
+        $stmt = $db->prepare("SELECT name FROM Department WHERE id = :department_id");
+        $stmt->bindValue(":department_id", $departmentId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
     static public function getPriorityName(PDO $db, int $priorityId): string {
         $stmt = $db->prepare("SELECT name FROM Priority WHERE id = :priority_id");
         $stmt->bindValue(":priority_id", $priorityId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    static public function getPriorityId(PDO $db, string $priorityName): int {
+        $stmt = $db->prepare("SELECT id FROM Priority WHERE name = :priority_name");
+        $stmt->bindValue(":priority_name", $priorityName);
         $stmt->execute();
         return $stmt->fetchColumn();
     }
@@ -168,5 +194,24 @@ class ticket
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':priority', $priority);
         $stmt->execute();
+    }
+
+    static public function getDocument($db, $ticket) : array{
+        $stmt = $db->prepare('SELECT * FROM Link_documents WHERE ticket_id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticket);
+        $stmt->execute();
+
+        $returnFiles = $stmt->fetchAll();
+        $returnPaths = array();
+
+        for($i = 0; $i < count($returnFiles); $i++){
+            $doc = $returnFiles[$i];
+
+            $stmt = $db->prepare('SELECT * FROM document WHERE id = :docId');
+            $stmt->bindParam(':docId', $doc['document_id']);
+            $stmt->execute();
+            $returnPaths[$i] = $stmt->fetch()['url'];
+        }
+        return $returnPaths;
     }
 }

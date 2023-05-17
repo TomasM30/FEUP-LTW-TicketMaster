@@ -2,8 +2,6 @@
 
 function drawNavBarTicket()
 {
-    error_reporting(E_ALL);
-    ini_set('display_errors', "1");
     ?>
     <nav id="navBarTicket">
         <ul>
@@ -45,7 +43,7 @@ function drawTicketSequence(array $tickets, PDO $db)
                 continue;
             }
             ?>
-            <a href="../pages/ticket_details.php?id=<?php echo $ticket['id']?>" id =refToTicketDet>
+            <a href="../pages/ticket_details.php?id=<?php echo $ticket['id']?>" class = "refToTicketDetail">
                 <div class="ticket">
                     <h2><?php echo $ticket['subject']; ?></h2>
                     <p><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
@@ -59,7 +57,7 @@ function drawTicketSequence(array $tickets, PDO $db)
                         <?php
                     }
                     ?>
-                    <article><?php echo $ticket['content']; ?></article>
+                    <p><?php echo $ticket['content']; ?></p>
                     <?php
                     $hashtags = ticket::getTicketHashtagNames($db, $ticket['id']);
                     if (!empty($hashtags)) {

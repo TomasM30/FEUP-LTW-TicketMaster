@@ -2,8 +2,6 @@
 declare(strict_types=1);
 
 require_once(__DIR__ . '/../utils/session.php');
-$session = new Session();
-
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../templates/ticketPrev.tpl.php');
@@ -64,7 +62,7 @@ drawHeader($session->getUsername()); ?>
                             <p class="title">Name</p>
                         </div>
                         <div class="infoColumn">
-                            <p class="info">
+                            <p class="info" id="user_name">
                                 <?php
                                 echo User::getName($db, $username);
                                 ?>
@@ -76,7 +74,7 @@ drawHeader($session->getUsername()); ?>
                             <p class="title">Email</p>
                         </div>
                         <div class="infoColumn">
-                            <p class="info">
+                            <p class="info" id ="userEmail">
                                 <?php
                                 echo User::getUserEmail($db, $username);
                                 ?>
@@ -91,20 +89,11 @@ drawHeader($session->getUsername()); ?>
         </div>
     </div>
     <div class="changeInfoB" id="popupEmail">
-        <form action="../actions/action_change_email.php" method="post">
-            <div class="email-box">
+        <form action="../actions/action_change_email.php" id ="emailForm">
+            <div class="inputB">
                 <label for="email">New e-mail</label>
                 <input type="email" placeholder="Enter Email" name="email" id="email" required>
             </div>
-            <span id="email-error">
-                <?php
-                if (isset($_GET['error']) && $_GET['error'] == 1) {
-                    echo "Email already in use";
-                } elseif (isset($_GET['error']) && $_GET['error'] == 8) {
-                    echo "Invalid Email!";
-                }
-                ?>
-            </span>
             <button type="submit" class="btn submit">Submit</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
@@ -112,7 +101,7 @@ drawHeader($session->getUsername()); ?>
 
     <div class="changeInfoB" id="popupPsw">
         <form action="../actions/change_password.php" method="post">
-            <div class="psw-box">
+            <div class="inputB">
                 <label for="psw">New password</label>
                 <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
             </div>
@@ -131,25 +120,18 @@ drawHeader($session->getUsername()); ?>
     </div>
 
     <div class="changeInfoB" id="popupName">
-        <form action="../actions/action_change_name.php" method="post">
-            <div class="name-box">
+        <form action="../actions/action_change_name.php" id ="nameForm">
+            <div class="inputB">
                 <label for="name">New name</label>
                 <input type="text" placeholder="Enter Name" name="name" id="name" required>
             </div>
-            <span id="name_error">
-                <?php
-                if (isset($_GET['error']) && $_GET['error'] == 4) {
-                    echo "Insert a different name!";
-                }
-                ?>
-            </span>
             <button type="submit" class="btn submit">Submit</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     </div>
     <div class="changeInfoB" id="popupUserName">
         <form action="../actions/action_change_username.php" method="post">
-            <div class="username-box">
+            <div class="inputB">
                 <label for="username">New username</label>
                 <input type="text" placeholder="Enter Username" name="username" id="username" required>
             </div>

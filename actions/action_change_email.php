@@ -1,36 +1,26 @@
 <?php
-
-    declare(strict_types=1);
-
     require_once(__DIR__ . '/../database/users.php');
     require_once(__DIR__ . '/../database/connection.db.php');
+    require_once(__DIR__ . '/../utils/session.php');
 
     $db = getDatabaseConnection();
+    $session = new Session();
+    $email = $_GET['email'];
+    $emailV = User::getEmail($db, $email);
+    $username = $session->getUsername();
 
-    $email = User::getEmail($db, $_POST['email']);
-
-    if($email){
-        ?>
-        <script>
-            window.alert("Email already in use");
-            window.location.href = "../pages/profile.php?error=1";
-        </script>
-        <?php
+    if($emailV){
+        echo json_encode('Email already exists!');
         exit();
-    }elseif (!user::checkEmail($_POST['email'], $errors)) {
+    }elseif (!user::checkEmail($email, $errors)) {
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
-                $error_message .= $error . "\\n";
+                $error_message .= $error . "\n";
             }
-            ?>
-            <script>
-                window.alert("<?php echo $error_message ?>");
-                window.location.href = "../pages/profile.php?error=8";
-            </script>
-            <?php
-            exit;
+            echo json_encode($error_message);
+            exit();
         }
     }
-    user::changeEmail($db, '123', $_POST['email']);
-    header('Location: ../pages/login.php?success=2');
+    user::changeEmail($db, $username, $email);
+    echo json_encode('');

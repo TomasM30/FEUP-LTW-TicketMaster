@@ -25,7 +25,7 @@
         </tr>
         <?php foreach ($agents as $agent) { ?>
             <tr>
-                <td><img src="<?= $agent['image_url'] ?>" alt="Agent image", width=50 height=50></td>
+                <td><img src="<?= $agent['image_url'] ?>" alt="Agent image" width=50 height=50></td>
                 <td><?= $agent['username'] ?></td>
                 <td><?= $agent['name'] ?></td>
             </tr>

@@ -20,6 +20,8 @@ require_once(__DIR__ . '/../database/connection.db.php');
         <link rel="stylesheet" href="../css/ticket.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="../javascript/scripts.js" defer></script>
+        <script src="../javascript/ticket.js" defer></script>
+        <script src="../javascript/profile.js" defer></script>
     </head>
     <body>
     <input type="checkbox" id="hamburger">

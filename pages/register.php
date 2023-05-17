@@ -44,6 +44,8 @@
                         echo "Invalid Username!";
                     }elseif ($_GET['error'] == 6) {
                         echo "Invalid Email!";
+                    } elseif ($_GET['error'] == 7) {
+                        echo "Invalid Name!";
                     }
                 }
                 ?></p>

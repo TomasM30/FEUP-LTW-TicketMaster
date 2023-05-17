@@ -17,7 +17,7 @@
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
-                $error_message .= $error . "\\n";
+                $error_message .= $error . "\n";
             }
             ?>
             <script>
@@ -54,12 +54,26 @@
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
-                $error_message .= $error . "\\n";
+                $error_message .= $error . "\n";
             }
             ?>
             <script>
                 window.alert("<?php echo $error_message ?>");
                 window.location.href = "../pages/register.php?error=4";
+            </script>
+            <?php
+            exit;
+        }
+    } elseif(!user::checkName($_POST['name'], $errors)){
+        if (!empty($errors)) {
+            $error_message = "";
+            foreach ($errors as $error) {
+                $error_message .= $error . "\n";
+            }
+            ?>
+            <script>
+                window.alert("<?php echo $error_message ?>");
+                window.location.href = "../pages/register.php?error=7";
             </script>
             <?php
             exit;

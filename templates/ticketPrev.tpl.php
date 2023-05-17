@@ -12,7 +12,7 @@ function drawTicketPreview(PDO $db, array $tickets)
             <?php
             if (!empty($tickets)) {
                 foreach ($tickets as $ticket) { ?>
-                    <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
+                    <button class="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
                     <a href="../pages/ticket_details.php?id=<?php echo $ticket['id']?>">
                         <div class="card">
                             <div class="content">
@@ -20,14 +20,13 @@ function drawTicketPreview(PDO $db, array $tickets)
                                     <h2 class="status"><?= ticket::getStatus($db, $ticket['status']) ?></h2>
                                     <h1><?= strlen($ticket['subject']) > 10 ? substr($ticket['subject'], 0, 10) . "..." : $ticket['subject'] ?></h1>
                                 </header>
-                                <article>
+                                <p>
                                     <?= strlen($ticket['content']) > 282 ? substr($ticket['content'], 0, 282) . "..." : $ticket['content'] ?>
-                                </article>
+                                </p>
                             </div>
                         </div>
                     </a>
-                    <button class="slideB" id="slideBR"
-                            onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+                    <button class="slideB" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
                     <?php
                 }
             } else {
@@ -39,9 +38,9 @@ function drawTicketPreview(PDO $db, array $tickets)
                                 <h2 class="status"></h2>
                                 <h1>No tickets</h1>
                             </header>
-                            <article>
+                            <p>
                                 You still don't have any tickets
-                            </article>
+                            </p>
                         </div>
                     </div>
                 </a>
@@ -50,30 +49,30 @@ function drawTicketPreview(PDO $db, array $tickets)
             ?>
         </div>
         <div class="container">
-            <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
+            <button class="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
             <a href="../pages/ticketPage.php">
-                <div class="card" id="stat_card">
-                    <div class="content" id="statistics">
+                <div class="card">
+                    <div class="statistics">
                         <header>
                             <h1>Number of tickets</h1>
                         </header>
-                        <article>
+                        <p>
                             <?php
                             echo count($tickets);
                             ?>
-                        </article>
+                        </p>
                     </div>
                 </div>
             </a>
-            <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
-            <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
+           <button class="slideB" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+            <button class="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
             <a href="../pages/ticketPage.php">
-                <div class="card" id="stat_card">
-                    <div class="content" id="statistics">
+                <div class="card">
+                    <div class="statistics">
                         <header>
                             <h1>Tickets Open</h1>
                         </header>
-                        <article>
+                        <p>
                             <?php
 
                             $open = 0;
@@ -84,19 +83,19 @@ function drawTicketPreview(PDO $db, array $tickets)
                             }
                             echo $open;
                             ?>
-                        </article>
+                        </p>
                     </div>
                 </div>
             </a>
-            <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
-            <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
+            <button class="slideB" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+            <button class="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
             <a href="../pages/ticketPage.php">
-                <div class="card" id="stat_card">
-                    <div class="content" id="statistics">
+                <div class="card">
+                    <div class="statistics">
                         <header>
                             <h1>Tickets in progress</h1>
                         </header>
-                        <article>
+                        <p>
                             <?php
 
                             $inProgress = 0;
@@ -107,19 +106,19 @@ function drawTicketPreview(PDO $db, array $tickets)
                             }
                             echo $inProgress;
                             ?>
-                        </article>
+                        </p>
                     </div>
                 </div>
             </a>
-            <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
-            <button class="slideB" id="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
+            <button class="slideB" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+            <button class="slideBL" onclick="scrollHContainer(200,'left',this.parentNode)"></button>
             <a href="../pages/ticketPage.php">
-                <div class="card" id="stat_card">
-                    <div class="content" id="statistics">
+                <div class="card">
+                    <div class="statistics">
                         <header>
                             <h1>Tickets Closed</h1>
                         </header>
-                        <article>
+                        <p>
                             <?php
 
                             $closed = 0;
@@ -130,11 +129,11 @@ function drawTicketPreview(PDO $db, array $tickets)
                             }
                             echo $closed;
                             ?>
-                        </article>
+                        </p>
                     </div>
                 </div>
             </a>
-            <button class="slideB" id="slideBR" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
+            <button class="slideB" onclick="scrollHContainer(200,'right',this.parentNode)"></button>
         </div>
     </div>
 

@@ -21,22 +21,31 @@
     display: none;
 }
 
-.slideB {
+.slideB, .slideBL {
     border-radius: 17px;
-    height: 100%;
+    height: 320px;
     opacity: 18%;
     cursor: pointer;
 }
-#slideBR{
+.slideB{
     border-right: white;
     margin-right: 0.5em;
 }
-#slideBL {
+
+.slideBL {
     border-left: white;
 }
-.slideB:hover {
+.slideB:hover, .slideBL:hover {
     opacity: 50%;
     transition: opacity 0.5s ease-in;
+}
+
+.slideB:last-child {
+display: none
+}
+
+.slideBL:first-child {
+display: none
 }
 
 .card {
@@ -58,7 +67,7 @@
     font-weight: bolder;
 }
 
-.content {
+.content, .statistics{
     display: grid;
     grid-template-rows: 15% 1fr;
     height: 100%;
@@ -68,7 +77,7 @@
     color: #929292;
 }
 
-#statistics header {
+.statistics header {
     grid-template-columns: 1fr;
     display: flex;
     justify-content: center;
@@ -81,10 +90,11 @@
     grid-template-columns: 1fr 30%;
 }
 
-#statistics h1 {
+.statistics h1 {
     font-family: Arial, Helvetica, sans-serif;
     color: #252525;
     font-weight: bold;
+    font-size: 1.2em;
 }
 
 .content header h1 {
@@ -97,7 +107,6 @@
     font-size: 1.15em;
     color: #252525;
 }
-
 
 .container a {
     text-decoration: none;
@@ -117,7 +126,7 @@
 }
 
 
-#statistics article {
+.statistics p {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -125,7 +134,7 @@
 }
 
 
-.content article {
+.content p {
     display: flex;
     width: 100%;
     height: 100%;

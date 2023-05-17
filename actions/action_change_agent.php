@@ -8,6 +8,8 @@ require_once(__DIR__ . '/../database/connection.db.php');
 $db = getDatabaseConnection();
 $ticketId = $_GET['ticket_id'];
 $agent = $_GET['agent'];
+if($agent === 'None'){
+    $agent = null;
+}
 ticket::changeAgent($db, $ticketId, $agent);
-header('Location: ../pages/ticket_details.php?id=' . $ticketId);
-
+echo json_encode('');

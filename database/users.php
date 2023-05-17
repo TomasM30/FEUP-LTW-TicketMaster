@@ -174,6 +174,20 @@
             return ($errors == $errors_init);
         }
 
+        static public function checkName($name, &$errors): bool {
+            $errors_init = $errors;
+
+            if (strlen($name) > 50) {
+                $errors[] = "Name must not exceed 50 characters!";
+            }
+
+            if (!preg_match("/^[a-zA-Z]+$/", $name)) {
+                $errors[] = "Name must only contain letters!";
+            }
+
+            return ($errors == $errors_init);
+        }
+
 
         static public function samePassword($db, $username, $new_psw): bool{
             $hashed_pw = password_hash($new_psw, PASSWORD_DEFAULT, ['cost' => 10]);
@@ -185,11 +199,10 @@
         }
 
         static public function sameName($db, $username, $newName): bool{
-            $stmt = $db->prepare('SELECT name FROM user WHERE username = :username');
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
-            $result = $stmt->fetch()['name'];
-            return $result == $newName;
+            $stmt = $db->prepare('SELECT name FROM user WHERE username LIKE ?');
+            $stmt->execute($username);
+            $result = $stmt->fetch();
+            return $result['name'] == $newName;
         }
         static public function sameUName($db, $username, $newUName): bool{
             $stmt = $db->prepare('SELECT username FROM user WHERE username = :username');

@@ -8,6 +8,6 @@ require_once(__DIR__ . '/../database/connection.db.php');
 $db = getDatabaseConnection();
 $ticketId = $_GET['ticket_id'];
 $priority = $_GET['priority'];
+$priority = ticket::getPriorityId($db, $priority);
 ticket::changePriority($db, $ticketId, $priority);
-header('Location: ../pages/ticket_details.php?id=' . $ticketId);
-
+echo json_encode('');
