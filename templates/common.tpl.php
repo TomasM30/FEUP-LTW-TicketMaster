@@ -44,7 +44,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
                     <ul>
                         <li><a href="../pages/ticketPage.php">Tickets</a></li>
                         <li><a href="/../pages/departments.php">Departments</a></li>
-                        <li><a href="/../pages/agents.php">Team</a></li>
+                        <li><a href="/../pages/agents.php">Agents</a></li>
                         <li><a href="/">FAQ</a></li>
                         <li class="userProfile"><a href="../pages/profile.php">Account</a></li>
                     </ul>

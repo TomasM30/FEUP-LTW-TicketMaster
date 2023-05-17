@@ -42,16 +42,22 @@ body {
     width: 70px;
   }
   
-  footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    align-self: center;
-  }
+footer {
+  padding: 10px;
+}
 
-  header h1 {
-    margin: 0;
-    padding: 10px;
-    color: #fff;
-  }
-  
+header {
+  padding: 20px;
+}
+
+header h1 {
+  margin: 0;
+  padding: 10px;
+  color: #fff;
+}
+
+main {
+  flex-grow: 1;
+}
+
+
