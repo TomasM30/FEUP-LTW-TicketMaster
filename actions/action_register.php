@@ -19,31 +19,20 @@
             foreach ($errors as $error) {
                 $error_message .= $error . "\n";
             }
-            ?>
-            <script>
-                window.alert("<?php echo $error_message ?>");
-                window.location.href = "../pages/register.php?error=5";
-            </script>
-            <?php
-            exit;
+            die(header('Location: ../pages/register.php?error=5'));
         }
     }
     elseif($email){
         header('Location: ../pages/register.php?error=2');
         die();
     } elseif (!user::checkEmail($_POST['email'], $errors)) {
+        print('1');
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
                 $error_message .= $error . "\\n";
             }
-            ?>
-            <script>
-                window.alert("<?php echo $error_message ?>");
-                window.location.href = "../pages/register.php?error=6";
-            </script>
-            <?php
-            exit;
+            die(header('Location: ../pages/register.php?error=6'));
         }
     }
     elseif($_POST['password'] != $_POST['password2']){
@@ -51,35 +40,29 @@
         die();
     }
     elseif (!user::checkPassword($_POST['password'], $errors)) {
+        print('2');
+
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
+                print($error);
                 $error_message .= $error . "\n";
             }
-            ?>
-            <script>
-                window.alert("<?php echo $error_message ?>");
-                window.location.href = "../pages/register.php?error=4";
-            </script>
-            <?php
-            exit;
+            die(header('Location: ../pages/register.php?error=4'));
         }
     } elseif(!user::checkName($_POST['name'], $errors)){
+        print('3');
+
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
                 $error_message .= $error . "\n";
             }
-            ?>
-            <script>
-                window.alert("<?php echo $error_message ?>");
-                window.location.href = "../pages/register.php?error=7";
-            </script>
-            <?php
-            exit;
+            die(header('Location: ../pages/register.php?error=7'));
         }
     }
 
     $newUser = new User($_POST['username'], $_POST['password'], $_POST['email'], $_POST['name']);
     User::insertUser($db, $newUser);
     header('Location: ../pages/login.php?success=1');
+?>
