@@ -22,6 +22,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
         <script src="../javascript/scripts.js" defer></script>
         <script src="../javascript/ticket.js" defer></script>
         <script src="../javascript/profile.js" defer></script>
+        <script src="../javascript/showhideform.js" defer></script>
     </head>
     <body>
     <input type="checkbox" id="hamburger">
@@ -44,7 +45,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
                         <li><a href="../pages/ticketPage.php">Tickets</a></li>
                         <li><a href="/../pages/departments.php">Departments</a></li>
                         <li><a href="/../pages/agents.php">Team</a></li>
-                        <li><a href="/../pages/faq.php">FAQ</a></li>
+                        <li><a href="/">FAQ</a></li>
                         <li class="userProfile"><a href="../pages/profile.php">Account</a></li>
                     </ul>
                 </div>

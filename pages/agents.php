@@ -18,6 +18,7 @@
     $agents = $stmt->fetchAll();
 ?>
 
+    <link rel="stylesheet" href="../css/agents.css">
     <h1>Agents</h1>
 
     <table>

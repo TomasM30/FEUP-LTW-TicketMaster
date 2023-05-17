@@ -25,6 +25,8 @@ $agents = user::getAllAgents($db);
 $priorities = ticket::getAllPriorities($db);
 
 ?>
+<link rel="stylesheet" href="../css/ticket.css">
+
 <div class="ticketPage">
     <?php drawNavBarTicket();
     if(user::isAgent($db, $username)){

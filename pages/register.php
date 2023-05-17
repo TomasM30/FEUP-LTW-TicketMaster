@@ -7,7 +7,7 @@
             <title>Ticket Master | Register</title>
             <meta name="description" content="">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="">
+            <link rel="stylesheet" href="../css/register.css">
         </head>
         <header>
             <img src="../images/logo.svg" alt="" width="400" height="400">
@@ -22,14 +22,13 @@
                 <input type="text" name="name" id="name" placeholder="Enter your name">
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" placeholder="Enter your email">
-                <br>
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" placeholder="Enter your password">
                 <label for="password2">Confirm Password</label>
                 <input type="password" name="password2" id="password2" placeholder="Confirm your password">
+                <br>
                 <input type="submit" value="Register">
             </form>
-            <br>
             <p><?php
                 if (isset($_GET['error'])) {
                     if ($_GET['error'] == 1){
