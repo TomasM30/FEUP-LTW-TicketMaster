@@ -312,4 +312,10 @@ form:valid input[type="submit"]{
     display: inline-block;
 }
 
+button#hideDepForm, form#modifyDeps{
+    display: none;
+}
+button#showDepForm:checked{
+    display: none;
+}
 
