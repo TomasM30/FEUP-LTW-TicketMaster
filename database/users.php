@@ -181,14 +181,12 @@
                 $errors[] = "Name must not exceed 50 characters!";
             }
 
-            if (!preg_match("/^[a-zA-Z]+$/", $name)) {
-                $errors[] = "Name must only contain letters!";
+            if (!preg_match("/^[a-zA-Z\s]+$/", $name)) {
+                $errors[] = "Name must only contain letters and spaces!";
             }
 
             return ($errors == $errors_init);
         }
-
-
         static public function samePassword($db, $username, $new_psw): bool{
             $hashed_pw = password_hash($new_psw, PASSWORD_DEFAULT, ['cost' => 10]);
             $stmt = $db->prepare('SELECT password FROM user WHERE username = :username');
