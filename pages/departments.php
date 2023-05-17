@@ -8,6 +8,7 @@
 
     $db = getDatabaseConnection();
     $session = new Session();
+    if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
 
     drawHeader($session->getUsername());
 

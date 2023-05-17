@@ -9,6 +9,9 @@ require_once(__DIR__ . '/../templates/drawTicketSequence.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 
 $session = new Session();
+
+if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
+
 $db = getDatabaseConnection();
 
 drawHeader($session->getUsername());
