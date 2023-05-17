@@ -77,7 +77,7 @@
                 $id = $lastId + 1;
             }
             else{
-                $id = $alrExists['id'];
+                return -1;
             }
 
             $stmt2 = $db->prepare('INSERT INTO Department (id, name) VALUES (:id, :name)');
@@ -85,7 +85,7 @@
             $stmt2->bindParam(':name', $name);
             $stmt2->execute();
 
-            return $id;
+            return intval($id, 10);
         }
 
         static function removeDepartment($db, $name){
