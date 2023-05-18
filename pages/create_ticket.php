@@ -16,8 +16,13 @@
     drawHeader($session->getUsername());
     drawNavBarTicket();
 ?>
-
-    <link rel="stylesheet" href="../css/create_ticket.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/create_ticket.css">
+        <title>Ticket Creation</title>
+    </head>
     <div class="ticket-form">
     <form action="/../actions/action_ticket.php" method="post" enctype="multipart/form-data">
         <input type="text" name="title" id="title" placeholder="Title">

@@ -1,5 +1,4 @@
 <?php
-    require_once(__DIR__ . '/../utils/misc.php');
 class ticket
 {
 
@@ -213,5 +212,17 @@ class ticket
             $returnPaths[$i] = $stmt->fetch()['url'];
         }
         return $returnPaths;
+    }
+
+    static function getTickets($db, $username) : array{
+        if (user::isAgent($db, $username)) {
+            $tickets = ticket::getAgentTickets($db, $username);
+            $clientTickets = ticket::getClientTickets($db, $username);
+            $unassignedTickets = ticket::getUnassignedTickets($db);
+            $allTickets = array_merge($clientTickets, $unassignedTickets, $tickets);
+            return array_unique($allTickets, SORT_REGULAR);
+        } else {
+            return ticket::getClientTickets($db, $username);
+        }
     }
 }

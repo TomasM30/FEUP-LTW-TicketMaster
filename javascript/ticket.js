@@ -94,3 +94,37 @@ priorityForm.addEventListener('submit', async function (e) {
     }
     openPriorityMenu();
 });
+
+function openAgentsMenu(){
+    const form = document.getElementById('agentChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+function openDepartmentMenu(){
+    const form = document.getElementById('departmentChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+function openPriorityMenu(){
+    const form = document.getElementById('priorityChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}
+
+function openStatusMenu(){
+    const form = document.getElementById('statusChangeForm');
+    if (form.style.display === 'block') {
+        form.style.display = 'none';
+    } else {
+        form.style.display = 'block';
+    }
+}

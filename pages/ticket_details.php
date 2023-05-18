@@ -14,7 +14,6 @@ if ($session->getUsername() == null) die(header('Location: /../pages/login.php')
 
 $db = getDatabaseConnection();
 
-drawHeader($session->getUsername());
 $username = $session->getUsername();
 $ticketId = $_GET['id'] ?? null;
 $ticket = ticket::getTicketById($db, $ticketId);
@@ -27,6 +26,14 @@ $priorities = ticket::getAllPriorities($db);
 $files = ticket::getDocument($db, $ticketId);
 
 ?>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ticket Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../javascript/ticket.js" defer></script>
+</head>
+<?php drawHeader($session->getUsername()); ?>
 <div class="ticketDetails">
     <?php drawNavBarTicket(); ?>
     <div class="ticket">
@@ -36,7 +43,7 @@ $files = ticket::getDocument($db, $ticketId);
             <p id='ticketStatus'><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
             <?php
             if ($isAgent) { ?>
-                <button class="edit" onclick="openStatusMenu()"><i class="pencil"></i></button>
+                <button class="edit" onclick="openStatusMenu()"></button>
                 <form class="editForm" id="statusChangeForm">
                     <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                     <label for="status"></label>

@@ -10,12 +10,21 @@ $session = new Session();
 
 $db = getDatabaseConnection();
 $pfp = User::getPfp($db, $session->getUsername());
-$tickets = Misc::getTickets($db, $session->getUsername());
+$tickets = ticket::getTickets($db, $session->getUsername());
 $username = $session->getUsername();
 
-if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
-
-drawHeader($session->getUsername()); ?>
+if ($username == null) die(header('Location: /../pages/login.php')); ?>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/userP.css">
+        <link rel="stylesheet" href="../css/cards.css">
+        <script src="../javascript/profile.js" defer></script>
+        <script src="../javascript/scripts.js" defer></script>
+    </head>
+    <?php drawHeader($username); ?>
     <div class="profileContainer" id="profilePage">
         <div class="settingsColumn">
             <div class="profileCard">
