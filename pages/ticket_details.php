@@ -40,7 +40,7 @@ $files = ticket::getDocument($db, $ticketId);
         <h2><?php echo $ticket['subject']; ?></h2>
         <h3><?php echo $ticket['author_username'] ?></h3>
         <div class="editable">
-            <p id='ticketStatus'><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
+            <p id='ticketStatus'><?php echo ticket::getStatusName($db, intval($ticket['status'])); ?></p>
             <?php
             if ($isAgent) { ?>
                 <button class="edit" onclick="openStatusMenu()"></button>
@@ -92,7 +92,7 @@ $files = ticket::getDocument($db, $ticketId);
         <p>Date created: <?php echo $ticket['date']; ?></p>
         <div class="editable">
             <p id='ticketDepartment'>
-                Department: <?php echo ticket::getDepartmentName($db, $ticket['department_id']); ?></p>
+                Department: <?php echo ticket::getDepartmentName($db, intval($ticket['department_id'])); ?></p>
             <?php
             if ($isAgent) { ?>
                 <button class="edit" onclick="openDepartmentMenu()"><i class="pencil"></i></button>
@@ -114,7 +114,7 @@ $files = ticket::getDocument($db, $ticketId);
         <?php
         if ($isAgent) { ?>
             <div class="editable">
-                <p id='ticketPriority'>Priority: <?php echo ticket::getPriorityName($db, $ticket['priority']); ?></p>
+                <p id='ticketPriority'>Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
                 <button class="edit" onclick="openPriorityMenu()"><i class="pencil"></i></button>
                 <form class="editForm" action="../actions/action_change_priority.php" id="priorityChangeForm">
                     <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
@@ -133,7 +133,7 @@ $files = ticket::getDocument($db, $ticketId);
         ?>
         <P><?php echo $ticket['content']; ?></P>
         <?php
-        $hashtags = ticket::getTicketHashtagNames($db, $ticket['id']);
+        $hashtags = ticket::getTicketHashtagNames($db, intval($ticket['id']));
         if (!empty($hashtags)) {
             ?>
             <div class="hashtags">
@@ -166,7 +166,7 @@ $files = ticket::getDocument($db, $ticketId);
     </div>
     <div class="ticketResponses" id="responseDiv">
         <?php
-        $responses = ticket::getTicketResponses($db, $ticket['id']);
+        $responses = ticket::getTicketResponses($db, intval($ticket['id']));
         if (!empty($responses)) {
             foreach ($responses as $response) {
                 ?>

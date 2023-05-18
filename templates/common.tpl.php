@@ -44,11 +44,6 @@ require_once(__DIR__ . '/../database/connection.db.php');
             </nav>
         </div>
         <div class="user">
-            <a class="username" href="../pages/profile.php">
-                <p><?php
-                    echo $username;
-                    ?></p>
-            </a>
             <a class="userImage" href="../pages/profile.php">
                 <img src="<?= $pfp ?>" alt="User" width="50" height="50">
             </a>

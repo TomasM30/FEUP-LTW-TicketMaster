@@ -1,4 +1,6 @@
 <?php
+require_once '../utils/misc.php';
+
 class ticket
 {
 
