@@ -20,7 +20,7 @@
     $link_departments = $stmt->fetchAll();
 
 ?>
-
+    <head><script src="../javascript/showhideform.js" defer></script></head>
     <h1>Departments</h1>
     <button type="button" id="showDepForm" name="showDepForm">Add/Remove Departments</button>
         <form id="modifyDeps" method="POST" action="../actions/action_add_remove_department.php">

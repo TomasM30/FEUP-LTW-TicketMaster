@@ -271,6 +271,62 @@
             $stmt->execute();
             return $stmt->fetchAll();
         }
+
+        static public function promoteUser($db, $username) : bool{
+            //verify if user is in admin table
+            $search1 = $db->prepare('SELECT * FROM admin WHERE admin_username = :username');
+            $search1->bindParam(':username', $username);
+            $search1->execute();
+
+            if ($search1->fetch() != null)return false;
+
+            //verify if user is in agent table
+            $search2 = $db->prepare('SELECT * FROM agent WHERE agent_username = :username');
+            $search2->bindParam(':username', $username);
+            $search2->execute();
+
+            if ($search2->fetch() != null){
+                //insert user into admin table
+                $stmt = $db->prepare('INSERT INTO admin (admin_username) VALUES (:username)');
+                $stmt->bindParam(':username', $username);
+                $stmt->execute();
+                return true;
+            }
+
+            //insert user into agent table
+            $stmt = $db->prepare('INSERT INTO agent (agent_username) VALUES (:username)');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return true;
+        }
+
+        static public function demoteUser($db, $username): bool{
+            //check if user is admin
+            $search1 = $db->prepare('SELECT * FROM admin WHERE admin_username = :username');
+            $search1->bindParam(':username', $username);
+            $search1->execute();
+
+            if ($search1->fetch() != null){
+                $stmt = $db->prepare('DELETE FROM admin WHERE admin_username = :username');
+                $stmt->bindParam(':username', $username);
+                $stmt->execute();
+                return true;
+            }
+
+            //check if user is agent
+            $search2 = $db->prepare('SELECT * FROM agent WHERE agent_username = :username');
+            $search2->bindParam(':username', $username);
+            $search2->execute();
+
+            if ($search2->fetch() != null){
+                $stmt = $db->prepare('DELETE FROM agent WHERE agent_username = :username');
+                $stmt->bindParam(':username', $username);
+                $stmt->execute();
+                return true;
+            }
+
+            return false;
+        }
     }
 
 ?>
