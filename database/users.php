@@ -254,14 +254,14 @@
         }
         static public function getPfp(PDO $db, string $username){
             $stmt = $db->prepare('SELECT image_url FROM User WHERE username=:username');
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':username', strtolower($username));
             $stmt->execute();
             return $stmt->fetch()['image_url'];
         }
 
         static public function isAgent($db, $username): bool{
             $stmt = $db->prepare('SELECT * FROM agent WHERE agent_username = :username');
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':username', strtolower($username));
             $stmt->execute();
             return $stmt->fetch() != null;
         }
@@ -275,20 +275,20 @@
         static public function promoteUser($db, $username) : bool{
             //verify if user is in admin table
             $search1 = $db->prepare('SELECT * FROM admin WHERE admin_username = :username');
-            $search1->bindParam(':username', $username);
+            $search1->bindParam(':username', strtolower($username));
             $search1->execute();
 
             if ($search1->fetch() != null)return false;
 
             //verify if user is in agent table
             $search2 = $db->prepare('SELECT * FROM agent WHERE agent_username = :username');
-            $search2->bindParam(':username', $username);
+            $search2->bindParam(':username', strtolower($username));
             $search2->execute();
 
             if ($search2->fetch() != null){
                 //insert user into admin table
                 $stmt = $db->prepare('INSERT INTO admin (admin_username) VALUES (:username)');
-                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':username', strtolower($username));
                 $stmt->execute();
                 return true;
             }
