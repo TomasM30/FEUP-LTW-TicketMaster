@@ -1,0 +1,153 @@
+.edit{
+    border: none;
+    background: none;
+}
+
+.editForm{
+    display: none;
+}
+
+.ticketDetails{
+    display: grid;
+    grid-template-rows: 5% 1fr;
+    height: auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#navBarTicket{
+    grid-row: 1/2;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border: rgba(211, 211, 211, 0.79) solid 1px;
+}
+
+#navBarTicket ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin-left: 20px;
+}
+
+#navBarTicket ul li a{
+    text-decoration: none;
+    color: #252525;
+    margin-right: 20px;
+}
+
+#navBarTicket ul li a:hover{
+    border-bottom: solid black 1px;
+}
+
+.ticket{
+    grid-row: 2/3;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ticketInfo{
+    width: 50%;
+    margin-top: 2em;
+    padding: 1em 1em;
+}
+.ticket h2{
+    font-size: 2rem;
+    margin: 0;
+}
+
+.ticket h3{
+    font-size: 0.875rem;
+    margin-left: 0.5em;
+}
+
+.editable{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+.infoHeading{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.infoHeading p{
+    color: #161616;
+    font-size: 12px;
+}
+
+.authorInfo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    height: 5em;
+}
+
+.editForm{
+    margin: 0 0 0 0.5em;
+}
+
+#priorityChangeForm{
+    margin-right: 0.5em;
+    margin-left: 0;
+}
+
+.authorInfo img{
+    border-radius: 50%;
+}
+
+.status-priority{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.status-priority .editable{
+    height: 100%;
+}
+
+.ticketContent{
+    font-size: 16px;
+    word-wrap: break-word;
+}
+
+.otherInfos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#agentDivChange, #departmentDivChange{
+    display: flex;
+    justify-content: center;
+    width: 45%;
+    border-radius: 17px;
+    background: #E6E6E6;
+    margin-bottom: 1em;
+}
+
+.hashtags {
+    display: flex;
+    flex-direction: row;
+}
+
+.hashtags p{
+    margin: 0 0.5em 0  0;
+    font-size: 12px;
+    border-bottom: #252525 solid 1px;
+}
+
+.fileName {
+    display: none;
+}
+
+.fileDownload a{
+    text-decoration: none;
+    margin-right: 15px;
+}

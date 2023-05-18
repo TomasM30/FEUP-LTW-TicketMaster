@@ -47,6 +47,7 @@ statusForm.addEventListener('submit', async function (e) {
         const agentForm = document.getElementById('agentChangeForm');
         statusName.textContent = document.getElementById('status').value;
         if(document.getElementById('status').value === 'Open'){
+            statusName.style.color = 'green';
             agentButton.style.display = 'none';
             if(agentForm.style.display === 'block'){
                 agentForm.style.display = 'none';
@@ -54,10 +55,15 @@ statusForm.addEventListener('submit', async function (e) {
             const response2 = await fetch('../actions/action_change_agent.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&agent=None');
             const res2 = await response2.json();
             if(res2 === ''){
-                agentName.textContent = 'Assigned agent: ';
+                agentName.textContent = 'Agent: ';
             }
         } else {
             agentButton.style.display = 'block';
+            if(document.getElementById('status').value === 'Closed'){
+                statusName.style.color = 'red';
+            } else {
+                statusName.style.color = '#be9801';
+            }
         }
         openStatusMenu();
     }
@@ -68,7 +74,7 @@ agentForm.addEventListener('submit', async function (e) {
     const response = await fetch('../actions/action_change_agent.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&agent=' + document.getElementById('agent').value);
     const res = await response.json();
     if (res === '') {
-        agentName.textContent = 'Assigned agent: ' + document.getElementById('agent').value;
+        agentName.textContent = "Agent: " + document.getElementById('agent').value;
     }
     openAgentsMenu();
 });
@@ -79,7 +85,7 @@ departmentForm.addEventListener('submit', async function (e) {
     const res = await response.json();
     console.log(res);
     if (res === '') {
-        departmentName.textContent = 'Department: ' + document.getElementById('department').value;
+        departmentName.textContent = (document.getElementById('department').value).length > 15 ?  (document.getElementById('department').value).substring(0, 15) + "..." : document.getElementById('department').value;
     }
     openDepartmentMenu();
 });
@@ -128,3 +134,4 @@ function openStatusMenu(){
         form.style.display = 'block';
     }
 }
+
