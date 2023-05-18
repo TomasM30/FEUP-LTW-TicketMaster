@@ -28,6 +28,7 @@ $priorities = ticket::getAllPriorities($db);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Ticket Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/ticket_page.css">
 </head>
 <?php drawHeader($username); ?>
 <div class="ticketPage">
