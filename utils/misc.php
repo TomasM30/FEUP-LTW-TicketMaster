@@ -2,17 +2,6 @@
     declare(strict_types=1);
 
     class Misc{
-        static function getTickets($db, $username) : array{
-            if (user::isAgent($db, $username)) {
-                $tickets = ticket::getAgentTickets($db, $username);
-                $clientTickets = ticket::getClientTickets($db, $username);
-                $unassignedTickets = ticket::getUnassignedTickets($db);
-                $allTickets = array_merge($clientTickets, $unassignedTickets, $tickets);
-                return array_unique($allTickets, SORT_REGULAR);
-            } else {
-                return ticket::getClientTickets($db, $username);
-            }
-        }
 
         static function addHashtagToTicket($db, $hashtag, $ticketId){
             $search = $db->prepare('SELECT * FROM Hashtags WHERE name = :hashtag');

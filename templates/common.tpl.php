@@ -15,13 +15,6 @@ require_once(__DIR__ . '/../database/connection.db.php');
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="../css/cards.css">
-        <link rel="stylesheet" href="../css/userP.css">
-        <link rel="stylesheet" href="../css/ticket.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="../javascript/scripts.js" defer></script>
-        <script src="../javascript/ticket.js" defer></script>
-        <script src="../javascript/profile.js" defer></script>
     </head>
     <body>
     <input type="checkbox" id="hamburger">
@@ -51,11 +44,6 @@ require_once(__DIR__ . '/../database/connection.db.php');
             </nav>
         </div>
         <div class="user">
-            <a class="username" href="../pages/profile.php">
-                <p><?php
-                    echo $username;
-                    ?></p>
-            </a>
             <a class="userImage" href="../pages/profile.php">
                 <img src="<?= $pfp ?>" alt="User" width="50" height="50">
             </a>

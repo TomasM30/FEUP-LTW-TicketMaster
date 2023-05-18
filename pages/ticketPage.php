@@ -10,14 +10,12 @@ require_once (__DIR__ . '/../templates/common.tpl.php');
 require_once (__DIR__ . '/../utils/misc.php');
 
 $session = new Session();
-if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
 
 $db = getDatabaseConnection();
 
-drawHeader($session->getUsername());
 $username = $session->getUsername();
-
-$tickets = misc::getTickets($db, $username);
+if ($username == null) die(header('Location: /../pages/login.php'));
+$tickets = ticket::getTickets($db, $username);
 $statuses = ticket::getAllStatuses($db);
 $departments = ticket::getAllDepartments($db);
 $hashtags = ticket::getAllHashtags($db);
@@ -25,8 +23,14 @@ $agents = user::getAllAgents($db);
 $priorities = ticket::getAllPriorities($db);
 
 ?>
-<link rel="stylesheet" href="../css/ticket.css">
-
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ticket Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/ticket_page.css">
+</head>
+<?php drawHeader($username); ?>
 <div class="ticketPage">
     <?php drawNavBarTicket();
     if(user::isAgent($db, $username)){

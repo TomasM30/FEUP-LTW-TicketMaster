@@ -14,7 +14,6 @@ if ($session->getUsername() == null) die(header('Location: /../pages/login.php')
 
 $db = getDatabaseConnection();
 
-drawHeader($session->getUsername());
 $username = $session->getUsername();
 $ticketId = $_GET['id'] ?? null;
 $ticket = ticket::getTicketById($db, $ticketId);
@@ -27,16 +26,24 @@ $priorities = ticket::getAllPriorities($db);
 $files = ticket::getDocument($db, $ticketId);
 
 ?>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ticket Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../javascript/ticket.js" defer></script>
+</head>
+<?php drawHeader($session->getUsername()); ?>
 <div class="ticketDetails">
     <?php drawNavBarTicket(); ?>
     <div class="ticket">
         <h2><?php echo $ticket['subject']; ?></h2>
         <h3><?php echo $ticket['author_username'] ?></h3>
         <div class="editable">
-            <p id='ticketStatus'><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
+            <p id='ticketStatus'><?php echo ticket::getStatusName($db, intval($ticket['status'])); ?></p>
             <?php
             if ($isAgent) { ?>
-                <button class="edit" onclick="openStatusMenu()"><i class="pencil"></i></button>
+                <button class="edit" onclick="openStatusMenu()"></button>
                 <form class="editForm" id="statusChangeForm">
                     <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                     <label for="status"></label>
@@ -85,7 +92,7 @@ $files = ticket::getDocument($db, $ticketId);
         <p>Date created: <?php echo $ticket['date']; ?></p>
         <div class="editable">
             <p id='ticketDepartment'>
-                Department: <?php echo ticket::getDepartmentName($db, $ticket['department_id']); ?></p>
+                Department: <?php echo ticket::getDepartmentName($db, intval($ticket['department_id'])); ?></p>
             <?php
             if ($isAgent) { ?>
                 <button class="edit" onclick="openDepartmentMenu()"><i class="pencil"></i></button>
@@ -107,7 +114,7 @@ $files = ticket::getDocument($db, $ticketId);
         <?php
         if ($isAgent) { ?>
             <div class="editable">
-                <p id='ticketPriority'>Priority: <?php echo ticket::getPriorityName($db, $ticket['priority']); ?></p>
+                <p id='ticketPriority'>Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
                 <button class="edit" onclick="openPriorityMenu()"><i class="pencil"></i></button>
                 <form class="editForm" action="../actions/action_change_priority.php" id="priorityChangeForm">
                     <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
@@ -126,7 +133,7 @@ $files = ticket::getDocument($db, $ticketId);
         ?>
         <P><?php echo $ticket['content']; ?></P>
         <?php
-        $hashtags = ticket::getTicketHashtagNames($db, $ticket['id']);
+        $hashtags = ticket::getTicketHashtagNames($db, intval($ticket['id']));
         if (!empty($hashtags)) {
             ?>
             <div class="hashtags">
@@ -159,7 +166,7 @@ $files = ticket::getDocument($db, $ticketId);
     </div>
     <div class="ticketResponses" id="responseDiv">
         <?php
-        $responses = ticket::getTicketResponses($db, $ticket['id']);
+        $responses = ticket::getTicketResponses($db, intval($ticket['id']));
         if (!empty($responses)) {
             foreach ($responses as $response) {
                 ?>
@@ -183,6 +190,22 @@ $files = ticket::getDocument($db, $ticketId);
         <input type="submit" value="Submit">
     </form>
 </div>
+
+<div class="logs">
+    <h2>Logs</h2>
+    <?php
+    $logs = Ticket::getLogs($db, intval($ticket['id']));
+    if (!empty($logs)) {
+        foreach ($logs as $log) {
+            ?>
+            <div class="log">
+                <p><?php echo $log['date']; ?></p>
+                <p><?php echo $log['content']; ?></p>
+            </div>
+            <?php
+        }
+    }
+    ?>
 
 
 <?php drawFooter(); ?>
