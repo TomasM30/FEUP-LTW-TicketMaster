@@ -75,4 +75,43 @@ main {
   .ticket-form input[type="submit"]:hover {
     background-color: #6f0720;
   }
-  
+
+  #result{
+    border: 1px dotted #ccc;
+    padding: 3px;
+  }
+  #result ul, #selectedHashtags{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  #result ul li, #selectedHashtags li{
+    padding: 5px 0;
+    padding-bottom: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  #result ul li:hover, #selectedHashtags li:hover {
+    background: #eee;
+  }
+
+  #selectedHashtags{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  #selectedHashtags li{
+    margin: 5px;
+  }
+
+  #selectedHashtags li:hover{
+    color: #c00;
+  }

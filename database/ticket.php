@@ -149,7 +149,7 @@ class ticket
         return $stmt->fetchAll();
     }
     static public function getAllHashtags(PDO $db): array {
-        $stmt = $db->prepare("SELECT * FROM Hashtags");
+        $stmt = $db->prepare("SELECT name FROM Hashtags");
         $stmt->execute();
         return $stmt->fetchAll();
     }
