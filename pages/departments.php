@@ -20,16 +20,10 @@
     $link_departments = $stmt->fetchAll();
 
 ?>
-    <head><script src="../javascript/showhideform.js" defer></script></head>
+    <head><script src="../javascript/showhideform.js" defer></script>
+    <link rel="stylesheet" href="../css/departments.css">
+    </head>
     <h1>Departments</h1>
-    <button type="button" id="showDepForm" name="showDepForm">Add/Remove Departments</button>
-        <form id="modifyDeps" method="POST" action="../actions/action_add_remove_department.php">
-            <input type="text" name="department" placeholder="Enter Department Name">
-            <label for="add-rm" id="add-rmLabel">Add</label>
-            <button name="add-rm" id="add-rm" type="button">Change action</button> 
-            <input type="hidden" id="action_input" name="action" value="add">  
-            <input type="submit" value="Submit">
-        </form>
     <table>
         <tr>
             <th>Name</th>
@@ -48,6 +42,14 @@
             </tr>
         <?php } ?>
     </table>
+
+    <button type="button" id="showDepForm" name="showDepForm">Add/Remove Departments</button>
+        <form id="modifyDeps" method="POST" action="../actions/action_add_remove_department.php">
+            <input type="text" name="department" placeholder="Enter Department Name">
+            <button name="add-rm" id="add-rm" type="button">Add</button> 
+            <input type="hidden" id="action_input" name="action" value="add">  
+            <input type="submit" value="Submit">
+        </form>
 
 <?php
     drawFooter();

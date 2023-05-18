@@ -2,7 +2,6 @@ const depOrAg = document.getElementById('showDepForm') != null;
 const currentForm = depOrAg ? document.getElementById('modifyDeps') : document.getElementById('modifyUsers');
 const showBtn = depOrAg ? document.getElementById('showDepForm') : document.getElementById('showAgForm');
 const toggleBtn = depOrAg ? document.getElementById('add-rm') : document.getElementById('promote-demote');
-const toggleLabel = depOrAg ? toggleLabel : document.getElementById('promote-demoteLabel');
 const actionInput = document.getElementById('action_input');
 
 showBtn.addEventListener('click', function(e){
@@ -18,20 +17,20 @@ showBtn.addEventListener('click', function(e){
 
 toggleBtn.addEventListener('click', function(e){
     e.preventDefault();
-    if(toggleLabel.textContent === 'Add'){
-        toggleLabel.textContent = 'Remove';
+    if(toggleBtn.textContent === 'Add'){
+        toggleBtn.textContent = 'Remove';
         actionInput.value ='remove';
     }
-    else if(toggleLabel.textContent === 'Remove'){
-        toggleLabel.textContent = 'Add';
+    else if(toggleBtn.textContent === 'Remove'){
+        toggleBtn.textContent = 'Add';
         actionInput.value = 'add';
     }
-    else if(toggleLabel.textContent === 'Promote'){
-        toggleLabel.textContent = 'Demote';
+    else if(toggleBtn.textContent === 'Promote'){
+        toggleBtn.textContent = 'Demote';
         actionInput.value ='demote';
     }
-    else if(toggleLabel.textContent === 'Demote'){
-        toggleLabel.textContent = 'Promote';
+    else if(toggleBtn.textContent === 'Demote'){
+        toggleBtn.textContent = 'Promote';
         actionInput.value = 'promote';
     }
 });

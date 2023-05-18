@@ -17,16 +17,9 @@
     $stmt->execute();
     $agents = $stmt->fetchAll();
 ?>
-    <head><script src="../javascript/showhideform.js" defer></script></head>
+    <head><script src="../javascript/showhideform.js" defer></script>
+    <link rel="stylesheet" href="../css/agents.css"></head>
     <h1>Our Team</h1>
-    <button type="button" id="showAgForm" name="showAgForm">Promote/Demote Users</button>
-        <form id="modifyUsers" method="POST" action="../actions/action_prom_dem_users.php">
-            <input type="text" name="username" placeholder="Enter Username">
-            <label for="add-rm" id="promote-demoteLabel">Promote</label>
-            <button name="add-rm" id="promote-demote" type="button">Change action</button> 
-            <input type="hidden" id="action_input" name="action" value="promote">  
-            <input type="submit" value="Submit">
-        </form>
     <table>
         <tr>
             <th></th>
@@ -39,8 +32,15 @@
                 <td><?= $agent['username'] ?></td>
                 <td><?= $agent['name'] ?></td>
             </tr>
-        <?php } ?>
-    </table>
-
-
-<?php drawFooter(); ?>
+            <?php } ?>
+        </table>
+        <button type="button" id="showAgForm" name="showAgForm">Promote/Demote Users</button>
+            <form id="modifyUsers" method="POST" action="../actions/action_prom_dem_users.php">
+                <input type="text" name="username" placeholder="Enter Username">
+                <button name="add-rm" id="promote-demote" type="button">Promote</button> 
+                <input type="hidden" id="action_input" name="action" value="promote">  
+                <input type="submit" value="Submit">
+            </form>
+        
+        
+        <?php drawFooter(); ?>
