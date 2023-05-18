@@ -11,3 +11,4 @@ $status = $_GET['ticket_status'];
 $status = ticket::getStatusId($db, $status);
 ticket::changeStatus($db, $ticketId, $status);
 echo json_encode('');
+?>

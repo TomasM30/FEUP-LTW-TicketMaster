@@ -15,15 +15,14 @@
     $db = getDatabaseConnection();
 
     drawHeader($session->getUsername());
-    drawNavBarTicket();
 ?>
 
     <link rel="stylesheet" href="../css/create_ticket.css">
     <script src="../javascript/autocomplete.js" defer></script>
     <div class="ticket-form">
     <form autocomplete="off" action="/../actions/action_ticket.php" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" id="title" placeholder="Title">
-        <textarea name="content" id="content" cols="30" rows="10" placeholder="content"></textarea>
+        <input type="text" name="title" id="title" placeholder="Title" required>
+        <textarea name="content" id="content" cols="30" rows="10" placeholder="content" required></textarea>
         <select name="department">
             <?php
                 foreach (Misc::getDepartments($db) as $department){
@@ -40,7 +39,7 @@
         <div id="result"></div>
         <label for="documents"> Annex documents: </label>
         <input type="file" id="documents" name="documents[]" multiple> 
-        <input type="submit" value="Create Ticket">
+        <input type="submit" id="submit" value="Create Ticket">
     </form>
 </div>
 

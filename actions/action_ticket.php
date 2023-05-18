@@ -19,5 +19,5 @@
 
     ticket::addTicket($db, $session->getUsername(),$department, $title, $content, $hashtags, $documents);
 
-    header('Location: ../pages/index.php?success=1')
+    header('Location: ../pages/index.php')
 ?>

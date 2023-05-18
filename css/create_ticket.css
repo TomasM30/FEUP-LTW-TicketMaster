@@ -115,3 +115,12 @@ main {
   #selectedHashtags li:hover{
     color: #c00;
   }
+
+  #result ul li#noResults{
+    cursor: default;
+    color: #FFFFFF;
+  }
+
+  #result ul li#noResults:hover{
+    background-color: red;
+  }
