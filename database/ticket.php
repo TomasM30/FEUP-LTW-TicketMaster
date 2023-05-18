@@ -1,5 +1,6 @@
 <?php
 require_once '../utils/misc.php';
+require_once '../database/users.php';
 
 class ticket
 {
@@ -182,7 +183,7 @@ class ticket
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':agent', $agent);
         $stmt->execute();
-        ticket::ticketLog($db, $ticketId, "Agent changed to " . $agent);
+        ticket::ticketLog($db, $ticketId, "Agent changed to " . User::getUsername($db, $agent));
     }
 
     static public function changeDepartment($db, $ticketId, $department){
@@ -198,7 +199,7 @@ class ticket
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':priority', $priority);
         $stmt->execute();
-        ticket::ticketLog($db, $ticketId, "Priority changed to " . $priority);
+        ticket::ticketLog($db, $ticketId, "Priority changed to " . ticket::getPriorityName($db, $priority));
     }
 
     static public function getDocument($db, $ticket) : array{

@@ -328,6 +328,12 @@
 
             return false;
         }
-    }
 
+        static public function getUsername($db, $username){
+            $stmt = $db->prepare('SELECT username FROM user WHERE username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch()['username'];
+        }
+    }
 ?>
