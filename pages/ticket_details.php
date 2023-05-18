@@ -191,5 +191,21 @@ $files = ticket::getDocument($db, $ticketId);
     </form>
 </div>
 
+<div class="logs">
+    <h2>Logs</h2>
+    <?php
+    $logs = Ticket::getLogs($db, intval($ticket['id']));
+    if (!empty($logs)) {
+        foreach ($logs as $log) {
+            ?>
+            <div class="log">
+                <p><?php echo $log['date']; ?></p>
+                <p><?php echo $log['content']; ?></p>
+            </div>
+            <?php
+        }
+    }
+    ?>
+
 
 <?php drawFooter(); ?>
