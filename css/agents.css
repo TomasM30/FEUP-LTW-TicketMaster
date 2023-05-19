@@ -76,7 +76,7 @@ input[type="text"] {
     width: 300px;
 }
 
-#modifyUsers {
+#modifyUsers{
     display: flex;
     justify-content: center;
     align-items: center;

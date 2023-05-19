@@ -1,7 +1,5 @@
 <?php
 declare(strict_types=1);
-
-
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../database/ticket.php');
 require_once(__DIR__ . '/../utils/session.php');
@@ -203,16 +201,20 @@ $pfp = User::getPfp($db, $username);
             <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
             <input type="hidden" name="imgPath" value="<?php echo $pfp; ?>">
             <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
-            <label for="comment"></label>
-            <label for="comment">Comment:</label><br>
-            <input list="faq" name="comment" id="comment" placeholder="Write your response here..."></input>
-            <datalist id="faq"></datalist>
+            <div class="contentBox">
+                <fieldset>
+                    <legend>Response</legend>
+                    <label for="comment"></label>
+                    <input list="faq" name="comment" id="comment" placeholder="Write your response here...">
+                    <datalist id="faq"></datalist>
+                </fieldset>
+            </div>
             <input type="submit" value="Submit">
         </form>
     </div>
     <div class="ticketContainerBox" id="responseDiv">
         <?php
-        $responses = ticket::getTicketResponses($db, intval($ticket['id']));
+        $responses = array_reverse(ticket::getTicketResponses($db, intval($ticket['id'])));
         if ($responses == null) {
             ?>
             <script>document.getElementById('responseDiv').style.display = 'none';</script>
@@ -224,18 +226,18 @@ $pfp = User::getPfp($db, $username);
                 <div class="infoHeading">
                     <div class="authorInfo">
                         <img src="<?= $pfp ?>" alt="User" width="50" height="50">
-                        <h3><?php echo $response['author_username'] ?></h3>
+                        <h3><?php echo $response['username'] ?></h3>
                     </div>
                     <p><?php echo $response['date']; ?></p>
                 </div>
                 <div class="contentBox">
                     <fieldset>
-                        <legend>Content</legend>
-                        <p><?php 
-                        if (strpos($response['content'], '#') !== false) {
-                            $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
-                        }
-                        echo $response['content']; ?></p>
+                        <legend>Answer</legend>
+                        <p><?php
+                            if (strpos($response['content'], '#') !== false) {
+                                $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
+                            }
+                            echo $response['content']; ?></p>
                     </fieldset>
                 </div>
                 <?php
@@ -243,24 +245,26 @@ $pfp = User::getPfp($db, $username);
         }
         ?>
     </div>
+    <div class="ticketContainerBox">
+        <h2>Logs</h2>
+        <ul class="log-list">
+            <?php
+            $logs = ticket::getLogs($db, intval($ticket['id']));
+            if (!empty($logs)) {
+                foreach ($logs as $log) {
+                    ?>
+                    <li class="log-item">
+                        <p class="log-content"><?php echo $log['content']; ?></p>
+                        <p class="log-date"><?php echo $log['date']; ?></p>
+
+                    </li>
+                    <?php
+                }
+            }
+            ?>
+        </ul>
+    </div>
 </div>
 
-<div class="log-container">
-    <h2>Logs</h2>
-    <ul class="log-list">
-        <?php
-        $logs = ticket::getLogs($db, intval($ticket['id']));
-        if (!empty($logs)) {
-            foreach ($logs as $log) {
-                ?>
-                <li class="log-item">
-                    <p class="log-date"><?php echo $log['date']; ?></p>
-                    <p class="log-content"><?php echo $log['content']; ?></p>
-                </li>
-                <?php
-            }
-        }
-        ?>
 
-
-    <?php drawFooter(); ?>
+<?php drawFooter(); ?>

@@ -23,13 +23,10 @@
             $file_paths = array();
             
             if ($pfp){
-                $error = $files_array['error'];
                 if ($error == UPLOAD_ERR_OK){
                     $upload_file = $user_dir . basename($files_array['name']);
                     
                     $upload_file = Upload::newName($upload_file);
-
-                    var_dump($upload_file);
 
                     $tmp_name =$files_array['tmp_name'];
                     move_uploaded_file($tmp_name, $upload_file);
@@ -42,8 +39,6 @@
                         $upload_file = $user_dir . basename($files_array['name'][$key]);
                         
                         $upload_file = Upload::newName($upload_file);
-
-                        var_dump($upload_file);
 
                         $tmp_name =$files_array['tmp_name'][$key];
                         move_uploaded_file($tmp_name, $upload_file);

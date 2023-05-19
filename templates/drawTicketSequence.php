@@ -50,7 +50,7 @@ function drawTicketSequence(array $tickets, PDO $db)
                     <p><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
                     <p>Assigned agent: <?php echo $ticket['agent_username']; ?></p>
                     <p>Date created: <?php echo $ticket['date']; ?></p>
-                    <p>Department: <?php echo $ticket['department_id']; ?></p>
+                    <p>Department: <?php echo ticket::getDepartmentName($db,$ticket['department_id']); ?></p>
                     <?php
                     if(user::isAgent($db, $_SESSION['username'])){
                         ?>
@@ -58,7 +58,7 @@ function drawTicketSequence(array $tickets, PDO $db)
                         <?php
                     }
                     ?>
-                    <p><?php echo $ticket['content']; ?></p>
+                    <p><?php echo 'Content: ' . $ticket['content']; ?></p>
                     <?php
                     $hashtags = ticket::getTicketHashtagNames($db, $ticket['id']);
                     if (!empty($hashtags)) {

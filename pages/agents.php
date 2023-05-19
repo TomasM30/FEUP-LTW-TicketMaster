@@ -4,18 +4,18 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
+require_once(__DIR__ . '/../database/users.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+$username = $session->getUsername();
 
-if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
+if ($username == null) die(header('Location: /../pages/login.php'));
 
 
-drawHeader($session->getUsername());
+drawHeader($username);
 
-$stmt = $db->prepare('SELECT * FROM Agent JOIN User on username = agent_username');
-$stmt->execute();
-$agents = $stmt->fetchAll();
+$agents = user::getAgentsInfo($db);
 ?>
     <head>
         <meta charset="UTF-8">
@@ -30,15 +30,26 @@ $agents = $stmt->fetchAll();
             <th></th>
             <th>Username</th>
             <th>Name</th>
+            <th>Role</th>
         </tr>
         <?php foreach ($agents as $agent) { ?>
             <tr>
                 <td><img src="<?= $agent['image_url'] ?>" alt="Agent image" width=50 height=50></td>
                 <td><?= $agent['username'] ?></td>
-                <td><?= $agent['name'] ?></td>
+                <td><?= $agent['name'];
+                    ?></td>
+                <td><?php if (user::isAdmin($db, $agent['username'])) {
+                        echo "Admin";
+                    } else {
+                        echo "Agent";
+                    } ?></td>
             </tr>
         <?php } ?>
     </table>
+
+<?php
+if (user::isAdmin($db, $username)) {
+    ?>
     <button type="button" id="showAgForm" name="showAgForm">Promote/Demote Users</button>
     <form id="modifyUsers" method="POST" action="../actions/action_prom_dem_users.php">
         <input type="text" name="username" placeholder="Enter Username">
@@ -46,6 +57,9 @@ $agents = $stmt->fetchAll();
         <input type="hidden" id="action_input" name="action" value="promote">
         <input type="submit" value="Submit">
     </form>
+    <?php
+}
+?>
 
 
 <?php drawFooter(); ?>

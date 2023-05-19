@@ -124,6 +124,24 @@ input[type="submit"]:hover {
     border-radius: 4px;
 }
 
+.createATicketButton {
+    margin-top: 20px;
+    border: none;
+
+}
+
+.createATicketButton a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    background-color: #6f0720;
+    border-radius: 4px;
+}
+
+.createATicketButton a:hover {
+    background-color: #45a049;
+}
+
 .ticketPage {
     display: flex;
     flex-direction: column; 

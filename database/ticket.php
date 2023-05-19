@@ -75,7 +75,14 @@ class ticket
         $stmt->execute();
 
         $seperatedHashtags = explode(' ', $hashtags);
-        foreach($seperatedHashtags as $ht){
+        $hashtagsArray = array_filter($seperatedHashtags, function($hashtag) {
+            return $hashtag !== '';
+        });
+
+        foreach($hashtagsArray as $ht){
+            if(substr($ht, 0, 1) !== '#'){
+                $ht = '#' . $ht;
+            }
             Misc::addHashtagToTicket($db, $ht, $id);
         }
 

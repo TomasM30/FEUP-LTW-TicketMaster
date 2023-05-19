@@ -9,7 +9,6 @@ if ($session->getUsername() == null) die(header('Location: /../pages/login.php')
 
 $db = getDatabaseConnection();
 
-$username = $session->getUsername();
 
 $ticketId = $_POST['id'] ?? null;
 
