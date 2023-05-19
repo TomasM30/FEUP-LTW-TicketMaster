@@ -47,7 +47,7 @@
             </tr>
         <?php } ?>
     </table>
-
+    <?php if (user::isAdmin($db, $session->getUsername())) { ?>
     <button type="button" id="showDepForm" name="showDepForm">Add/Remove Departments</button>
         <form id="modifyDeps" method="POST" action="../actions/action_add_remove_department.php">
             <input type="text" name="department" placeholder="Enter Department Name">
@@ -55,6 +55,7 @@
             <input type="hidden" id="action_input" name="action" value="add">  
             <input type="submit" value="Submit">
         </form>
+    <?php } ?>
 
 <?php
     drawFooter();

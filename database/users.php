@@ -360,5 +360,28 @@
             $stmt->execute();
             return $stmt->fetch()['username'];
         }
-    }
+
+        static public function assignAgentToDepartment($db, $username, $department_id){
+            if (User::isAgent($db, $username) || User::isAdmin($db, $username)){
+                $search = $db->prepare('SELECT * FROM link_departments WHERE username = :username AND department_id = :department_id');
+                $search->bindParam(':username', $username);
+                $search->bindParam(':department_id', $department_id);
+                $search->execute();
+
+                if ($search->fetch() != null) return;
+
+                $stmt = $db->prepare('INSERT INTO link_departments (username, department_id) VALUES (:username, :department_id)');
+                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':department_id', $department_id);
+                $stmt->execute();
+            }
+        }
+
+        static public function removeAgentFromDepartment($db, $username, $department_id){
+            $stmt = $db->prepare('DELETE FROM link_departments WHERE username = :username AND department_id = :department_id');
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':department_id', $department_id);
+            $stmt->execute();
+            }
+        }
 ?>

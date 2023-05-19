@@ -10,7 +10,7 @@
 
     if (isset($_POST['action']) && $_POST['action'] == 'promote'){
         User::promoteUser($db, $_POST['username']);
-    } elseif (isset($_POST['action']) && $_POST['action'] == 'demote'){
+    } elseif (isset($_POST['action']) && $_POST['action'] == 'demote' && $_POST['username'] != $session->getUsername()){
         User::demoteUser($db, $_POST['username']);
     }
 

@@ -69,7 +69,7 @@ function drawTicketSequence(array $tickets, PDO $db)
                             <?php
                             foreach ($hashtags as $hashtag) {
                                 ?>
-                                <span><?php echo $hashtag; ?></span>
+                                <span><?php echo '#' . $hashtag; ?></span>
                                 <?php
                             }
                             ?>

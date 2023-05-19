@@ -76,13 +76,22 @@ input[type="text"] {
     width: 300px;
 }
 
-#modifyUsers{
+select{
+    padding: 10px;
+    width: 200px;
+}
+
+#modifyUsers, #modifyUserDeps{
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
 }
 
-#showAgForm {
+#showAgForm, #showAssignDepForm {
     margin-bottom: 10px;
+}
+
+#modifyUsers *, #modifyUserDeps * {
+    margin: 0 10px;
 }

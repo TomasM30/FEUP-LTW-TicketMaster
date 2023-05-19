@@ -21,7 +21,7 @@ function showResults(value_to_search) {
     let list = '';
     let terms = autocompleteMatch(val, hashtags);
 
-    for (let i=0; i< terms.length; i++) {
+    for (let i=0; i< Math.min(terms.length, 9); i++) {
         if (terms[i] === '')continue;
         list += '<li>#' + terms[i] + '</li>';
         res.style.backgroundColor = "#f5f5f5";
