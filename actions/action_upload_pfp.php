@@ -10,8 +10,7 @@
     $username = $session->getUsername();
 
     $path = Upload::uploadFile($username, true);
-    var_dump($path);
-    
+
     $stmt = $db->prepare ('UPDATE User SET image_url = :url WHERE username = :username');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':url', $path[0]);

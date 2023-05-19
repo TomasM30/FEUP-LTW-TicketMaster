@@ -266,6 +266,18 @@
             $stmt->execute();
             return $stmt->fetch() != null;
         }
+        static public function isAdmin($db, $username): bool{
+            $stmt = $db->prepare('SELECT * FROM admin WHERE admin_username = :username');
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            return $stmt->fetch() != null;
+        }
+
+        static public function getAgentsInfo($db): array{
+            $stmt = $db->prepare('SELECT * FROM Agent JOIN User on username = agent_username');
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
 
         static public function getAllAgents($db): array{
             $stmt = $db->prepare('SELECT * FROM agent');

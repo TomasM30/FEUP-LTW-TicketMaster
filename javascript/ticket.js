@@ -1,5 +1,9 @@
+import { encodeForAjax } from "../utils/ajax.js";
+
 const form = document.getElementById('responseForm');
 const ticketResponses = document.getElementById('responseDiv');
+
+
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
     const response = await fetch('../actions/action_add_response.php?content=' + document.getElementById('comment').value + '&ticket_id=' + document.getElementsByName('ticket_id')[0].value);
@@ -58,7 +62,6 @@ form.addEventListener('submit', async function (e) {
     }
 });
 
-
 const statusForm = document.getElementById('statusChangeForm');
 const statusName = document.getElementById('ticketStatus');
 const agentForm = document.getElementById('agentChangeForm');
@@ -96,6 +99,7 @@ statusForm.addEventListener('submit', async function (e) {
                 statusName.style.color = '#be9801';
             }
         }
+        updateLogs();
         openStatusMenu();
     }
 });
@@ -107,6 +111,7 @@ agentForm.addEventListener('submit', async function (e) {
     if (res === '') {
         agentName.textContent = "Agent: " + document.getElementById('agent').value;
     }
+    updateLogs();
     openAgentsMenu();
 });
 
@@ -118,6 +123,7 @@ departmentForm.addEventListener('submit', async function (e) {
     if (res === '') {
         departmentName.textContent = (document.getElementById('department').value).length > 15 ?  (document.getElementById('department').value).substring(0, 15) + "..." : document.getElementById('department').value;
     }
+    updateLogs();
     openDepartmentMenu();
 });
 
@@ -129,6 +135,7 @@ priorityForm.addEventListener('submit', async function (e) {
     if (res === '') {
         priorityName.textContent = 'Priority: ' + document.getElementById('priority').value;
     }
+    updateLogs();
     openPriorityMenu();
 });
 
@@ -166,10 +173,11 @@ function openStatusMenu(){
     }
 }
 
-/*async function updateLogs() {
-    const logs = document.querySelector(".log-list");
 
 
+async function updateLogs() {
+
+    const logs = document.querySelector(".log");
 
     const ticket_id = document.querySelector("#ticketId").value;
 
@@ -190,8 +198,8 @@ function openStatusMenu(){
 
     logs.innerHTML = "";
 
-    for (const log of data) {;
-        const logElement = document.createElement("div  ");
+    for (const log of data) {
+        const logElement = document.createElement("div");
 
         const logContent = document.createElement("p");
         logContent.classList.add("log-content");
@@ -211,5 +219,5 @@ function openStatusMenu(){
 
 }
 
-updateLogs();*/
+updateLogs();
 

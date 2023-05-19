@@ -123,6 +123,8 @@ input[type="submit"]:hover {
 
 .createATicketButton {
     margin-top: 20px;
+    border: none;
+
 }
 
 .createATicketButton a {

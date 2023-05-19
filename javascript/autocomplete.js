@@ -16,12 +16,12 @@ function autocompleteMatch(input, search_terms) {
 
 function showResults(value_to_search) {
     let val = value_to_search[0] == '#' ? value_to_search.substring(1) : value_to_search;
-    res = document.getElementById("result");
+    let res = document.getElementById("result");
     res.innerHTML = '';
     let list = '';
     let terms = autocompleteMatch(val, hashtags);
 
-    for (i=0; i< terms.length; i++) {
+    for (let i=0; i< terms.length; i++) {
         if (terms[i] === '')continue;
         list += '<li>#' + terms[i] + '</li>';
         res.style.backgroundColor = "#f5f5f5";
@@ -65,7 +65,7 @@ function setHashtags(arr){
 
 document.getElementById("submit").addEventListener("click", function(){
     let hashtagString = "";
-    for (i=0; i<selectedHashtags.length; i++){
+    for (let i=0; i<selectedHashtags.length; i++){
         hashtagString += selectedHashtags[i].substring(1) + " ";
     }
     document.getElementById("hashtags").value = hashtagString;
