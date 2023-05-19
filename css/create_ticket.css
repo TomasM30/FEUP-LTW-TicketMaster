@@ -124,3 +124,7 @@ main {
   #result ul li#noResults:hover{
     background-color: red;
   }
+
+  #annexDoc{
+    pointer-events: none;
+  }

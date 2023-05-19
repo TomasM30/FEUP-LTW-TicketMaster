@@ -18,7 +18,7 @@ $ticketId = $_GET['id'] ?? null;
 $ticket = ticket::getTicketById($db, $ticketId);
 $isAgent = user::isAgent($db, $username);
 $statuses = ticket::getAllStatuses($db);
-$agents = user::getAllAgents($db);
+$agents = user::getAgentsByTicketDepartment($db, $ticketId);
 $departments = ticket::getAllDepartments($db);
 $hashtags = ticket::getAllHashtags($db);
 $priorities = ticket::getAllPriorities($db);
@@ -38,6 +38,7 @@ $pfp = User::getPfp($db, $username);
     <?php drawNavBarTicket(); ?>
     <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
+        <!-- todo background on ticketcontainerBox -->
         <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
         <div class="status-priority">
             <div class="editable">
@@ -57,6 +58,7 @@ $pfp = User::getPfp($db, $username);
                 <?php
                 if ($isAgent) { ?>
                     <button class="edit"> &#9998;</button>
+                    <!-- todo fix the double click not supposed -->
                     <form class="editForm" id="statusChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="status"></label>
@@ -83,6 +85,7 @@ $pfp = User::getPfp($db, $username);
                         <label for="priority"></label>
                         <select id="priority" name="priority">
                             <?php foreach ($priorities as $priority) {
+                                //todo ajax to update agents list
                                 $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
                                 <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
                             <?php } ?>
@@ -212,6 +215,7 @@ $pfp = User::getPfp($db, $username);
             <input type="submit" value="Submit">
         </form>
     </div>
+    <!--todo button toogle between log and comments-->
     <div class="ticketContainerBox" id="responseDiv">
         <?php
         $responses = array_reverse(ticket::getTicketResponses($db, intval($ticket['id'])));

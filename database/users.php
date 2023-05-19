@@ -285,6 +285,19 @@
             return $stmt->fetchAll();
         }
 
+        static public function getAgentsByTicketDepartment($db, $ticket_id): array{
+            $stmt = $db->prepare('SELECT A.agent_username
+                                    FROM Ticket T
+                                    INNER JOIN Department D ON T.department_id = D.id
+                                    INNER JOIN Link_departments LD ON D.id = LD.department_id
+                                    INNER JOIN Agent A ON LD.username = A.agent_username
+                                    WHERE T.id = :ticket_id
+                                    ');
+            $stmt->bindParam(':ticket_id', $ticket_id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
+
         static public function promoteUser($db, $username) : bool{
             //verify if user is in admin table
             $search1 = $db->prepare('SELECT * FROM admin WHERE admin_username = :username');
