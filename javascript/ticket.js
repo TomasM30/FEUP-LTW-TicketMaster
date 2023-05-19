@@ -6,27 +6,58 @@ form.addEventListener('submit', async function (e) {
     const res = await response.json();
     if (res === '') {
         const responseDiv = document.createElement('div');
-        responseDiv.classList.add('response');
 
-        const authorParagraph = document.createElement('p');
-        authorParagraph.textContent = "User: " + document.getElementsByName('author_username')[0].value;
+        const infoHeadingDiv = document.createElement('div');
+        infoHeadingDiv.classList.add('infoHeading');
+
+        const authorInfoDiv = document.createElement('div');
+        authorInfoDiv.classList.add('authorInfo');
+
+        const authorImage = document.createElement('img');
+        authorImage.src = document.getElementsByName('imgPath')[0].value;
+        authorImage.alt = 'User';
+        authorImage.width = 50;
+        authorImage.height = 50;
+        authorInfoDiv.appendChild(authorImage);
+
+        const authorHeading = document.createElement('h3');
+        authorHeading.textContent = document.getElementsByName('author_username')[0].value;
+        authorInfoDiv.appendChild(authorHeading);
+
+        infoHeadingDiv.appendChild(authorInfoDiv);
 
         const dateParagraph = document.createElement('p');
         dateParagraph.textContent = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        infoHeadingDiv.appendChild(dateParagraph);
+
+        responseDiv.appendChild(infoHeadingDiv);
+
+        const contentBoxDiv = document.createElement('div');
+        contentBoxDiv.classList.add('contentBox');
+
+        const fieldset = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.textContent = 'Answer';
+        fieldset.appendChild(legend);
 
         const responseParagraph = document.createElement('p');
-        responseParagraph.textContent = "Answer: " + document.getElementById('comment').value;
+        responseParagraph.textContent = document.getElementById('comment').value;
+        fieldset.appendChild(responseParagraph);
 
-        responseDiv.appendChild(authorParagraph);
-        responseDiv.appendChild(dateParagraph);
-        responseDiv.appendChild(responseParagraph);
+        contentBoxDiv.appendChild(fieldset);
+        responseDiv.appendChild(contentBoxDiv);
 
         ticketResponses.appendChild(responseDiv);
         document.getElementById('comment').value = '';
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+        });
     } else {
         alert(res);
     }
 });
+
 
 const statusForm = document.getElementById('statusChangeForm');
 const statusName = document.getElementById('ticketStatus');
@@ -134,4 +165,51 @@ function openStatusMenu(){
         form.style.display = 'block';
     }
 }
+
+/*async function updateLogs() {
+    const logs = document.querySelector(".log-list");
+
+
+
+    const ticket_id = document.querySelector("#ticketId").value;
+
+    const response = await fetch("../api/get_logs.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: encodeForAjax({
+            id: ticket_id,
+        }),
+    });
+
+    const data = await response.json();
+
+
+    console.log(data);
+
+    logs.innerHTML = "";
+
+    for (const log of data) {;
+        const logElement = document.createElement("div  ");
+
+        const logContent = document.createElement("p");
+        logContent.classList.add("log-content");
+
+        logContent.innerHTML = log.content;
+
+        const logDate = document.createElement("p");
+        logDate.classList.add("log-date");
+
+        logDate.innerHTML = log.date;
+
+        logElement.appendChild(logDate);
+        logElement.appendChild(logContent);
+
+        logs.appendChild(logElement);
+    }
+
+}
+
+updateLogs();*/
 

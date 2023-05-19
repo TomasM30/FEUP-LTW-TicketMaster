@@ -1,5 +1,6 @@
 <?php
 require_once '../utils/misc.php';
+require_once '../database/users.php';
 
 class ticket
 {
@@ -150,7 +151,7 @@ class ticket
         return $stmt->fetchAll();
     }
     static public function getAllHashtags(PDO $db): array {
-        $stmt = $db->prepare("SELECT * FROM Hashtags");
+        $stmt = $db->prepare("SELECT name FROM Hashtags");
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -175,12 +176,14 @@ class ticket
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':status', $status);
         $stmt->execute();
+        ticket::ticketLog($db, $ticketId, "Status changed to " . ticket::getStatusName($db, $status));
     }
     static public function changeAgent($db, $ticketId, $agent){
         $stmt = $db->prepare('UPDATE Ticket SET agent_username = :agent WHERE id = :ticketId');
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':agent', $agent);
         $stmt->execute();
+        ticket::ticketLog($db, $ticketId, "Agent changed to " . User::getUsername($db, $agent));
     }
 
     static public function changeDepartment($db, $ticketId, $department){
@@ -188,6 +191,7 @@ class ticket
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':department', $department);
         $stmt->execute();
+        ticket::ticketLog($db, $ticketId, "Department changed to " . ticket::getDepartmentName($db, $department));
     }
 
     static public function changePriority($db, $ticketId, $priority){
@@ -195,6 +199,7 @@ class ticket
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':priority', $priority);
         $stmt->execute();
+        ticket::ticketLog($db, $ticketId, "Priority changed to " . ticket::getPriorityName($db, $priority));
     }
 
     static public function getDocument($db, $ticket) : array{
@@ -226,5 +231,19 @@ class ticket
         } else {
             return ticket::getClientTickets($db, $username);
         }
+    }
+
+    static function ticketLog(PDO $db, int $ticketId, string $content) : bool {
+        $stmt = $db->prepare('INSERT INTO TicketLog (ticket_id, content) VALUES (:ticketId, :content)');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->bindParam(':content', $content);
+        return $stmt->execute();
+    }
+
+    static function getLogs($db, $ticketId) : array{
+        $stmt = $db->prepare('SELECT * FROM TicketLog WHERE ticket_id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

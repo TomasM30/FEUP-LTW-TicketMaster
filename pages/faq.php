@@ -54,12 +54,12 @@
                             echo '<input type="text" name="question" id="question" value="' . $row['question'] . '" required>';
                             echo '<label for="answer">Answer</label>';
                             echo '<input type="text" name="answer" id="answer" value="' . $row['answer'] . '" required>';
-                            echo '<input type="submit" value="Edit FAQ">';
+                            echo '<input type="submit" value="&#9998;">';
                             echo '</form>';
                             
                             echo '<form action="../actions/action_delete_faq.php" method="post">';
                             echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
-                            echo '<input type="submit" value="Delete FAQ">';
+                            echo '<input type="submit" value="&#128465;">';
                             echo '</form>';
                             echo '</div>';
                         }

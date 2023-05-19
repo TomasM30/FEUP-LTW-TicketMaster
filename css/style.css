@@ -1,5 +1,4 @@
 body {
-    width: 100vw;
     margin: 0;
     min-width: 450px;
 }
@@ -14,6 +13,33 @@ main{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+#navBarTicket{
+    margin: 1em 0;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    border: rgba(211, 211, 211, 0.79) solid 1px;
+}
+
+#navBarTicket ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin-left: 20px;
+}
+
+#navBarTicket ul li a{
+    text-decoration: none;
+    color: #252525;
+    margin-right: 20px;
+}
+
+#navBarTicket ul li a:hover{
+    border-bottom: solid black 1px;
 }
 
 body > header {
@@ -278,5 +304,12 @@ footer a{
 
     .hamburger{
         left: 365px;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar li {
+        display: block;
+        margin-bottom: 10px;
     }
 }

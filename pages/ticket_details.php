@@ -37,187 +37,228 @@ $pfp = User::getPfp($db, $username);
 <?php drawHeader($session->getUsername()); ?>
 <div class="ticketDetails">
     <?php drawNavBarTicket(); ?>
-    <div class="ticket">
-        <div class="ticketInfo">
-            <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
-            <div class="status-priority">
-                <div class="editable">
-                    <?php
-                    $statusColor = '';
-                    if ($ticket['status'] == 0) {
-                        $statusColor = 'green';
-                    } else if ($ticket['status'] == 1) {
-                        $statusColor = '#be9801';
-                    } else {
-                        $statusColor = 'red';
-                    }
-                    ?>
-                    <p id="ticketStatus" style="color: <?php echo $statusColor; ?>">
-                        <?php echo ticket::getStatusName($db, intval($ticket['status'])); ?>
-                    </p>
-                    <?php
-                    if ($isAgent) { ?>
-                        <button class="edit" onclick="openStatusMenu()"> &#9998;</button>
-                        <form class="editForm" id="statusChangeForm">
-                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
-                            <label for="status"></label>
-                            <select id="status" name="status">
-                                <?php
-                                foreach ($statuses as $status) {
-                                    $selected = ($status['id'] === $ticket['status']) ? 'selected' : ''; ?>
-                                    <option value="<?php echo $status['name']; ?>" <?php echo $selected; ?>><?php echo $status['name']; ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                            <input type="submit" value="Submit">
-                        </form>
-                        <?php
-                    }
-                    ?>
-                </div>
+    <div class="ticketContainerBox">
+        <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
+        <div class="status-priority">
+            <div class="editable">
+                <?php
+                $statusColor = '';
+                if ($ticket['status'] == 0) {
+                    $statusColor = 'green';
+                } else if ($ticket['status'] == 1) {
+                    $statusColor = '#be9801';
+                } else {
+                    $statusColor = 'red';
+                }
+                ?>
+                <p id="ticketStatus" style="color: <?php echo $statusColor; ?>">
+                    <?php echo ticket::getStatusName($db, intval($ticket['status'])); ?>
+                </p>
                 <?php
                 if ($isAgent) { ?>
-                    <div class="editable">
-                        <form class="editForm" id="priorityChangeForm" action="../actions/action_change_priority.php">
-                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
-                            <label for="priority"></label>
-                            <select id="priority" name="priority">
-                                <?php foreach ($priorities as $priority) {
-                                    $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
-                                    <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
-                                <?php } ?>
-                            </select>
-                            <input type="submit" value="Submit">
-                        </form>
-                        <p id='ticketPriority'>
-                            Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
-                        <button class="edit" onclick="openPriorityMenu()"> &#9998;</button>
-
-                    </div>
+                    <button class="edit" onclick="openStatusMenu()"> &#9998;</button>
+                    <form class="editForm" id="statusChangeForm">
+                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                        <label for="status"></label>
+                        <select id="status" name="status">
+                            <?php
+                            foreach ($statuses as $status) {
+                                $selected = ($status['id'] === $ticket['status']) ? 'selected' : ''; ?>
+                                <option value="<?php echo $status['name']; ?>" <?php echo $selected; ?>><?php echo $status['name']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <input type="submit" value="Submit">
+                    </form>
                     <?php
                 }
                 ?>
             </div>
-            <div class="infoHeading">
-                <div class="authorInfo">
-                    <img src="<?= $pfp ?>" alt="User" width="50" height="50">
-                    <h3><?php echo $ticket['author_username'] ?></h3>
-                </div>
-                <p><?php echo $ticket['date']; ?></p>
-            </div>
-            <P class="ticketContent"><?php echo $ticket['content']; ?></P>
-            <div class="otherInfos">
-                <div class="editable" id="agentDivChange">
-                    <p id="ticketAgent"><?php echo "Agent: " . $ticket['agent_username']; ?></p>
-                    <?php
-                    if ($isAgent) {
-                        ?>
-                        <button class="edit" id='agentEdit' onclick="openAgentsMenu()"> &#9998;</button>
-                        <form class="editForm" action="../actions/action_change_agent.php" id="agentChangeForm">
-                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
-                            <label for="agent"></label>
-                            <select id="agent" name="agent">
-                                <?php foreach ($agents as $agent) {
-                                    $selected = ($agent['agent_username'] === $ticket['agent_username']) ? 'selected' : ''; ?>
-                                    <option value="<?php echo $agent['agent_username']; ?>" <?php echo $selected; ?>><?php echo $agent['agent_username']; ?></option>
-                                <?php } ?>
-                            </select>
-                            <input type="submit" value="Submit">
-                        </form>
-                    <?php
-                    if ($ticket['status'] == 0) { ?>
-                        <script>
-                            document.getElementById('agentEdit').style.display = 'none';
-                        </script>
-                        <?php
-                    }
-                    }
-                    ?>
-                </div>
-                <div class="editable" id="departmentDivChange">
-                    <p id='ticketDepartment'><?php
-                        $ticketDep = ticket::getDepartmentName($db, intval($ticket['department_id']));
-                        echo $ticketDep; ?></p>
-                    <?php
-                    if ($isAgent) {
-                        ?>
-                        <button class="edit" onclick="openDepartmentMenu()"> &#9998;</button>
-                        <form class="editForm" action="../actions/action_change_department.php"
-                              id="departmentChangeForm">
-                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
-                            <label for="department"></label>
-                            <select id="department" name="department">
-                                <?php foreach ($departments as $department) {
-                                    $selected = ($department['id'] === $ticket['department_id']) ? 'selected' : ''; ?>
-                                    <option value="<?php echo $department['name']; ?>" <?php echo $selected; ?>><?php echo $department['name']; ?></option>
-                                <?php } ?>
-                            </select>
-                            <input type="submit" value="Submit">
-                        </form>
-                        <?php
-                    }
-                    ?>
-                </div>
-            </div>
             <?php
-            $hashtags = ticket::getTicketHashtagNames($db, intval($ticket['id']));
-            if (!empty($hashtags)) {
-                ?>
-                <div class="hashtags">
-                    <?php
-                    foreach ($hashtags as $hashtag) {
-                        ?>
-                        <p>
-                            <?php echo $hashtag; ?>
-                        </p>
-                        <?php
-                    }
-                    ?>
+            if ($isAgent) { ?>
+                <div class="editable">
+                    <form class="editForm" id="priorityChangeForm" action="../actions/action_change_priority.php">
+                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                        <label for="priority"></label>
+                        <select id="priority" name="priority">
+                            <?php foreach ($priorities as $priority) {
+                                $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
+                                <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <p id='ticketPriority'>
+                        Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
+                    <button class="edit" onclick="openPriorityMenu()"> &#9998;</button>
+
                 </div>
                 <?php
             }
             ?>
-            <div class="fileDownload">
-                <p>
-                    <?php
-                    foreach ($files as $file) {
-                        ?>
-                        <a href="<?php echo $file ?>" target="_blank" rel="noopener noreferrer">
-                            <img src="../images/download.png" alt="Download" width="50" height="50">
-                        </a>
-                        <?php
-                    }
-                    ?>
-                </p>
-            </div>
         </div>
-        <div class="ticketResponses" id="responseDiv">
-            <?php
-            $responses = ticket::getTicketResponses($db, intval($ticket['id']));
-            if (!empty($responses)) {
-                foreach ($responses as $response) {
+        <div class="infoHeading">
+            <div class="authorInfo">
+                <img src="<?= $pfp ?>" alt="User" width="50" height="50">
+                <h3><?php echo $ticket['author_username'] ?></h3>
+            </div>
+            <p><?php echo $ticket['date']; ?></p>
+        </div>
+        <div class="contentBox">
+            <fieldset>
+                <legend>Content</legend>
+                <p><?php echo $ticket['content']; ?></p>
+            </fieldset>
+        </div>
+        <div class="otherInfos">
+            <div class="editable" id="agentDivChange">
+                <p id="ticketAgent"><?php echo "Agent: " . $ticket['agent_username']; ?></p>
+                <?php
+                if ($isAgent) {
                     ?>
-                    <div class="response">
-                        <p>User: <?php echo $response['username']; ?></p>
-                        <p><?php echo $response['date']; ?></p>
-                        <P>Answer: <?php echo $response['content']; ?></P>
-                    </div>
+                    <button class="edit" id='agentEdit' onclick="openAgentsMenu()"> &#9998;</button>
+                    <form class="editForm" action="../actions/action_change_agent.php" id="agentChangeForm">
+                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                        <label for="agent"></label>
+                        <select id="agent" name="agent">
+                            <?php foreach ($agents as $agent) {
+                                $selected = ($agent['agent_username'] === $ticket['agent_username']) ? 'selected' : ''; ?>
+                                <option value="<?php echo $agent['agent_username']; ?>" <?php echo $selected; ?>><?php echo $agent['agent_username']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <input type="submit" value="Submit">
+                    </form>
+                <?php
+                if ($ticket['status'] == 0) { ?>
+                    <script>
+                        document.getElementById('agentEdit').style.display = 'none';
+                    </script>
                     <?php
                 }
-            }
-            ?>
+                }
+                ?>
+            </div>
+            <div class="editable" id="departmentDivChange">
+                <p id='ticketDepartment'><?php
+                    $ticketDep = ticket::getDepartmentName($db, intval($ticket['department_id']));
+                    echo $ticketDep; ?></p>
+                <?php
+                if ($isAgent) {
+                    ?>
+                    <button class="edit" onclick="openDepartmentMenu()"> &#9998;</button>
+                    <form class="editForm" action="../actions/action_change_department.php"
+                          id="departmentChangeForm">
+                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                        <label for="department"></label>
+                        <select id="department" name="department">
+                            <?php foreach ($departments as $department) {
+                                $selected = ($department['id'] === $ticket['department_id']) ? 'selected' : ''; ?>
+                                <option value="<?php echo $department['name']; ?>" <?php echo $selected; ?>><?php echo $department['name']; ?></option>
+                            <?php } ?>
+                        </select>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <?php
+                }
+                ?>
+            </div>
         </div>
-        <div class="addResponse">
-            <form action="../actions/action_add_response.php" id='responseForm'>
-                <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
-                <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
-                <label for="comment">Comment:</label><br>
-                <textarea name="comment" id="comment" placeholder="Write your response here..." required></textarea>
-                <input type="submit" value="Submit">
-            </form>
+        <?php
+        $hashtags = ticket::getTicketHashtagNames($db, intval($ticket['id']));
+        if (!empty($hashtags)) {
+            ?>
+            <div class="hashtags">
+                <?php
+                foreach ($hashtags as $hashtag) {
+                    ?>
+                    <p>
+                        <?php echo $hashtag; ?>
+                    </p>
+                    <?php
+                }
+                ?>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="fileDownload">
+            <p>
+                <?php
+                foreach ($files as $file) {
+                    ?>
+                    <a href="<?php echo $file ?>" target="_blank" rel="noopener noreferrer">
+                        <img src="../images/download.png" alt="Download" width="50" height="50">
+                    </a>
+                    <?php
+                }
+                ?>
+            </p>
         </div>
     </div>
-</div>
+    <div class="ticketContainerBox">
+        <form action="../actions/action_add_response.php" id='responseForm'>
+            <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
+            <input type="hidden" name="imgPath" value="<?php echo $pfp; ?>">
+            <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
+            <label for="comment"></label>
+            <fieldset>
+                <legend>Response</legend>
+                <textarea name="comment" id="comment" placeholder="Write your response here..." required></textarea>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div class="ticketContainerBox" id="responseDiv">
+        <?php
+        $responses = ticket::getTicketResponses($db, intval($ticket['id']));
+        if ($responses == null) {
+            ?>
+            <script>document.getElementById('responseDiv').style.display = 'none';</script>
+            <?php
+        }
+        if (!empty($responses)) {
+            foreach ($responses as $response) {
+                ?>
+                <div class="infoHeading">
+                    <div class="authorInfo">
+                        <img src="<?= $pfp ?>" alt="User" width="50" height="50">
+                        <h3><?php echo $ticket['author_username'] ?></h3>
+                    </div>
+                    <p><?php echo $ticket['date']; ?></p>
+                </div>
+                <div class="contentBox">
+                    <fieldset>
+                        <legend>Content</legend>
+                        <p><?php echo $ticket['content']; ?></p>
+                    </fieldset>
+                </div>
+                <?php
+            }
+        }
+        ?>
+    </div>
+    <div class="ticketContainerBox" id ="logsContainerBox">
+        <h2>Logs</h2>
+        <div class="contentBox">
+            <fieldset class="log-list">
+                <?php
+                $logs = Ticket::getLogs($db, intval($ticket['id']));
+                if (!empty($logs)) {
+                    foreach ($logs as $log) {
+                        ?>
+                        <div class = "log">
+                            <p class="log-content" ><?php echo $log['content']; ?></p>
+                            <p class="log-date"><?php echo $log['date']; ?></p>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </fieldset>
 
-<?php drawFooter(); ?>
+        </div>
+    </div>
+
+
+    <?php drawFooter(); ?>

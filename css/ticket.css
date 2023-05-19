@@ -1,62 +1,40 @@
 .edit{
     border: none;
     background: none;
+    cursor: pointer;
 }
 
 .editForm{
     display: none;
 }
 
-.ticketDetails{
-    display: grid;
-    grid-template-rows: 5% 1fr;
-    height: auto;
+body {
     font-family: Arial, Helvetica, sans-serif;
-}
-
-#navBarTicket{
-    grid-row: 1/2;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    border: rgba(211, 211, 211, 0.79) solid 1px;
-}
-
-#navBarTicket ul {
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
+    margin: 0;
     padding: 0;
-    margin-left: 20px;
 }
 
-#navBarTicket ul li a{
-    text-decoration: none;
-    color: #252525;
-    margin-right: 20px;
-}
-
-#navBarTicket ul li a:hover{
-    border-bottom: solid black 1px;
-}
-
-.ticket{
-    grid-row: 2/3;
-    display:flex;
+.ticketDetails{
+    display: flex;
     flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
     align-items: center;
 }
-.ticketInfo{
-    width: 50%;
-    margin-top: 2em;
+.ticketContainerBox{
+    width: 97%;
     padding: 1em 1em;
+    justify-content: center;
+    border-radius: 17px;
+    border: rgba(211, 211, 211, 0.79) solid 1px;
+    margin-bottom: 1em;
 }
-.ticket h2{
+.ticketDetails h2{
     font-size: 2rem;
     margin: 0;
 }
 
-.ticket h3{
+.ticketDetails h3{
     font-size: 0.875rem;
     margin-left: 0.5em;
 }
@@ -112,9 +90,14 @@
     height: 100%;
 }
 
-.ticketContent{
-    font-size: 16px;
+fieldset{
+    font-size: 15px;
+    margin: 1em 0;
+}
+
+fieldset p{
     word-wrap: break-word;
+    font-size: 16px;
 }
 
 .otherInfos{
@@ -150,4 +133,37 @@
 .fileDownload a{
     text-decoration: none;
     margin-right: 15px;
+}
+
+#responseForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#responseForm textarea{
+    width: 100%;
+    height: 100px;
+    border: none;
+    padding: 10px;
+    resize: none;
+}
+
+#responseForm label{
+    display: none;
+}
+
+#responseForm input[type="submit"]{
+    width: 100%;
+    height: 30px;
+    resize: none;
+    font-size: 15px;
+}
+
+.log{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: #252525 solid 1px;
 }

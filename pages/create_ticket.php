@@ -6,6 +6,7 @@
     require_once(__DIR__ . '/../utils/session.php');
     require_once(__DIR__ . '/../utils/misc.php');
     require_once(__DIR__ . '/../templates/drawTicketSequence.php');
+    require_once(__DIR__ . '/../database/ticket.php');
 
     $session = new Session();
 
@@ -14,19 +15,14 @@
     $db = getDatabaseConnection();
 
     drawHeader($session->getUsername());
-    drawNavBarTicket();
 ?>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/create_ticket.css">
-        <title>Ticket Creation</title>
-    </head>
+
+    <link rel="stylesheet" href="../css/create_ticket.css">
+    <script src="../javascript/autocomplete.js" defer></script>
     <div class="ticket-form">
-    <form action="/../actions/action_ticket.php" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" id="title" placeholder="Title">
-        <textarea name="content" id="content" cols="30" rows="10" placeholder="content"></textarea>
+    <form autocomplete="off" action="/../actions/action_ticket.php" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" id="title" placeholder="Title" required>
+        <textarea name="content" id="content" cols="30" rows="10" placeholder="content" required></textarea>
         <select name="department">
             <?php
                 foreach (Misc::getDepartments($db) as $department){
@@ -38,10 +34,12 @@
                 }
             ?>
         </select>
-        <input type="text" id="hashtags" name="hashtags" placeholder="#">
+        <ul id="selectedHashtags"></ul>
+        <input type="text" id="hashtags" name="hashtags" placeholder="#" onkeyup="showResults(this.value)" onclick="setHashtags([<?php foreach (Ticket::getAllHashtags($db) as $hashtag){echo "'" . $hashtag['name'] . "',"; }?>]); showResults(this.value); ">
+        <div id="result"></div>
         <label for="documents"> Annex documents: </label>
         <input type="file" id="documents" name="documents[]" multiple> 
-        <input type="submit" value="Create Ticket">
+        <input type="submit" id="submit" value="Create Ticket">
     </form>
 </div>
 

@@ -92,6 +92,15 @@ CREATE TABLE Ticket (
   FOREIGN KEY ('status') REFERENCES 'Statuses' ('id')
 );
 
+CREATE TABLE TicketLog (
+  'id' int(6),
+  'ticket_id' int(6) NOT NULL,
+  'content' text NOT NULL,
+  'date' datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY ('id'),
+  FOREIGN KEY ('ticket_id') REFERENCES 'ticket' ('id')
+);
+
 
 CREATE TABLE Link_hashtags(
   'ticket_id' int(6) NOT NULL,
