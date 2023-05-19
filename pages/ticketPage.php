@@ -34,6 +34,7 @@ $priorities = ticket::getAllPriorities($db);
 <div class="ticketPage">
     <?php drawNavBarTicket();
     if(user::isAgent($db, $username)){
+        //todo add a button to appear and disappear the filtering box
         ?>
         <div class = "filtering-box">
             <?php

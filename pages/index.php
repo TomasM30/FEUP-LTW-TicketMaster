@@ -13,6 +13,7 @@ $db = getDatabaseConnection();
 if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
 
 $tickets = ticket::getTickets($db, $session->getUsername());
+//todo style this page better
 ?>
 <head>
     <meta charset="utf-8">

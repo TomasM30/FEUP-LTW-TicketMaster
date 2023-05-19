@@ -37,7 +37,7 @@
         <ul id="selectedHashtags"></ul>
         <input type="text" id="hashtags" name="hashtags" placeholder="#" onkeyup="showResults(this.value)" onclick="setHashtags([<?php foreach (Ticket::getAllHashtags($db) as $hashtag){echo "'" . $hashtag['name'] . "',"; }?>]); showResults(this.value); ">
         <div id="result"></div>
-        <label for="documents"> Annex documents: </label>
+        <label for="documents" id ="annexDoc"> Annex documents: </label>
         <input type="file" id="documents" name="documents[]" multiple> 
         <input type="submit" id="submit" value="Create Ticket">
     </form>

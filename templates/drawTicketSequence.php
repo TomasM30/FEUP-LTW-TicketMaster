@@ -12,6 +12,7 @@ function drawNavBarTicket()
     </nav>
     <?php
 }
+
 function drawTicketSequence(array $tickets, PDO $db)
 {
     if (isset($_GET['sort'])) {
@@ -23,13 +24,13 @@ function drawTicketSequence(array $tickets, PDO $db)
             usort($tickets, function ($a, $b) {
                 return $a['priority'] <=> $b['priority'];
             });
-        }else if ($_GET['sort'] == 'priorityD') {
+        } else if ($_GET['sort'] == 'priorityD') {
             usort($tickets, function ($a, $b) {
-                return $b['priority']<=> $a['priority'] ;
+                return $b['priority'] <=> $a['priority'];
             });
-        }else if ($_GET['sort'] == 'dateD') {
+        } else if ($_GET['sort'] == 'dateD') {
             usort($tickets, function ($a, $b) {
-                return $b['date']<=> $a['date'] ;
+                return $b['date'] <=> $a['date'];
             });
         }
     }
@@ -44,15 +45,15 @@ function drawTicketSequence(array $tickets, PDO $db)
                 continue;
             }
             ?>
-            <a href="../pages/ticket_details.php?id=<?php echo $ticket['id']?>" class = "refToTicketDetail">
+            <a href="../pages/ticket_details.php?id=<?php echo $ticket['id'] ?>" class="refToTicketDetail">
                 <div class="ticket">
                     <h2><?php echo $ticket['subject']; ?></h2>
                     <p><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
                     <p>Assigned agent: <?php echo $ticket['agent_username']; ?></p>
                     <p>Date created: <?php echo $ticket['date']; ?></p>
-                    <p>Department: <?php echo ticket::getDepartmentName($db,$ticket['department_id']); ?></p>
+                    <p>Department: <?php echo ticket::getDepartmentName($db, $ticket['department_id']); ?></p>
                     <?php
-                    if(user::isAgent($db, $_SESSION['username'])){
+                    if (user::isAgent($db, $_SESSION['username'])) {
                         ?>
                         <p>Priority: <?php echo ticket::getPriorityName($db, $ticket['priority']); ?></p>
                         <?php
@@ -80,11 +81,21 @@ function drawTicketSequence(array $tickets, PDO $db)
             </a>
             <?php
         }
-    } 
+    } else {
+        ?>
+        <div class="createATicketButton">
+            <a href="../pages/create_ticket.php">
+                Create a ticket
+            </a>
+        </div>
+
+        <?php
+    }
 } ?>
 
 <?php
-function drawFilter(array $statuses, array $departments, array $hashtags, array $agents, array $priorities){
+function drawFilter(array $statuses, array $departments, array $hashtags, array $agents, array $priorities)
+{
     ?>
     <form method="get">
         <label for="status">Filter by status:</label>
@@ -148,10 +159,18 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
         <label for="sort">Sort by:</label>
         <select id="sort" name="sort">
             <option value="" <?php if (!isset($_GET['sort'])) echo 'selected'; ?>>Id</option>
-            <option value="dateC" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'dateC') echo 'selected'; ?>>Date &uarr;</option>
-            <option value="priorityC" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'priorityC') echo 'selected'; ?>>Priority &uarr;</option>
-            <option value="dateD" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'dateD') echo 'selected'; ?>>Date &darr;</option>
-            <option value="priorityD" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'priorityD') echo 'selected'; ?>>Priority &darr;</option>
+            <option value="dateC" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'dateC') echo 'selected'; ?>>Date
+                &uarr;
+            </option>
+            <option value="priorityC" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'priorityC') echo 'selected'; ?>>
+                Priority &uarr;
+            </option>
+            <option value="dateD" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'dateD') echo 'selected'; ?>>Date
+                &darr;
+            </option>
+            <option value="priorityD" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'priorityD') echo 'selected'; ?>>
+                Priority &darr;
+            </option>
         </select>
         <input type="submit" value="Sort">
     </form>
@@ -159,4 +178,5 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
 
     <?php
 }
+
 ?>
