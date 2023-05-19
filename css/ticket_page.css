@@ -5,6 +5,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   
   /* Header styles */
@@ -121,22 +124,6 @@ input[type="submit"]:hover {
     border-radius: 4px;
 }
 
-.createATicketButton {
-    margin-top: 20px;
-}
-
-.createATicketButton a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
-    background-color: #6f0720;
-    border-radius: 4px;
-}
-
-.createATicketButton a:hover {
-    background-color: #45a049;
-}
-
 .ticketPage {
     display: flex;
     flex-direction: column; 
@@ -151,10 +138,11 @@ header {
 }
 
 footer {
-    margin-top: auto;
+    
     padding: 10px;
 }
 
-body {
-    width: 100%;
+main {
+    flex-grow: 1;
 }
+

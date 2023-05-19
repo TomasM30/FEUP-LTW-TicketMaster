@@ -36,9 +36,8 @@
         <?php drawHeader($session->getUsername()); ?>
 
         <main>
-            <h2>Frequently Asked Questions</h2>
-        
             <div id="faq-container">
+                <h2>Frequently Asked Questions</h2>
                 <?php
                     foreach ($result as $row) {
                         echo '<div class="faq-item">';
