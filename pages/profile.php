@@ -21,6 +21,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/userP.css">
         <link rel="stylesheet" href="../css/cards.css">
+        <link rel="stylesheet" href="../css/profile.css">
         <script src="../javascript/profile.js" defer></script>
         <script src="../javascript/scripts.js" defer></script>
     </head>

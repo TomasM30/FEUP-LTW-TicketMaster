@@ -18,7 +18,7 @@ $ticketId = $_GET['id'] ?? null;
 $ticket = ticket::getTicketById($db, $ticketId);
 $isAgent = user::isAgent($db, $username);
 $statuses = ticket::getAllStatuses($db);
-$agents = user::getAllAgents($db);
+$agents = user::getAgentsByTicketDepartment($db, $ticketId);
 $departments = ticket::getAllDepartments($db);
 $hashtags = ticket::getAllHashtags($db);
 $priorities = ticket::getAllPriorities($db);
@@ -30,13 +30,15 @@ $pfp = User::getPfp($db, $username);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Ticket Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../javascript/ticket.js" defer></script>
+    <script type="module" src="../javascript/ticket.js" defer></script>
     <link rel="stylesheet" href="../css/ticket.css">
 </head>
 <?php drawHeader($session->getUsername()); ?>
 <div class="ticketDetails">
     <?php drawNavBarTicket(); ?>
+    <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
+        <!-- todo background on ticketcontainerBox -->
         <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
         <div class="status-priority">
             <div class="editable">
@@ -56,6 +58,7 @@ $pfp = User::getPfp($db, $username);
                 <?php
                 if ($isAgent) { ?>
                     <button class="edit"> &#9998;</button>
+                    <!-- todo fix the double click not supposed -->
                     <form class="editForm" id="statusChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="status"></label>
@@ -82,6 +85,7 @@ $pfp = User::getPfp($db, $username);
                         <label for="priority"></label>
                         <select id="priority" name="priority">
                             <?php foreach ($priorities as $priority) {
+                                //todo ajax to update agents list
                                 $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
                                 <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
                             <?php } ?>
@@ -200,17 +204,21 @@ $pfp = User::getPfp($db, $username);
             <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
             <input type="hidden" name="imgPath" value="<?php echo $pfp; ?>">
             <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
-            <label for="comment"></label>
-            <fieldset>
-                <legend>Response</legend>
-                <textarea name="comment" id="comment" placeholder="Write your response here..." required></textarea>
-            </fieldset>
+            <div class="contentBox">
+                <fieldset>
+                    <legend>Response</legend>
+                    <label for="comment"></label>
+                    <input list="faq" name="comment" id="comment" placeholder="Write your response here...">
+                    <datalist id="faq"></datalist>
+                </fieldset>
+            </div>
             <input type="submit" value="Submit">
         </form>
     </div>
+    <!--todo button toogle between log and comments-->
     <div class="ticketContainerBox" id="responseDiv">
         <?php
-        $responses = ticket::getTicketResponses($db, intval($ticket['id']));
+        $responses = array_reverse(ticket::getTicketResponses($db, intval($ticket['id'])));
         if ($responses == null) {
             ?>
             <script>document.getElementById('responseDiv').style.display = 'none';</script>
@@ -222,18 +230,18 @@ $pfp = User::getPfp($db, $username);
                 <div class="infoHeading">
                     <div class="authorInfo">
                         <img src="<?= $pfp ?>" alt="User" width="50" height="50">
-                        <h3><?php echo $response['author_username'] ?></h3>
+                        <h3><?php echo $response['username'] ?></h3>
                     </div>
                     <p><?php echo $response['date']; ?></p>
                 </div>
                 <div class="contentBox">
                     <fieldset>
-                        <legend>Content</legend>
-                        <p><?php 
-                        if (strpos($response['content'], '#') !== false) {
-                            $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
-                        }
-                        echo $response['content']; ?></p>
+                        <legend>Answer</legend>
+                        <p><?php
+                            if (strpos($response['content'], '#') !== false) {
+                                $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
+                            }
+                            echo $response['content']; ?></p>
                     </fieldset>
                 </div>
                 <?php
@@ -241,34 +249,25 @@ $pfp = User::getPfp($db, $username);
         }
         ?>
     </div>
-</div>
-<div class="addResponse">
-    <form action="../actions/action_add_response.php" id='responseForm'>
-        <input type="hidden" id="ticket_id" value="<?php echo $ticket['id']; ?>">
-        <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
-        <label for="comment">Comment:</label><br>
-        <input list="faq" name="comment" id="comment" placeholder="Write your response here..."></input>
-        <datalist id="faq"></datalist>
-        <input type="submit" value="Submit">
-    </form>
-</div>
-
-<div class="log-container">
-    <h2>Logs</h2>
-    <ul class="log-list">
-        <?php
-        $logs = ticket::getLogs($db, intval($ticket['id']));
-        if (!empty($logs)) {
-            foreach ($logs as $log) {
-                ?>
-                <li class="log-item">
-                    <p class="log-date"><?php echo $log['date']; ?></p>
-                    <p class="log-content"><?php echo $log['content']; ?></p>
-                </li>
-                <?php
+    <div class="ticketContainerBox">
+        <h2>Logs</h2>
+        <ul class="log-list">
+            <?php
+            $logs = ticket::getLogs($db, intval($ticket['id']));
+            if (!empty($logs)) {
+                foreach ($logs as $log) {
+                    ?>
+                    <li class="log-item">
+                        <p class="log-content"><?php echo $log['content']; ?></p>
+                        <p class="log-date"><?php echo $log['date']; ?></p>
+                    </li>
+                    <?php
+                }
             }
-        }
-        ?>
+            ?>
+        </ul>
+    </div>
+</div>
 
 
-    <?php drawFooter(); ?>
+<?php drawFooter(); ?>

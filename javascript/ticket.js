@@ -1,24 +1,32 @@
 import { encodeForAjax } from "../utils/ajax.js";
 
+const statusForm = document.getElementById('statusChangeForm');
+const statusName = document.getElementById('ticketStatus');
+const agentForm = document.getElementById('agentChangeForm');
+const agentName = document.getElementById('ticketAgent');
+const departmentForm = document.getElementById('departmentChangeForm');
+const departmentName = document.getElementById('ticketDepartment');
+const priorityForm = document.getElementById('priorityChangeForm');
+const priorityName = document.getElementById('ticketPriority');
+
 const form = document.getElementById('responseForm');
 const ticketResponses = document.getElementById('responseDiv');
-
 
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
     const comment = document.getElementById('comment').value;
-    const ticket_id = document.getElementById('ticket_id').value;
+    const ticket_id = document.getElementsByName('ticket_id')[0].value;
     const response = await fetch('../actions/action_add_response.php',
-    {method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: encodeForAjax({
-            comment: comment,
-            ticket_id: ticket_id
-        }),
-    });
-    
+        {method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: encodeForAjax({
+                comment: comment,
+                ticket_id: ticket_id
+            }),
+        });
+
     const res = await response.json();
     if (res === '') {
         const responseDiv = document.createElement('div');
@@ -56,10 +64,9 @@ form.addEventListener('submit', async function (e) {
         legend.textContent = 'Answer';
         fieldset.appendChild(legend);
 
-        
+
         const responseParagraph = document.createElement('p');
         responseParagraph.textContent = document.getElementById('comment').value;
-        fieldset.appendChild(responseParagraph);
 
         contentBoxDiv.appendChild(fieldset);
         responseDiv.appendChild(contentBoxDiv);
@@ -71,30 +78,15 @@ form.addEventListener('submit', async function (e) {
             responseParagraph.appendChild(faq_link);
         }
 
-        responseDiv.appendChild(authorParagraph);
-        responseDiv.appendChild(dateParagraph);
-        responseDiv.appendChild(responseParagraph);
+        fieldset.appendChild(responseParagraph);
 
-        ticketResponses.appendChild(responseDiv);
+        ticketResponses.prepend(responseDiv);
         document.getElementById('comment').value = '';
-        window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth'
-        });
+        document.getElementById('responseDiv').style.display = 'block'
     } else {
         alert(res);
     }
 });
-
-const statusForm = document.getElementById('statusChangeForm');
-const statusName = document.getElementById('ticketStatus');
-const agentForm = document.getElementById('agentChangeForm');
-const agentName = document.getElementById('ticketAgent');
-const departmentForm = document.getElementById('departmentChangeForm');
-const departmentName = document.getElementById('ticketDepartment');
-const priorityForm = document.getElementById('priorityChangeForm');
-const priorityName = document.getElementById('ticketPriority');
-
 
 statusForm.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -146,6 +138,7 @@ departmentForm.addEventListener('submit', async function (e) {
     console.log(res);
     if (res === '') {
         departmentName.textContent = (document.getElementById('department').value).length > 15 ?  (document.getElementById('department').value).substring(0, 15) + "..." : document.getElementById('department').value;
+
     }
 
     updateLogs();   
@@ -164,44 +157,44 @@ priorityForm.addEventListener('submit', async function (e) {
 
 async function updateLogs() {
     const logs = document.querySelector(".log-list");
-    
-            const ticket_id = document.querySelector("#ticketId").value;
 
-            const response = await fetch("../api/get_logs.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: encodeForAjax({
-                    id: ticket_id,
-                }),
-            }); 
+    const ticket_id = document.querySelector("#ticketId").value;
 
-            const data = await response.json();
-            
+    const response = await fetch("../api/get_logs.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: encodeForAjax({
+            id: ticket_id,
+        }),
+    }); 
 
-            console.log(data);
+    const data = await response.json();
 
-            logs.innerHTML = "";
+    console.log(data);
 
-            for (const log of data) {;
-                const logElement = document.createElement("li");
-                
-                const logDate = document.createElement("p");
-                logDate.classList.add("log-date");
+    logs.innerHTML = "";
 
-                logDate.innerHTML = log.date;
+    for (const log of data) {
+        const logElement = document.createElement("li");
+        logElement.classList.add("log-item");
+        
+        const logDate = document.createElement("p");
+        logDate.classList.add("log-date");
 
-                const logContent = document.createElement("p");
-                logContent.classList.add("log-content");
+        logDate.innerHTML = log.date;
 
-                logContent.innerHTML = log.content;
+        const logContent = document.createElement("p");
+        logContent.classList.add("log-content");
 
-                logElement.appendChild(logDate);
-                logElement.appendChild(logContent);
+        logContent.innerHTML = log.content;
 
-                logs.prepend(logElement);
-            }
+        logElement.appendChild(logContent);
+        logElement.appendChild(logDate);
+
+        logs.prepend(logElement);
+    }
 }
 
 const responseForm = document.getElementById('comment');
@@ -235,54 +228,11 @@ responseForm.addEventListener('input', async () => {
         }
     }
 });
-
-async function updateLogs() {
-
-    const logs = document.querySelector(".log");
-
-    const ticket_id = document.querySelector("#ticketId").value;
-
-    const response = await fetch("../api/get_logs.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: encodeForAjax({
-            id: ticket_id,
-        }),
-    });
-
-    const data = await response.json();
-
-
-    console.log(data);
-
-    logs.innerHTML = "";
-
-    for (const log of data) {
-        const logElement = document.createElement("div");
-
-        const logContent = document.createElement("p");
-        logContent.classList.add("log-content");
-
-        logContent.innerHTML = log.content;
-
-        const logDate = document.createElement("p");
-        logDate.classList.add("log-date");
-
-        logDate.innerHTML = log.date;
-
-        logElement.appendChild(logDate);
-        logElement.appendChild(logContent);
-
-        logs.appendChild(logElement);
-    }
-}
     
 const editButton = document.querySelectorAll('.edit');
 editButton.forEach(button => {
     button.addEventListener('click', async () => {
-        const editForm = button.nextElementSibling;
+        const editForm = button.parentElement.querySelector('.editForm');
 
         if (editForm.style.display === 'none') {
             editForm.style.display = 'block';
