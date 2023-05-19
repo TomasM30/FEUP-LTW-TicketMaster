@@ -1,8 +1,22 @@
+import { encodeForAjax } from "../utils/ajax.js";
+
 const form = document.getElementById('responseForm');
 const ticketResponses = document.getElementById('responseDiv');
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const response = await fetch('../actions/action_add_response.php?content=' + document.getElementById('comment').value + '&ticket_id=' + document.getElementsByName('ticket_id')[0].value);
+    const comment = document.getElementById('comment').value;
+    const ticket_id = document.getElementById('ticket_id').value;
+    const response = await fetch('../actions/action_add_response.php',
+    {method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: encodeForAjax({
+            comment: comment,
+            ticket_id: ticket_id
+        }),
+    });
+    
     const res = await response.json();
     if (res === '') {
         const responseDiv = document.createElement('div');
@@ -40,12 +54,24 @@ form.addEventListener('submit', async function (e) {
         legend.textContent = 'Answer';
         fieldset.appendChild(legend);
 
+        
         const responseParagraph = document.createElement('p');
         responseParagraph.textContent = document.getElementById('comment').value;
         fieldset.appendChild(responseParagraph);
 
         contentBoxDiv.appendChild(fieldset);
         responseDiv.appendChild(contentBoxDiv);
+        if (document.getElementById('comment').value.includes("#")) {
+            const faq_link = document.createElement("a");
+            faq_link.href = "faq.php";
+            faq_link.textContent = document.getElementById('comment').value;
+            responseParagraph.textContent = "Answer: ";
+            responseParagraph.appendChild(faq_link);
+        }
+
+        responseDiv.appendChild(authorParagraph);
+        responseDiv.appendChild(dateParagraph);
+        responseDiv.appendChild(responseParagraph);
 
         ticketResponses.appendChild(responseDiv);
         document.getElementById('comment').value = '';
@@ -96,7 +122,8 @@ statusForm.addEventListener('submit', async function (e) {
                 statusName.style.color = '#be9801';
             }
         }
-        openStatusMenu();
+
+        updateLogs();
     }
 });
 
@@ -107,7 +134,8 @@ agentForm.addEventListener('submit', async function (e) {
     if (res === '') {
         agentName.textContent = "Agent: " + document.getElementById('agent').value;
     }
-    openAgentsMenu();
+
+    updateLogs();
 });
 
 departmentForm.addEventListener('submit', async function (e) {
@@ -118,7 +146,8 @@ departmentForm.addEventListener('submit', async function (e) {
     if (res === '') {
         departmentName.textContent = (document.getElementById('department').value).length > 15 ?  (document.getElementById('department').value).substring(0, 15) + "..." : document.getElementById('department').value;
     }
-    openDepartmentMenu();
+
+    updateLogs();   
 });
 
 priorityForm.addEventListener('submit', async function (e) {
@@ -129,44 +158,84 @@ priorityForm.addEventListener('submit', async function (e) {
     if (res === '') {
         priorityName.textContent = 'Priority: ' + document.getElementById('priority').value;
     }
-    openPriorityMenu();
+    updateLogs();
 });
 
-function openAgentsMenu(){
-    const form = document.getElementById('agentChangeForm');
-    if (form.style.display === 'block') {
-        form.style.display = 'none';
-    } else {
-        form.style.display = 'block';
-    }
-}
-function openDepartmentMenu(){
-    const form = document.getElementById('departmentChangeForm');
-    if (form.style.display === 'block') {
-        form.style.display = 'none';
-    } else {
-        form.style.display = 'block';
-    }
-}
-function openPriorityMenu(){
-    const form = document.getElementById('priorityChangeForm');
-    if (form.style.display === 'block') {
-        form.style.display = 'none';
-    } else {
-        form.style.display = 'block';
-    }
+async function updateLogs() {
+    const logs = document.querySelector(".log-list");
+    
+            const ticket_id = document.querySelector("#ticketId").value;
+
+            const response = await fetch("../api/get_logs.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: encodeForAjax({
+                    id: ticket_id,
+                }),
+            }); 
+
+            const data = await response.json();
+            
+
+            console.log(data);
+
+            logs.innerHTML = "";
+
+            for (const log of data) {;
+                const logElement = document.createElement("li");
+                
+                const logDate = document.createElement("p");
+                logDate.classList.add("log-date");
+
+                logDate.innerHTML = log.date;
+
+                const logContent = document.createElement("p");
+                logContent.classList.add("log-content");
+
+                logContent.innerHTML = log.content;
+
+                logElement.appendChild(logDate);
+                logElement.appendChild(logContent);
+
+                logs.prepend(logElement);
+            }
 }
 
-function openStatusMenu(){
-    const form = document.getElementById('statusChangeForm');
-    if (form.style.display === 'block') {
-        form.style.display = 'none';
-    } else {
-        form.style.display = 'block';
-    }
-}
+const responseForm = document.getElementById('comment');
 
-/*async function updateLogs() {
+responseForm.addEventListener('input', async () => {
+    const content = responseForm.value;
+
+    if (content.includes('#')) {
+        const response = await fetch('../api/get_faq.php', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
+
+        const data = await response.json();
+
+        const faq = document.getElementById('faq');
+
+        faq.innerHTML = "";
+
+        for (const qa of data) {
+            const question = qa.question;
+            const answer = qa.answer;
+
+            const option = document.createElement('option');
+            option.value = "#" + question;
+            option.innerHTML = answer;
+
+            faq.appendChild(option);
+        }
+    }
+});
+
+async function updateLogs() {
     const logs = document.querySelector(".log-list");
 
 
@@ -208,8 +277,19 @@ function openStatusMenu(){
 
         logs.appendChild(logElement);
     }
-
 }
+    
+const editButton = document.querySelectorAll('.edit');
 
-updateLogs();*/
+editButton.forEach(button => {
+    button.addEventListener('click', async () => {
+        const editForm = button.nextElementSibling;
 
+        if (editForm.style.display === 'none') {
+            editForm.style.display = 'block';
+        }
+        else {
+            editForm.style.display = 'none';
+        }
+    });
+});
