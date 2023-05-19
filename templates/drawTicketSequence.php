@@ -80,12 +80,7 @@ function drawTicketSequence(array $tickets, PDO $db)
             </a>
             <?php
         }
-    } else {
-        ?>
-        <button class=createATicketButton><a href="../pages/create_ticket.php">Create a ticket</a></button>
-        <?php
-    }
-
+    } 
 } ?>
 
 <?php
