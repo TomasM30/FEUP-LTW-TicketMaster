@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../database/ticket.php');
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../templates/drawTicketSequence.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
+require_once(__DIR__ . '/../database/faq.php');
 
 $session = new Session();
 
@@ -54,7 +55,7 @@ $pfp = User::getPfp($db, $username);
                 </p>
                 <?php
                 if ($isAgent) { ?>
-                    <button class="edit" onclick="openStatusMenu()"> &#9998;</button>
+                    <button class="edit"> &#9998;</button>
                     <form class="editForm" id="statusChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="status"></label>
@@ -89,7 +90,7 @@ $pfp = User::getPfp($db, $username);
                     </form>
                     <p id='ticketPriority'>
                         Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
-                    <button class="edit" onclick="openPriorityMenu()"> &#9998;</button>
+                    <button class="edit"> &#9998;</button>
 
                 </div>
                 <?php
@@ -115,7 +116,7 @@ $pfp = User::getPfp($db, $username);
                 <?php
                 if ($isAgent) {
                     ?>
-                    <button class="edit" id='agentEdit' onclick="openAgentsMenu()"> &#9998;</button>
+                    <button class="edit" id='agentEdit'> &#9998;</button>
                     <form class="editForm" action="../actions/action_change_agent.php" id="agentChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="agent"></label>
@@ -144,7 +145,7 @@ $pfp = User::getPfp($db, $username);
                 <?php
                 if ($isAgent) {
                     ?>
-                    <button class="edit" onclick="openDepartmentMenu()"> &#9998;</button>
+                    <button class="edit"> &#9998;</button>
                     <form class="editForm" action="../actions/action_change_department.php"
                           id="departmentChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
@@ -221,14 +222,18 @@ $pfp = User::getPfp($db, $username);
                 <div class="infoHeading">
                     <div class="authorInfo">
                         <img src="<?= $pfp ?>" alt="User" width="50" height="50">
-                        <h3><?php echo $ticket['author_username'] ?></h3>
+                        <h3><?php echo $response['author_username'] ?></h3>
                     </div>
-                    <p><?php echo $ticket['date']; ?></p>
+                    <p><?php echo $response['date']; ?></p>
                 </div>
                 <div class="contentBox">
                     <fieldset>
                         <legend>Content</legend>
-                        <p><?php echo $ticket['content']; ?></p>
+                        <p><?php 
+                        if (strpos($response['content'], '#') !== false) {
+                            $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
+                        }
+                        echo $response['content']; ?></p>
                     </fieldset>
                 </div>
                 <?php
@@ -236,27 +241,34 @@ $pfp = User::getPfp($db, $username);
         }
         ?>
     </div>
-    <div class="ticketContainerBox" id ="logsContainerBox">
-        <h2>Logs</h2>
-        <div class="contentBox">
-            <fieldset class="log-list">
-                <?php
-                $logs = Ticket::getLogs($db, intval($ticket['id']));
-                if (!empty($logs)) {
-                    foreach ($logs as $log) {
-                        ?>
-                        <div class = "log">
-                            <p class="log-content" ><?php echo $log['content']; ?></p>
-                            <p class="log-date"><?php echo $log['date']; ?></p>
-                        </div>
-                        <?php
-                    }
-                }
-                ?>
-            </fieldset>
+</div>
+<div class="addResponse">
+    <form action="../actions/action_add_response.php" id='responseForm'>
+        <input type="hidden" id="ticket_id" value="<?php echo $ticket['id']; ?>">
+        <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
+        <label for="comment">Comment:</label><br>
+        <input list="faq" name="comment" id="comment" placeholder="Write your response here..."></input>
+        <datalist id="faq"></datalist>
+        <input type="submit" value="Submit">
+    </form>
+</div>
 
-        </div>
-    </div>
+<div class="log-container">
+    <h2>Logs</h2>
+    <ul class="log-list">
+        <?php
+        $logs = ticket::getLogs($db, intval($ticket['id']));
+        if (!empty($logs)) {
+            foreach ($logs as $log) {
+                ?>
+                <li class="log-item">
+                    <p class="log-date"><?php echo $log['date']; ?></p>
+                    <p class="log-content"><?php echo $log['content']; ?></p>
+                </li>
+                <?php
+            }
+        }
+        ?>
 
 
     <?php drawFooter(); ?>

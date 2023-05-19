@@ -240,14 +240,14 @@ class ticket
         }
     }
 
-    static function ticketLog(PDO $db, int $ticketId, string $content) : bool {
+    static function ticketLog($db, $ticketId, $content) : bool {
         $stmt = $db->prepare('INSERT INTO TicketLog (ticket_id, content) VALUES (:ticketId, :content)');
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':content', $content);
         return $stmt->execute();
     }
 
-    static function getLogs($db, $ticketId) : array{
+    static function getLogs($db, $ticketId) : array {
         $stmt = $db->prepare('SELECT * FROM TicketLog WHERE ticket_id = :ticketId');
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->execute();

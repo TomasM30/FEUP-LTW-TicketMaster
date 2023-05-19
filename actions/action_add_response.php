@@ -7,8 +7,8 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
-$content = $_GET['content'];
-$ticketId = $_GET['ticket_id'];
+$content = $_POST['comment'];
+$ticketId = $_POST['ticket_id'];
 if (trim($content) == '') {
     echo json_encode('Content cannot be empty');
 } else {

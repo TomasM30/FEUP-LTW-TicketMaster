@@ -3,6 +3,7 @@
 function drawNavBarTicket()
 {
     ?>
+
     <nav id="navBarTicket">
         <ul>
             <li><a href="../pages/create_ticket.php">Create Ticket</a></li>
@@ -163,5 +164,4 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
 
     <?php
 }
-
 ?>
