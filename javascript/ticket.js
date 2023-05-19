@@ -9,6 +9,83 @@ const departmentName = document.getElementById('ticketDepartment');
 const priorityForm = document.getElementById('priorityChangeForm');
 const priorityName = document.getElementById('ticketPriority');
 
+const form = document.getElementById('responseForm');
+const ticketResponses = document.getElementById('responseDiv');
+
+form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const comment = document.getElementById('comment').value;
+    const ticket_id = document.getElementsByName('ticket_id')[0].value;
+    const response = await fetch('../actions/action_add_response.php',
+        {method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: encodeForAjax({
+                comment: comment,
+                ticket_id: ticket_id
+            }),
+        });
+
+    const res = await response.json();
+    if (res === '') {
+        const responseDiv = document.createElement('div');
+
+        const infoHeadingDiv = document.createElement('div');
+        infoHeadingDiv.classList.add('infoHeading');
+
+        const authorInfoDiv = document.createElement('div');
+        authorInfoDiv.classList.add('authorInfo');
+
+        const authorImage = document.createElement('img');
+        authorImage.src = document.getElementsByName('imgPath')[0].value;
+        authorImage.alt = 'User';
+        authorImage.width = 50;
+        authorImage.height = 50;
+        authorInfoDiv.appendChild(authorImage);
+
+        const authorHeading = document.createElement('h3');
+        authorHeading.textContent = document.getElementsByName('author_username')[0].value;
+        authorInfoDiv.appendChild(authorHeading);
+
+        infoHeadingDiv.appendChild(authorInfoDiv);
+
+        const dateParagraph = document.createElement('p');
+        dateParagraph.textContent = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        infoHeadingDiv.appendChild(dateParagraph);
+
+        responseDiv.appendChild(infoHeadingDiv);
+
+        const contentBoxDiv = document.createElement('div');
+        contentBoxDiv.classList.add('contentBox');
+
+        const fieldset = document.createElement('fieldset');
+        const legend = document.createElement('legend');
+        legend.textContent = 'Answer';
+        fieldset.appendChild(legend);
+
+
+        const responseParagraph = document.createElement('p');
+        responseParagraph.textContent = document.getElementById('comment').value;
+
+        contentBoxDiv.appendChild(fieldset);
+        responseDiv.appendChild(contentBoxDiv);
+        if (document.getElementById('comment').value.includes("#")) {
+            const faq_link = document.createElement("a");
+            faq_link.href = "faq.php";
+            faq_link.textContent = document.getElementById('comment').value;
+            responseParagraph.textContent = "Answer: ";
+            responseParagraph.appendChild(faq_link);
+        }
+
+        fieldset.appendChild(responseParagraph);
+
+        ticketResponses.prepend(responseDiv);
+        document.getElementById('comment').value = '';
+    } else {
+        alert(res);
+    }
+});
 
 statusForm.addEventListener('submit', async function (e) {
     e.preventDefault();
