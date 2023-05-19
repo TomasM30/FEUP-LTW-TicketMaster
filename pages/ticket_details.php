@@ -32,12 +32,13 @@ $pfp = User::getPfp($db, $username);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Ticket Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../javascript/ticket.js" defer></script>
+    <script type="module" src="../javascript/ticket.js" defer></script>
     <link rel="stylesheet" href="../css/ticket.css">
 </head>
 <?php drawHeader($session->getUsername()); ?>
 <div class="ticketDetails">
     <?php drawNavBarTicket(); ?>
+    <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
         <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
         <div class="status-priority">
@@ -203,10 +204,9 @@ $pfp = User::getPfp($db, $username);
             <input type="hidden" name="imgPath" value="<?php echo $pfp; ?>">
             <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
             <label for="comment"></label>
-            <fieldset>
-                <legend>Response</legend>
-                <textarea name="comment" id="comment" placeholder="Write your response here..." required></textarea>
-            </fieldset>
+            <label for="comment">Comment:</label><br>
+            <input list="faq" name="comment" id="comment" placeholder="Write your response here..."></input>
+            <datalist id="faq"></datalist>
             <input type="submit" value="Submit">
         </form>
     </div>
@@ -243,16 +243,6 @@ $pfp = User::getPfp($db, $username);
         }
         ?>
     </div>
-</div>
-<div class="addResponse">
-    <form action="../actions/action_add_response.php" id='responseForm'>
-        <input type="hidden" id="ticket_id" value="<?php echo $ticket['id']; ?>">
-        <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
-        <label for="comment">Comment:</label><br>
-        <input list="faq" name="comment" id="comment" placeholder="Write your response here..."></input>
-        <datalist id="faq"></datalist>
-        <input type="submit" value="Submit">
-    </form>
 </div>
 
 <div class="log-container">

@@ -1,90 +1,5 @@
 import { encodeForAjax } from "../utils/ajax.js";
 
-const form = document.getElementById('responseForm');
-const ticketResponses = document.getElementById('responseDiv');
-form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const comment = document.getElementById('comment').value;
-    const ticket_id = document.getElementById('ticket_id').value;
-    const response = await fetch('../actions/action_add_response.php',
-    {method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: encodeForAjax({
-            comment: comment,
-            ticket_id: ticket_id
-        }),
-    });
-    
-    const res = await response.json();
-    if (res === '') {
-        const responseDiv = document.createElement('div');
-
-        const infoHeadingDiv = document.createElement('div');
-        infoHeadingDiv.classList.add('infoHeading');
-
-        const authorInfoDiv = document.createElement('div');
-        authorInfoDiv.classList.add('authorInfo');
-
-        const authorImage = document.createElement('img');
-        authorImage.src = document.getElementsByName('imgPath')[0].value;
-        authorImage.alt = 'User';
-        authorImage.width = 50;
-        authorImage.height = 50;
-        authorInfoDiv.appendChild(authorImage);
-
-        const authorHeading = document.createElement('h3');
-        authorHeading.textContent = document.getElementsByName('author_username')[0].value;
-        authorInfoDiv.appendChild(authorHeading);
-
-        infoHeadingDiv.appendChild(authorInfoDiv);
-
-        const dateParagraph = document.createElement('p');
-        dateParagraph.textContent = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        infoHeadingDiv.appendChild(dateParagraph);
-
-        responseDiv.appendChild(infoHeadingDiv);
-
-        const contentBoxDiv = document.createElement('div');
-        contentBoxDiv.classList.add('contentBox');
-
-        const fieldset = document.createElement('fieldset');
-        const legend = document.createElement('legend');
-        legend.textContent = 'Answer';
-        fieldset.appendChild(legend);
-
-        
-        const responseParagraph = document.createElement('p');
-        responseParagraph.textContent = document.getElementById('comment').value;
-        fieldset.appendChild(responseParagraph);
-
-        contentBoxDiv.appendChild(fieldset);
-        responseDiv.appendChild(contentBoxDiv);
-        if (document.getElementById('comment').value.includes("#")) {
-            const faq_link = document.createElement("a");
-            faq_link.href = "faq.php";
-            faq_link.textContent = document.getElementById('comment').value;
-            responseParagraph.textContent = "Answer: ";
-            responseParagraph.appendChild(faq_link);
-        }
-
-        responseDiv.appendChild(authorParagraph);
-        responseDiv.appendChild(dateParagraph);
-        responseDiv.appendChild(responseParagraph);
-
-        ticketResponses.appendChild(responseDiv);
-        document.getElementById('comment').value = '';
-        window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth'
-        });
-    } else {
-        alert(res);
-    }
-});
-
-
 const statusForm = document.getElementById('statusChangeForm');
 const statusName = document.getElementById('ticketStatus');
 const agentForm = document.getElementById('agentChangeForm');
@@ -163,44 +78,44 @@ priorityForm.addEventListener('submit', async function (e) {
 
 async function updateLogs() {
     const logs = document.querySelector(".log-list");
+
+    const ticket_id = document.querySelector("#ticketId").value;
+
+    const response = await fetch("../api/get_logs.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: encodeForAjax({
+            id: ticket_id,
+        }),
+    }); 
+
+    const data = await response.json();
     
-            const ticket_id = document.querySelector("#ticketId").value;
 
-            const response = await fetch("../api/get_logs.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: encodeForAjax({
-                    id: ticket_id,
-                }),
-            }); 
+    console.log(data);
 
-            const data = await response.json();
-            
+    logs.innerHTML = "";
 
-            console.log(data);
+    for (const log of data) {;
+        const logElement = document.createElement("li");
+        
+        const logDate = document.createElement("p");
+        logDate.classList.add("log-date");
 
-            logs.innerHTML = "";
+        logDate.innerHTML = log.date;
 
-            for (const log of data) {;
-                const logElement = document.createElement("li");
-                
-                const logDate = document.createElement("p");
-                logDate.classList.add("log-date");
+        const logContent = document.createElement("p");
+        logContent.classList.add("log-content");
 
-                logDate.innerHTML = log.date;
+        logContent.innerHTML = log.content;
 
-                const logContent = document.createElement("p");
-                logContent.classList.add("log-content");
+        logElement.appendChild(logDate);
+        logElement.appendChild(logContent);
 
-                logContent.innerHTML = log.content;
-
-                logElement.appendChild(logDate);
-                logElement.appendChild(logContent);
-
-                logs.prepend(logElement);
-            }
+        logs.prepend(logElement);
+    }
 }
 
 const responseForm = document.getElementById('comment');
@@ -234,58 +149,14 @@ responseForm.addEventListener('input', async () => {
         }
     }
 });
-
-async function updateLogs() {
-    const logs = document.querySelector(".log-list");
-
-
-
-    const ticket_id = document.querySelector("#ticketId").value;
-
-    const response = await fetch("../api/get_logs.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: encodeForAjax({
-            id: ticket_id,
-        }),
-    });
-
-    const data = await response.json();
-
-
-    console.log(data);
-
-    logs.innerHTML = "";
-
-    for (const log of data) {;
-        const logElement = document.createElement("div  ");
-
-        const logContent = document.createElement("p");
-        logContent.classList.add("log-content");
-
-        logContent.innerHTML = log.content;
-
-        const logDate = document.createElement("p");
-        logDate.classList.add("log-date");
-
-        logDate.innerHTML = log.date;
-
-        logElement.appendChild(logDate);
-        logElement.appendChild(logContent);
-
-        logs.appendChild(logElement);
-    }
-}
     
 const editButton = document.querySelectorAll('.edit');
 
 editButton.forEach(button => {
     button.addEventListener('click', async () => {
-        const editForm = button.nextElementSibling;
+        const editForm = button.parentElement.querySelector('.editForm');
 
-        if (editForm.style.display === 'none') {
+        if (editForm.style.display == 'none') {
             editForm.style.display = 'block';
         }
         else {
