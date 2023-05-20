@@ -9,11 +9,9 @@
 
 
     $session = new Session();
+    $session->generateToken();
 
-    if (!$session->isLoggedIn()) {
-        header('Location: ../pages/login.php');
-        die();
-    }
+    if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
 
     $db = getDatabaseConnection();
 

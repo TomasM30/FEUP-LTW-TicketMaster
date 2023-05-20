@@ -9,8 +9,9 @@
     require_once(__DIR__ . '/../database/ticket.php');
 
     $session = new Session();
-
-    if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
+    $session->generateToken();
+    
+    if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
 
     $db = getDatabaseConnection();
 

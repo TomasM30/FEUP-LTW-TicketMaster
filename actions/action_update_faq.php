@@ -7,6 +7,7 @@
     require_once '../database/users.php';
 
     $session = new Session();
+    $session->generateToken();
 
     $db = getDatabaseConnection();
 

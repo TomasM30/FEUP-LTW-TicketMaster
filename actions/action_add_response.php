@@ -7,10 +7,11 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+$session->generateToken();
 
-if ($_SESSION['csrf'] !== $_POST['csrf']) {
-    echo "<script>alert('Invalid token')</script>";
-    die(header('Location: /../pages/departments.php'));
+if (!$session->isLoggedIn()) {
+    echo json_encode('You must be logged in to add a response');
+    exit();
 }
 
 $content = htmlspecialchars($_POST['comment']);

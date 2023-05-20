@@ -9,6 +9,10 @@ require_once(__DIR__ . '/../utils/misc.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+$session->generateToken();
+
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
+
 $username = $session->getUsername();
 
 if ($username == null) die(header('Location: /../pages/login.php'));

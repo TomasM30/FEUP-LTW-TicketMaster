@@ -7,6 +7,7 @@
 
     $db = getDatabaseConnection();
     $session = new Session();
+    $session->generateToken();
     $username = $session->getUsername();
 
     if ($_SESSION['csrf'] !== $_POST['csrf']) {

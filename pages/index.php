@@ -8,9 +8,11 @@ require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../utils/misc.php');
 
 $session = new Session();
+$session->generateToken();
 
 $db = getDatabaseConnection();
-if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php')); 
+    
 
 $tickets = ticket::getTickets($db, $session->getUsername());
 //todo style this page better

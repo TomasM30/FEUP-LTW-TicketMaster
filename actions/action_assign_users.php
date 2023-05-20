@@ -6,6 +6,7 @@
 
     $db = getDatabaseConnection();
     $session = new Session();
+    $session->generateToken();
 
     if (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'assign'){
         User::assignAgentToDepartment($db, htmlspecialchars($_POST['username']), htmlspecialchars($_POST['department']));

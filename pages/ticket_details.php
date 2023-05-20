@@ -8,9 +8,9 @@ require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../database/faq.php');
 
 $session = new Session();
+$session->generateToken();
 
-if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
-
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
 $db = getDatabaseConnection();
 
 $username = $session->getUsername();

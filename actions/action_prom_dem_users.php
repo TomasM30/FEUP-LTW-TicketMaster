@@ -7,6 +7,7 @@
 
     $db = getDatabaseConnection();
     $session = new Session();
+    $session->generateToken();
 
     if ($_SESSION['csrf'] !== $_POST['csrf']) {
         echo "<script>alert('Invalid token')</script>";

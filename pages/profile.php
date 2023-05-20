@@ -8,12 +8,13 @@ require_once(__DIR__ . '/../utils/misc.php');
 
 $session = new Session();
 
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
+
 $db = getDatabaseConnection();
 $pfp = User::getPfp($db, $session->getUsername());
 $tickets = ticket::getTickets($db, $session->getUsername());
 $username = $session->getUsername();
-
-if ($username == null) die(header('Location: /../pages/login.php')); ?>
+ ?>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
