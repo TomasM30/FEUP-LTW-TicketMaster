@@ -35,7 +35,7 @@ $username = $session->getUsername();
                         <label for="pfp"><img src="<?= $pfp ?>" alt="userImg" class="userImg"></label>
                         <input type="file" id="pfp" name="pfp" required="required" accept="image/*">
                         <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
-                        <input type="submit" id="submit" value="Submit changes!" class="openButton">
+                        <input type="submit" id="submit" value="Submit changes!">
                     </form>
                     <h5 class="usernameP">
                         <?php

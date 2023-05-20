@@ -19,6 +19,9 @@ showBtn.addEventListener('click', function(e){
     e.preventDefault();
     if(currentForm.style.display === 'none'){
         currentForm.style.display = 'flex';
+        currentForm.style.justifyContent = 'center';
+        currentForm.style.alignItems = 'center';
+        currentForm.style.marginBottom = '20px';
         showBtn.textContent = 'Hide form';
     } else {
         currentForm.style.display = 'none';
@@ -60,6 +63,9 @@ showBtnAssign.addEventListener('click', function(e){
         e.preventDefault();
         if(assignForm.style.display === 'none'){
             assignForm.style.display = 'flex';
+            assignForm.style.justifyContent = 'center';
+            assignForm.style.alignItems = 'center';
+            assignForm.style.marginBottom = '20px';
             showBtnAssign.textContent = 'Hide form';
         } else {
             assignForm.style.display = 'none';

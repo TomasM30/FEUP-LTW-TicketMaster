@@ -289,11 +289,13 @@ editButton.forEach(button => {
     button.addEventListener('click', async () => {
         const editForm = button.parentElement.querySelector('.editForm');
 
-        if (editForm.style.display === 'none') {
+        if (editForm !== null) {
+            if (editForm.style.display === 'none') {
             editForm.style.display = 'block';
         } else {
             editForm.style.display = 'none';
         }
+            }
     });
 });
 
@@ -350,16 +352,18 @@ function removeHashtag(event) {
 }
 
 hashtagEdit.addEventListener('click', async () => {
-    if (editForm.style.display === 'none') {
-        editForm.style.display = 'block';
-        hashtags.forEach(tag => {
-            tag.style.cursor = 'pointer';
-        });
-    } else {
-        editForm.style.display = 'none';
-        hashtags.forEach(tag => {
-            tag.style.cursor = 'default';
-        });
+    if (editForm !== null) {
+        if (editForm.style.display === 'none') {
+            editForm.style.display = 'block';
+            hashtags.forEach(tag => {
+                tag.style.cursor = 'pointer';
+            });
+        } else {
+            editForm.style.display = 'none';
+            hashtags.forEach(tag => {
+                tag.style.cursor = 'default';
+            });
+        }
     }
 });
 
@@ -380,10 +384,27 @@ editForm.addEventListener('submit', async (e) => {
             }
             const tag = document.createElement('span');
             tag.classList.add('tag');
-            tag.innerHTML = '#'+data;
+            tag.innerHTML = '#' + data;
             tag.addEventListener('click', removeHashtag);
             hashtagDiv.appendChild(tag);
+            tag.style.cursor = 'pointer';
             document.getElementById('hashtagInput').value = '';
         });
 });
+
+const deleteButton = document.getElementById('deleteTicket');
+deleteButton.addEventListener('click', deleteTicket);
+
+function deleteTicket() {
+    const ticketId = document.getElementsByName('ticket_id')[0].value;
+    fetch('../actions/action_delete_ticket.php?ticket_id=' + ticketId)
+        .then(response => response.json())
+        .then(data => {
+            if (data === true) {
+                window.location.replace('../pages/ticketPage.php');
+            } else {
+                alert('Something went wrong!');
+            }
+        });
+}
 
