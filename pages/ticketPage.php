@@ -29,14 +29,15 @@ $priorities = ticket::getAllPriorities($db);
     <title>Ticket Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/ticket_page.css">
+    <script src="../javascript/scripts.js" defer></script>
 </head>
 <?php drawHeader($username); ?>
 <div class="ticketPage">
     <?php drawNavBarTicket();
     if(user::isAgent($db, $username)){
-        //todo add a button to appear and disappear the filtering box
         ?>
         <div class = "filtering-box">
+            <button id="filter">&#x1F50D;</button>
             <?php
             drawFilter($statuses, $departments, $hashtags, $agents, $priorities);
             ?>

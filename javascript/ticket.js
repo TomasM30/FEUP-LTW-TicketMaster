@@ -8,7 +8,7 @@ const departmentForm = document.getElementById('departmentChangeForm');
 const departmentName = document.getElementById('ticketDepartment');
 const priorityForm = document.getElementById('priorityChangeForm');
 const priorityName = document.getElementById('ticketPriority');
-
+let isResponseVisible = false;
 const form = document.getElementById('responseForm');
 const ticketResponses = document.getElementById('responseDiv');
 
@@ -84,9 +84,11 @@ form.addEventListener('submit', async function (e) {
 
         fieldset.appendChild(responseParagraph);
 
-        ticketResponses.prepend(responseDiv);
+        ticketResponses.appendChild(responseDiv);
         document.getElementById('comment').value = '';
-        document.getElementById('responseDiv').style.display = 'block'
+        if(isResponseVisible){
+            document.getElementById('responseDiv').style.display = 'block'
+        }
     } else {
         alert(res);
     }
@@ -101,6 +103,7 @@ statusForm.addEventListener('submit', async function (e) {
         const agentForm = document.getElementById('agentChangeForm');
         statusName.textContent = document.getElementById('status').value;
         if(document.getElementById('status').value === 'Open'){
+            document.getElementById('responseBox').style.display = 'block';
             statusName.style.color = 'green';
             agentButton.style.display = 'none';
             if(agentForm.style.display === 'block'){
@@ -114,8 +117,10 @@ statusForm.addEventListener('submit', async function (e) {
         } else {
             agentButton.style.display = 'block';
             if(document.getElementById('status').value === 'Closed'){
+                document.getElementById('responseForm').style.display = 'none';
                 statusName.style.color = 'red';
             } else {
+                document.getElementById('responseForm').style.display = 'block';
                 statusName.style.color = '#be9801';
             }
         }
@@ -142,11 +147,37 @@ departmentForm.addEventListener('submit', async function (e) {
     const res = await response.json();
     console.log(res);
     if (res === '') {
-        departmentName.textContent = (document.getElementById('department').value).length > 15 ?  (document.getElementById('department').value).substring(0, 15) + "..." : document.getElementById('department').value;
+        const selectedDepartment = document.getElementById('department').value;
+        departmentName.textContent = (selectedDepartment).length > 15 ?  (selectedDepartment).substring(0, 15) + "..." : selectedDepartment;
+        fetch('../api/get_agentsByDep.php?department=' + selectedDepartment + '&ticket_id=' + document.getElementsByName('ticket_id')[0].value)
+            .then(response => response.json())
+            .then(data => {
+                if(data.length === 0){
+                    agentName.textContent = "Agent: ";
+                    const agentButton = document.getElementById('agentEdit');
+                    agentButton.style.display = 'none';
+                    const agentForm = document.getElementById('agentChangeForm');
+                    agentForm.style.display = 'none';
+
+                } else {
+                    agentName.textContent = "Agent: " + data[0]['agent_username'];
+                    const agentButton = document.getElementById('agentEdit');
+                    agentButton.style.display = 'block';
+                }
+                const agentSelect = document.getElementById('agent');
+                agentSelect.innerHTML = '';
+                for (const agent of data) {
+                    const option = document.createElement('option');
+                    option.value = agent['agent_username'];
+                    option.textContent = agent['agent_username'];
+                    agentSelect.appendChild(option);
+                }
+            }
+        );
         departmentForm.style.display = 'none';
     }
 
-    updateLogs();   
+    updateLogs();
 });
 
 priorityForm.addEventListener('submit', async function (e) {
@@ -200,6 +231,9 @@ async function updateLogs() {
         logElement.appendChild(logDate);
 
         logs.prepend(logElement);
+        if(!isResponseVisible){
+            document.getElementById("logsDiv").style.display = "block";
+        }
     }
 }
 
@@ -247,4 +281,32 @@ editButton.forEach(button => {
             editForm.style.display = 'none';
         }
     });
+});
+
+
+const toggleB = document.querySelector('.toggleB');
+const responseBox = document.getElementById('responseDiv');
+const logBox = document.getElementById('logsDiv');
+const leftP = document.getElementById('responseToggle');
+const rightP = document.getElementById('logToggle');
+toggleB.addEventListener('change', async () => {
+    if (isResponseVisible) {
+        logBox.style.display = 'block';
+        responseBox.style.display = 'none';
+        leftP.style.color = '#252525';
+        rightP.style.color = 'white';
+        leftP.style.background = 'white';
+        rightP.style.background = '#252525';
+
+    } else {
+        logBox.style.display = 'none';
+        responseBox.style.display = 'block';
+        leftP.style.color = 'white';
+        rightP.style.color = '#252525';
+        leftP.style.background = '#252525';
+        rightP.style.background = 'white';
+    }
+
+    // Toggle the flag variable
+    isResponseVisible = !isResponseVisible;
 });

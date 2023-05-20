@@ -225,26 +225,37 @@ class ticket
         return $returnPaths;
     }
 
-    static function getTickets($db, $username) : array{
+    static public function getAllTickets($db) : array{
+        $stmt = $db->prepare('SELECT * FROM Ticket');
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    static public function getTickets($db, $username) : array{
         if (user::isAgent($db, $username)) {
-            $tickets = ticket::getAgentTickets($db, $username);
-            $clientTickets = ticket::getClientTickets($db, $username);
-            $unassignedTickets = ticket::getUnassignedTickets($db);
-            $allTickets = array_merge($clientTickets, $unassignedTickets, $tickets);
-            return array_unique($allTickets, SORT_REGULAR);
+            return self::getAllTickets($db);
         } else {
             return ticket::getClientTickets($db, $username);
         }
     }
 
-    static function ticketLog($db, $ticketId, $content) : bool {
+    static public function canModifyTicket($db, $username, $ticket) : bool {
+        if ((user::isAgent($db, $username) && $ticket['agent_username'] == $username) || user::isAdmin($db, $username)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    static public function ticketLog($db, $ticketId, $content) : bool {
         $stmt = $db->prepare('INSERT INTO TicketLog (ticket_id, content) VALUES (:ticketId, :content)');
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->bindParam(':content', $content);
         return $stmt->execute();
     }
 
-    static function getLogs($db, $ticketId) : array {
+    static public function getLogs($db, $ticketId) : array {
         $stmt = $db->prepare('SELECT * FROM TicketLog WHERE ticket_id = :ticketId');
         $stmt->bindParam(':ticketId', $ticketId);
         $stmt->execute();

@@ -1,6 +1,11 @@
-/* ticket_page.css */
+#filterForm, #sortForm{
+    display:none;
+}
 
-/* Global styles */
+#filter{
+    margin-bottom: 1em;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;

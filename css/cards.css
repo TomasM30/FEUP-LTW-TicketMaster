@@ -65,6 +65,7 @@ display: none
     justify-content: center;
     user-select: none;
     font-weight: bolder;
+    overflow: hidden;
 }
 
 .content, .statistics{

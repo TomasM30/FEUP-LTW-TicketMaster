@@ -32,9 +32,9 @@ h1 {
 }
 
 table {
+    margin: 50px auto 45px;
     display: -ms-flexbox;
     justify-content: space-evenly;
-    margin: 100px auto;
     border-collapse: collapse;
     width: 80%;
     max-width: 800px;
@@ -80,7 +80,7 @@ input[type="text"] {
 }
 
 #showDepForm {
-    margin-bottom: 10px;
+    margin-bottom: 50px;
 }
 
 #modifyDeps *{

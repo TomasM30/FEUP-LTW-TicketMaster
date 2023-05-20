@@ -298,6 +298,18 @@
             return $stmt->fetchAll();
         }
 
+        static public function getAgentsByDepartment($db, $department_id): array{
+            $stmt = $db->prepare('SELECT A.agent_username
+                                    FROM Department D
+                                    INNER JOIN Link_departments LD ON D.id = LD.department_id
+                                    INNER JOIN Agent A ON LD.username = A.agent_username
+                                    WHERE D.id = :department_id
+                                    ');
+            $stmt->bindParam(':department_id', $department_id);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        }
+
         static public function promoteUser($db, $username) : bool{
             //verify if user is in admin table
             $search1 = $db->prepare('SELECT * FROM admin WHERE admin_username = :username');

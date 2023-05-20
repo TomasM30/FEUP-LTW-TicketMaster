@@ -97,7 +97,7 @@ function drawTicketSequence(array $tickets, PDO $db)
 function drawFilter(array $statuses, array $departments, array $hashtags, array $agents, array $priorities)
 {
     ?>
-    <form method="get">
+    <form method="get" id ="filterForm">
         <label for="status">Filter by status:</label>
         <select id="status" name="status">
             <option value="" <?php if (!isset($_GET['status'])) echo 'selected'; ?>>All</option>
@@ -155,7 +155,7 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
         </select>
         <input type="submit" value="Apply Filter">
     </form>
-    <form method="get">
+    <form method="get" id ="sortForm">
         <label for="sort">Sort by:</label>
         <select id="sort" name="sort">
             <option value="" <?php if (!isset($_GET['sort'])) echo 'selected'; ?>>Id</option>
