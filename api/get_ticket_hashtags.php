@@ -12,7 +12,9 @@ $db = getDatabaseConnection();
 $ticketId = htmlspecialchars($_GET['ticket_id']);
 $hashtags = ticket::getTicketHashtagNames($db, $ticketId);
 $hashtagName = htmlspecialchars($_GET['hashtag']);
+$hashtagName = str_replace(' ', '', $hashtagName);
 $hashtagName = str_replace('#', '', $hashtagName);
+
 $add = $_GET['action'];
 
 if ($add == 'remove'){

@@ -310,4 +310,27 @@ class ticket
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    static public function deleteTicket($db, $ticketId): bool
+    {
+        $stmt = $db->prepare('DELETE FROM Ticket WHERE id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->execute();
+
+        $stmt = $db->prepare('DELETE FROM TicketLog WHERE ticket_id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->execute();
+
+        $stmt = $db->prepare('DELETE FROM Link_hashtags WHERE ticket_id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->execute();
+
+        $stmt = $db->prepare('DELETE FROM Link_documents WHERE ticket_id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        $stmt->execute();
+
+        $stmt = $db->prepare('DELETE FROM Comment WHERE ticket_id = :ticketId');
+        $stmt->bindParam(':ticketId', $ticketId);
+        return $stmt->execute();
+    }
 }
