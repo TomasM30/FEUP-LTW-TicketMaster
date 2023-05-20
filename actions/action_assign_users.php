@@ -7,10 +7,10 @@
     $db = getDatabaseConnection();
     $session = new Session();
 
-    if (isset($_POST['action']) && $_POST['action'] == 'assign'){
-        User::assignAgentToDepartment($db, $_POST['username'], $_POST['department']);
-    } elseif (isset($_POST['action']) && $_POST['action'] == 'unassign'){
-        User::removeAgentFromDepartment($db, $_POST['username'], $_POST['department']);
+    if (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'assign'){
+        User::assignAgentToDepartment($db, htmlspecialchars($_POST['username']), htmlspecialchars($_POST['department']));
+    } elseif (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'unassign'){
+        User::removeAgentFromDepartment($db, htmlspecialchars($_POST['username']), htmlspecialchars($_POST['department']));
     }
 
     die(header('Location: /../pages/agents.php'));

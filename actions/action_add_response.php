@@ -7,12 +7,12 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
-$content = $_POST['comment'];
+$content = htmlspecialchars($_POST['comment']);
 $ticketId = $_POST['ticket_id'];
 if (trim($content) == '') {
     echo json_encode('Content cannot be empty');
 } else {
-    ticket::addResponse($db, $ticketId, $session->getUsername(), $content);
+    ticket::addResponse($db, $ticketId, $session->getUsername(), htmlspecialchars($content));
     echo json_encode('');
     exit();
 }

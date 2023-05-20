@@ -14,7 +14,7 @@ if ($session->getUsername() == null) die(header('Location: /../pages/login.php')
 $db = getDatabaseConnection();
 
 $username = $session->getUsername();
-$ticketId = $_GET['id'] ?? null;
+$ticketId = htmlspecialchars($_GET['id']) ?? null;
 $ticket = ticket::getTicketById($db, $ticketId);
 $isAgent = user::isAgent($db, $username);
 $statuses = ticket::getAllStatuses($db);
@@ -39,7 +39,7 @@ $pfp = User::getPfp($db, $username);
     <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
         <!-- todo background on ticketcontainerBox -->
-        <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
+        <h2><?php echo htmlspecialchars(strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject']) ?></h2>
         <div class="status-priority">
             <div class="editable">
                 <?php
@@ -53,7 +53,7 @@ $pfp = User::getPfp($db, $username);
                 }
                 ?>
                 <p id="ticketStatus" style="color: <?php echo $statusColor; ?>">
-                    <?php echo ticket::getStatusName($db, intval($ticket['status'])); ?>
+                    <?php echo htmlspecialchars(ticket::getStatusName($db, intval($ticket['status']))); ?>
                 </p>
                 <?php
                 if ($isAgent) { ?>
@@ -66,7 +66,7 @@ $pfp = User::getPfp($db, $username);
                             <?php
                             foreach ($statuses as $status) {
                                 $selected = ($status['id'] === $ticket['status']) ? 'selected' : ''; ?>
-                                <option value="<?php echo $status['name']; ?>" <?php echo $selected; ?>><?php echo $status['name']; ?></option>
+                                <option value="<?php echo htmlspecialchars($status['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($status['name']); ?></option>
                                 <?php
                             }
                             ?>
@@ -87,13 +87,13 @@ $pfp = User::getPfp($db, $username);
                             <?php foreach ($priorities as $priority) {
                                 //todo ajax to update agents list
                                 $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
-                                <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
+                                <option value="<?php echo htmlspecialchars($priority['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($priority['name']); ?></option>
                             <?php } ?>
                         </select>
                         <input type="submit" value="Submit">
                     </form>
                     <p id='ticketPriority'>
-                        Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
+                        Priority: <?php echo htmlspecialchars(ticket::getPriorityName($db, intval($ticket['priority']))); ?></p>
                     <button class="edit"> &#9998;</button>
 
                 </div>
@@ -104,19 +104,19 @@ $pfp = User::getPfp($db, $username);
         <div class="infoHeading">
             <div class="authorInfo">
                 <img src="<?= $pfp ?>" alt="User" width="50" height="50">
-                <h3><?php echo $ticket['author_username'] ?></h3>
+                <h3><?php echo htmlspecialchars($ticket['author_username']) ?></h3>
             </div>
-            <p><?php echo $ticket['date']; ?></p>
+            <p><?php echo htmlspecialchars($ticket['date']); ?></p>
         </div>
         <div class="contentBox">
             <fieldset>
                 <legend>Content</legend>
-                <p><?php echo $ticket['content']; ?></p>
+                <p><?php echo htmlspecialchars($ticket['content']); ?></p>
             </fieldset>
         </div>
         <div class="otherInfos">
             <div class="editable" id="agentDivChange">
-                <p id="ticketAgent"><?php echo "Agent: " . $ticket['agent_username']; ?></p>
+                <p id="ticketAgent"><?php echo "Agent: " . htmlspecialchars($ticket['agent_username'] == null ? ' ' : $ticket['agent_username']); ?></p>
                 <?php
                 if ($isAgent) {
                     ?>
@@ -127,7 +127,7 @@ $pfp = User::getPfp($db, $username);
                         <select id="agent" name="agent">
                             <?php foreach ($agents as $agent) {
                                 $selected = ($agent['agent_username'] === $ticket['agent_username']) ? 'selected' : ''; ?>
-                                <option value="<?php echo $agent['agent_username']; ?>" <?php echo $selected; ?>><?php echo $agent['agent_username']; ?></option>
+                                <option value="<?php echo htmlspecialchars($agent['agent_username']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($agent['agent_username']); ?></option>
                             <?php } ?>
                         </select>
                         <input type="submit" value="Submit">
@@ -145,7 +145,7 @@ $pfp = User::getPfp($db, $username);
             <div class="editable" id="departmentDivChange">
                 <p id='ticketDepartment'><?php
                     $ticketDep = ticket::getDepartmentName($db, intval($ticket['department_id']));
-                    echo $ticketDep; ?></p>
+                    echo htmlspecialchars($ticketDep); ?></p>
                 <?php
                 if ($isAgent) {
                     ?>
@@ -157,7 +157,7 @@ $pfp = User::getPfp($db, $username);
                         <select id="department" name="department">
                             <?php foreach ($departments as $department) {
                                 $selected = ($department['id'] === $ticket['department_id']) ? 'selected' : ''; ?>
-                                <option value="<?php echo $department['name']; ?>" <?php echo $selected; ?>><?php echo $department['name']; ?></option>
+                                <option value="<?php echo htmlspecialchars($department['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($department['name']); ?></option>
                             <?php } ?>
                         </select>
                         <input type="submit" value="Submit">
@@ -176,7 +176,7 @@ $pfp = User::getPfp($db, $username);
                 foreach ($hashtags as $hashtag) {
                     ?>
                     <p>
-                        <?php echo $hashtag; ?>
+                        <?php echo htmlspecialchars($hashtag); ?>
                     </p>
                     <?php
                 }
@@ -190,7 +190,7 @@ $pfp = User::getPfp($db, $username);
                 <?php
                 foreach ($files as $file) {
                     ?>
-                    <a href="<?php echo $file ?>" target="_blank" rel="noopener noreferrer">
+                    <a href="<?php echo htmlspecialchars($file) ?>" target="_blank" rel="noopener noreferrer">
                         <img src="../images/download.png" alt="Download" width="50" height="50">
                     </a>
                     <?php
@@ -202,8 +202,8 @@ $pfp = User::getPfp($db, $username);
     <div class="ticketContainerBox">
         <form action="../actions/action_add_response.php" id='responseForm'>
             <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
-            <input type="hidden" name="imgPath" value="<?php echo $pfp; ?>">
-            <input type="hidden" name="author_username" value="<?php echo $session->getUsername(); ?>">
+            <input type="hidden" name="imgPath" value="<?php echo htmlspecialchars($pfp); ?>">
+            <input type="hidden" name="author_username" value="<?php echo htmlspecialchars($session->getUsername()); ?>">
             <div class="contentBox">
                 <fieldset>
                     <legend>Response</legend>
@@ -230,9 +230,9 @@ $pfp = User::getPfp($db, $username);
                 <div class="infoHeading">
                     <div class="authorInfo">
                         <img src="<?= $pfp ?>" alt="User" width="50" height="50">
-                        <h3><?php echo $response['username'] ?></h3>
+                        <h3><?php echo htmlspecialchars($response['username']) ?></h3>
                     </div>
-                    <p><?php echo $response['date']; ?></p>
+                    <p><?php echo htmlspecialchars($response['date']); ?></p>
                 </div>
                 <div class="contentBox">
                     <fieldset>
@@ -241,7 +241,7 @@ $pfp = User::getPfp($db, $username);
                             if (strpos($response['content'], '#') !== false) {
                                 $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
                             }
-                            echo $response['content']; ?></p>
+                            echo htmlspecialchars($response['content']); ?></p>
                     </fieldset>
                 </div>
                 <?php
@@ -258,8 +258,8 @@ $pfp = User::getPfp($db, $username);
                 foreach ($logs as $log) {
                     ?>
                     <li class="log-item">
-                        <p class="log-content"><?php echo $log['content']; ?></p>
-                        <p class="log-date"><?php echo $log['date']; ?></p>
+                        <p class="log-content"><?php echo htmlspecialchars($log['content']); ?></p>
+                        <p class="log-date"><?php echo htmlspecialchars($log['date']); ?></p>
                     </li>
                     <?php
                 }

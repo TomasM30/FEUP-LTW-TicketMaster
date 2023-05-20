@@ -39,7 +39,7 @@
                 $num_agents = 0;
             ?>
             <tr>
-                <td><?= $department['name'] ?></td>
+                <td><?= htmlspecialchars($department['name']) ?></td>
                 <td><?= $department['id'] ?></td>
                 <?php foreach ($link_departments as $link_department) { 
                      if ($link_department['department_id'] == $department['id']) { $num_agents++; } }?>

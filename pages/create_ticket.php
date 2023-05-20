@@ -29,7 +29,7 @@
                     echo "<option value=";
                     echo $department['id'];
                     echo ">";
-                    echo $department['name'];
+                    echo htmlspecialchars($department['name']);
                     echo "</option>";
                 }
             ?>

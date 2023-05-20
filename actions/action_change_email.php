@@ -5,7 +5,7 @@
 
     $db = getDatabaseConnection();
     $session = new Session();
-    $email = $_GET['email'];
+    $email = htmlspecialchars($_GET['email']);
     $emailV = User::getEmail($db, $email);
     $username = $session->getUsername();
 

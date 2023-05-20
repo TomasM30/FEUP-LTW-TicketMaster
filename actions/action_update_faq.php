@@ -21,9 +21,9 @@
     $isAgent = User::isAgent($db, $session->getUsername());
 
     if ($isAgent) {
-        $id = $_POST['edit_id'];
-        $question = $_POST['question'];
-        $answer = $_POST['answer'];
+        $id = htmlspecialchars($_POST['edit_id']);
+        $question = htmlspecialchars($_POST['question']);
+        $answer = htmlspecialchars($_POST['answer']);
 
         $faq->updateFAQ($id, $question, $answer);
 

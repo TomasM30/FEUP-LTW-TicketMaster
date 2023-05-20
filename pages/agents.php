@@ -36,8 +36,8 @@ $agents = user::getAgentsInfo($db);
         <?php foreach ($agents as $agent) { ?>
             <tr>
                 <td><img src="<?= $agent['image_url'] ?>" alt="Agent image" width=50 height=50></td>
-                <td><?= $agent['username'] ?></td>
-                <td><?= $agent['name'];
+                <td><?= htmlspecialchars($agent['username']) ?></td>
+                <td><?= htmlspecialchars($agent['name']);
                     ?></td>
                 <td><?php if (user::isAdmin($db, $agent['username'])) {
                         echo "Admin";
@@ -72,7 +72,7 @@ if (user::isAdmin($db, $username)) {
                     echo "<option value=";
                     echo $department['id'];
                     echo ">";
-                    echo $department['name'];
+                    echo htmlspecialchars($department['name']);
                     echo "</option>";
                 }
             ?>

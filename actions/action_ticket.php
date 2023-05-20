@@ -10,10 +10,10 @@
     $session = new Session();
     $db = getDatabaseConnection();
 
-    $title = $_POST['title'];
-    $content = $_POST['content'];
-    $hashtags = $_POST['hashtags'];
-    $department = $_POST['department'];
+    $title = htmlspecialchars($_POST['title']);
+    $content = htmlspecialchars($_POST['content']);
+    $hashtags = htmlspecialchars($_POST['hashtags']);
+    $department = htmlspecialchars($_POST['department']);
 
     $documents = Upload::uploadFile($session->getUsername(), false);
 

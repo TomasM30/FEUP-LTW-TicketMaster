@@ -9,9 +9,9 @@ require_once(__DIR__ . '/../utils/session.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
-$user = User::getUser($db, $_POST['username']);
+$user = User::getUser($db, htmlspecialchars($_POST['username']));
 
-if(user::sameUName($db,$session->getUsername(),$_POST['username'])){
+if(user::sameUName($db,$session->getUsername(),htmlspecialchars($_POST['username']))){
     ?>
     <script>
         window.alert("Insert a different username from the previous one!");
@@ -27,7 +27,7 @@ if(user::sameUName($db,$session->getUsername(),$_POST['username'])){
     </script>
     <?php
     exit;
-}elseif (!user::checkUsername($_POST['username'], $errors)) {
+}elseif (!user::checkUsername(htmlspecialchars($_POST['username']), $errors)) {
     if (!empty($errors)) {
         $error_message = "";
         foreach ($errors as $error) {
@@ -35,7 +35,7 @@ if(user::sameUName($db,$session->getUsername(),$_POST['username'])){
         }
         ?>
         <script>
-            window.alert("<?php echo $error_message ?>");
+            window.alert("<?php echo htmlspecialchars($error_message) ?>");
             window.location.href = "../pages/profile.php?error=7";
         </script>
         <?php
@@ -43,5 +43,5 @@ if(user::sameUName($db,$session->getUsername(),$_POST['username'])){
     }
 }
 
-user::changeUName($db,$session->getUsername(), $_POST['username']);
+user::changeUName($db,$session->getUsername(), htmlspecialchars($_POST['username']));
 header('Location: ../pages/login.php?success=4');

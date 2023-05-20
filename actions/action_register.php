@@ -6,14 +6,14 @@
 
     $db = getDatabaseConnection();
 
-    $user = User::getUser($db, $_POST['username']);
-    $email = User::getEmail($db, $_POST['email']);
+    $user = User::getUser($db, htmlspecialchars($_POST['username']));
+    $email = User::getEmail($db, htmlspecialchars($_POST['email']));
     $errors = array();
 
     if ($user){
         header('Location: ../pages/register.php?error=1');
         die();
-    } elseif (!user::checkUsername($_POST['username'], $errors)) {
+    } elseif (!user::checkUsername(htmlspecialchars($_POST['username']), $errors)) {
         if (!empty($errors)) {
             $error_message = "";
             foreach ($errors as $error) {
@@ -25,7 +25,7 @@
     elseif($email){
         header('Location: ../pages/register.php?error=2');
         die();
-    } elseif (!user::checkEmail($_POST['email'], $errors)) {
+    } elseif (!user::checkEmail(htmlspecialchars($_POST['email']), $errors)) {
         print('1');
         if (!empty($errors)) {
             $error_message = "";
@@ -39,7 +39,7 @@
         header('Location: ../pages/register.php?error=3');
         die();
     }
-    elseif (!user::checkPassword($_POST['password'], $errors)) {
+    elseif (!user::checkPassword(htmlspecialchars($_POST['password']), $errors)) {
         print('2');
 
         if (!empty($errors)) {
@@ -50,7 +50,7 @@
             }
             die(header('Location: ../pages/register.php?error=4'));
         }
-    } elseif(!user::checkName($_POST['name'], $errors)){
+    } elseif(!user::checkName(htmlspecialchars($_POST['name']), $errors)){
         print('3');
 
         if (!empty($errors)) {
@@ -62,7 +62,7 @@
         }
     }
 
-    $newUser = new User($_POST['username'], $_POST['password'], $_POST['email'], $_POST['name']);
+    $newUser = new User(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']), htmlspecialchars($_POST['email']), htmlspecialchars($_POST['name']));
     User::insertUser($db, $newUser);
     header('Location: ../pages/login.php?success=1');
 ?>

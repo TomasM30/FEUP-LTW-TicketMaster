@@ -41,8 +41,8 @@
                 <?php
                     foreach ($result as $row) {
                         echo '<div class="faq-item">';
-                        echo '<h3 class="faq-question">' . $row['question'] . '</h3>';
-                        echo '<p class="faq-answer">' . $row['answer'] . '</p>';
+                        echo '<h3 class="faq-question">' . htmlspecialchars($row['question']) . '</h3>';
+                        echo '<p class="faq-answer">' . htmlspecialchars($row['answer']) . '</p>';
                         echo '</div>';
 
                         if ($isAgent) {
@@ -50,9 +50,9 @@
                             echo '<form action="../actions/action_update_faq.php" method="post">';
                             echo '<input type="hidden" name="edit_id" value="' . $row['id'] . '">';
                             echo '<label for="question">Question</label>';
-                            echo '<input type="text" name="question" id="question" value="' . $row['question'] . '" required>';
+                            echo '<input type="text" name="question" id="question" value="' . htmlspecialchars($row['question']) . '" required>';
                             echo '<label for="answer">Answer</label>';
-                            echo '<input type="text" name="answer" id="answer" value="' . $row['answer'] . '" required>';
+                            echo '<input type="text" name="answer" id="answer" value="' . htmlspecialchars($row['answer']) . '" required>';
                             echo '<input type="submit" value="&#9998;">';
                             echo '</form>';
                             
@@ -70,7 +70,7 @@
                 if ($isAgent) {
                     echo '<section id="add-faq">';
                     echo '<h2>Add a new FAQ</h2>';
-                    echo '<form action="../actions/action_add_faq.php" method="post">';
+                    echo '<form action="../actions/action_add_faq.php" method="post">'; 
                     echo '<label for="question">Question</label>';
                     echo '<input type="text" name="question" id="question" required>';
                     echo '<label for="answer">Answer</label>';

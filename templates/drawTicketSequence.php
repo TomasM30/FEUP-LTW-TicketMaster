@@ -45,21 +45,21 @@ function drawTicketSequence(array $tickets, PDO $db)
                 continue;
             }
             ?>
-            <a href="../pages/ticket_details.php?id=<?php echo $ticket['id'] ?>" class="refToTicketDetail">
+            <a href="../pages/ticket_details.php?id=<?php echo htmlspecialchars($ticket['id']) ?>" class="refToTicketDetail">
                 <div class="ticket">
-                    <h2><?php echo $ticket['subject']; ?></h2>
-                    <p><?php echo ticket::getStatusName($db, $ticket['status']); ?></p>
-                    <p>Assigned agent: <?php echo $ticket['agent_username']; ?></p>
-                    <p>Date created: <?php echo $ticket['date']; ?></p>
-                    <p>Department: <?php echo ticket::getDepartmentName($db, $ticket['department_id']); ?></p>
+                    <h2><?php echo htmlspecialchars($ticket['subject']); ?></h2>
+                    <p><?php echo htmlspecialchars(ticket::getStatusName($db, $ticket['status'])); ?></p>
+                    <p>Assigned agent: <?php echo htmlspecialchars($ticket['agent_username']); ?></p>
+                    <p>Date created: <?php echo htmlspecialchars($ticket['date']); ?></p>
+                    <p>Department: <?php echo htmlspecialchars(ticket::getDepartmentName($db, $ticket['department_id'])); ?></p>
                     <?php
                     if (user::isAgent($db, $_SESSION['username'])) {
                         ?>
-                        <p>Priority: <?php echo ticket::getPriorityName($db, $ticket['priority']); ?></p>
+                        <p>Priority: <?php echo htmlspecialchars(ticket::getPriorityName($db, $ticket['priority'])); ?></p>
                         <?php
                     }
                     ?>
-                    <p><?php echo 'Content: ' . $ticket['content']; ?></p>
+                    <p><?php echo 'Content: ' . htmlspecialchars($ticket['content']); ?></p>
                     <?php
                     $hashtags = ticket::getTicketHashtagNames($db, $ticket['id']);
                     if (!empty($hashtags)) {
@@ -69,7 +69,7 @@ function drawTicketSequence(array $tickets, PDO $db)
                             <?php
                             foreach ($hashtags as $hashtag) {
                                 ?>
-                                <span><?php echo '#' . $hashtag; ?></span>
+                                <span><?php echo '#' . htmlspecialchars($hashtag); ?></span>
                                 <?php
                             }
                             ?>
@@ -104,7 +104,7 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
             <?php
             foreach ($statuses as $status) {
                 ?>
-                <option value="<?php echo $status['id']; ?>" <?php if (isset($_GET['status']) && $_GET['status'] == $status['id']) echo 'selected'; ?>><?php echo $status['name']; ?></option>
+                <option value="<?php echo $status['id']; ?>" <?php if (isset($_GET['status']) && $_GET['status'] == $status['id']) echo 'selected'; ?>><?php echo htmlspecialchars($status['name']); ?></option>
                 <?php
             }
             ?>
@@ -115,7 +115,7 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
             <?php
             foreach ($priorities as $priority) {
                 ?>
-                <option value="<?php echo $priority['id']; ?>" <?php if (isset($_GET['priority']) && $_GET['priority'] == $priority['id']) echo 'selected'; ?>><?php echo $priority['name']; ?></option>
+                <option value="<?php echo $priority['id']; ?>" <?php if (isset($_GET['priority']) && $_GET['priority'] == $priority['id']) echo 'selected'; ?>><?php echo htmlspecialchars($priority['name']); ?></option>
                 <?php
             }
             ?>
@@ -126,7 +126,7 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
             <?php
             foreach ($departments as $department) {
                 ?>
-                <option value="<?php echo $department['id']; ?>" <?php if (isset($_GET['department']) && $_GET['department'] == $department['id']) echo 'selected'; ?>><?php echo $department['name']; ?></option>
+                <option value="<?php echo $department['id']; ?>" <?php if (isset($_GET['department']) && $_GET['department'] == $department['id']) echo 'selected'; ?>><?php echo htmlspecialchars($department['name']); ?></option>
                 <?php
             }
             ?>
@@ -137,7 +137,7 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
             <?php
             foreach ($agents as $agent) {
                 ?>
-                <option value="<?php echo $agent['agent_username']; ?>" <?php if (isset($_GET['agent']) && $_GET['agent'] == $agent['agent_username']) echo 'selected'; ?>><?php echo $agent['agent_username']; ?></option>
+                <option value="<?php echo htmlspecialchars($agent['agent_username']); ?>" <?php if (isset($_GET['agent']) && $_GET['agent'] == $agent['agent_username']) echo 'selected'; ?>><?php echo htmlspecialchars($agent['agent_username']); ?></option>
                 <?php
             }
             ?>
@@ -148,7 +148,7 @@ function drawFilter(array $statuses, array $departments, array $hashtags, array 
             <?php
             foreach ($hashtags as $hashtag) {
                 ?>
-                <option value="<?php echo $hashtag['name']; ?>" <?php if (isset($_GET['hashtag']) && $_GET['hashtag'] == $hashtag['name']) echo 'selected'; ?>><?php echo $hashtag['name']; ?></option>
+                <option value="<?php echo $hashtag['name']; ?>" <?php if (isset($_GET['hashtag']) && $_GET['hashtag'] == $hashtag['name']) echo 'selected'; ?>><?php echo htmlspecialchars($hashtag['name']); ?></option>
                 <?php
             }
             ?>

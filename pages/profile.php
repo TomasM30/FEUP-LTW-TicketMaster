@@ -37,7 +37,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                     </form>
                     <h5 class="usernameP">
                         <?php
-                        echo $username;
+                        echo htmlspecialchars($username);
                         ?>
                     </h5>
                 </div>
@@ -73,7 +73,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                         <div class="infoColumn">
                             <p class="info" id="user_name">
                                 <?php
-                                echo User::getName($db, $username);
+                                echo htmlspecialchars(User::getName($db, $username));
                                 ?>
                             </p>
                         </div>
@@ -85,7 +85,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                         <div class="infoColumn">
                             <p class="info" id ="userEmail">
                                 <?php
-                                echo User::getUserEmail($db, $username);
+                                echo htmlspecialchars(User::getUserEmail($db, $username));
                                 ?>
                             </p>
                         </div>

@@ -8,10 +8,10 @@
     $db = getDatabaseConnection();
     $session = new Session();
 
-    if (isset($_POST['action']) && $_POST['action'] == 'promote'){
-        User::promoteUser($db, $_POST['username']);
-    } elseif (isset($_POST['action']) && $_POST['action'] == 'demote' && $_POST['username'] != $session->getUsername()){
-        User::demoteUser($db, $_POST['username']);
+    if (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'promote' && isset($_POST['username'])){
+        User::promoteUser($db, htmlspecialchars($_POST['username']));
+    } elseif (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'demote' && isset($_POST['username']) && htmlspecialchars($_POST['username']) != $session->getUsername()){
+        User::demoteUser($db, htmlspecialchars($_POST['username']));
     }
 
     die(header('Location: /../pages/agents.php'));

@@ -6,8 +6,8 @@ require_once(__DIR__ . '/../database/ticket.php');
 require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
-$ticketId = $_GET['ticket_id'];
-$agent = $_GET['agent'];
+$ticketId = htmlspecialchars($_GET['ticket_id']);
+$agent = htmlspecialchars($_GET['agent']);
 if($agent === 'None'){
     $agent = null;
 }

@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $ticketId = $_GET['ticket_id'];
-$status = $_GET['ticket_status'];
+$status = htmlspecialchars($_GET['ticket_status']);
 $status = ticket::getStatusId($db, $status);
 ticket::changeStatus($db, $ticketId, $status);
 echo json_encode('');

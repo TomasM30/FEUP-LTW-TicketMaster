@@ -14,7 +14,7 @@ $session = new Session();
 
 $errors = array();
 
-if (!user::checkPassword($_POST['psw'], $errors)) {
+if (!user::checkPassword(htmlspecialchars($_POST['psw']), $errors)) {
     if (!empty($errors)) {
         $error_message = "";
         foreach ($errors as $error) {
@@ -28,7 +28,7 @@ if (!user::checkPassword($_POST['psw'], $errors)) {
         <?php
         exit;
     }
-} elseif(!user::samePassword($db,$session->getUsername(), $_POST['psw'])){?>
+} elseif(!user::samePassword($db,$session->getUsername(), htmlspecialchars($_POST['psw']))){?>
     <script>
     window.alert("Insert a different password from the previous one!");
     window.location.href = "../pages/profile.php?error=3";
@@ -36,5 +36,5 @@ if (!user::checkPassword($_POST['psw'], $errors)) {
         <?php
     exit;
 }
-user::changePassword($db,$session->getUsername(), $_POST['psw']);
+user::changePassword($db,$session->getUsername(), htmlspecialchars($_POST['psw']));
 

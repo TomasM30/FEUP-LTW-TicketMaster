@@ -12,6 +12,10 @@ const priorityName = document.getElementById('ticketPriority');
 const form = document.getElementById('responseForm');
 const ticketResponses = document.getElementById('responseDiv');
 
+document.querySelectorAll('.editForm').forEach(form => {
+    form.style.display = 'none';
+});
+
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
     const comment = document.getElementById('comment').value;
@@ -115,7 +119,7 @@ statusForm.addEventListener('submit', async function (e) {
                 statusName.style.color = '#be9801';
             }
         }
-
+        statusForm.style.display = 'none';
         updateLogs();
     }
 });
@@ -126,6 +130,7 @@ agentForm.addEventListener('submit', async function (e) {
     const res = await response.json();
     if (res === '') {
         agentName.textContent = "Agent: " + document.getElementById('agent').value;
+        agentForm.style.display = 'none';
     }
 
     updateLogs();
@@ -138,7 +143,7 @@ departmentForm.addEventListener('submit', async function (e) {
     console.log(res);
     if (res === '') {
         departmentName.textContent = (document.getElementById('department').value).length > 15 ?  (document.getElementById('department').value).substring(0, 15) + "..." : document.getElementById('department').value;
-
+        departmentForm.style.display = 'none';
     }
 
     updateLogs();   
@@ -151,6 +156,7 @@ priorityForm.addEventListener('submit', async function (e) {
     console.log(res);
     if (res === '') {
         priorityName.textContent = 'Priority: ' + document.getElementById('priority').value;
+        priorityForm.style.display = 'none';
     }
     updateLogs();
 });

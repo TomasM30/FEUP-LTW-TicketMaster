@@ -4,6 +4,7 @@
         static public function uploadFile(string $username, bool $pfp) : ?array{
             $path_to_save = '/../uploads/';
             $upload_dir = __DIR__ . $path_to_save;
+            $accept = ["jpg", "png", "gif", "webp"];
             
             if ($pfp){
                 $upload_dir  = $upload_dir . 'pfp/';

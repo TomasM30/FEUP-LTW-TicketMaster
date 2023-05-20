@@ -21,8 +21,8 @@
     $isAgent = User::isAgent($db, $session->getUsername());
 
     if ($isAgent) {
-        $question = $_POST['question'];
-        $answer = $_POST['answer'];
+        $question = htmlspecialchars($_POST['question']);
+        $answer = htmlspecialchars($_POST['answer']);
 
         $faq->addFAQ($question, $answer);
 

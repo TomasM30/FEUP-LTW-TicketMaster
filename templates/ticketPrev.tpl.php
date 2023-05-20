@@ -17,11 +17,11 @@ function drawTicketPreview(PDO $db, array $tickets)
                         <div class="card">
                             <div class="content">
                                 <header>
-                                    <h2 class="status"><?= ticket::getStatus($db, $ticket['status']) ?></h2>
-                                    <h1><?= strlen($ticket['subject']) > 10 ? substr($ticket['subject'], 0, 10) . "..." : $ticket['subject'] ?></h1>
+                                    <h2 class="status"><?= htmlspecialchars(ticket::getStatus($db, $ticket['status'])) ?></h2>
+                                    <h1><?= htmlspecialchars(strlen($ticket['subject']) > 10 ? substr($ticket['subject'], 0, 10) . "..." : $ticket['subject']) ?></h1>
                                 </header>
                                 <p>
-                                    <?= strlen($ticket['content']) > 282 ? substr($ticket['content'], 0, 282) . "..." : $ticket['content'] ?>
+                                    <?= htmlspecialchars(strlen($ticket['content']) > 282 ? substr($ticket['content'], 0, 282) . "..." : $ticket['content']) ?>
                                 </p>
                             </div>
                         </div>

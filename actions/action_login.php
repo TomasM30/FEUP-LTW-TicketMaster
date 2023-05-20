@@ -7,7 +7,7 @@
 
     $session = new Session();
     $db = getDatabaseConnection();
-    $user = User::getUserUsernamePassword($_POST['username'], $_POST['password']);
+    $user = User::getUserUsernamePassword(htmlspecialchars($_POST['username']), htmlspecialchars($_POST['password']));
 
     if ($user){
         $session->setUsername($user->username);

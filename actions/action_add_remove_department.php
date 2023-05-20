@@ -7,10 +7,10 @@
     $db = getDatabaseConnection();
     $session = new Session();
 
-    if (isset($_POST['action']) && $_POST['action'] == 'add'){
-        Misc::addDepartment($db, $_POST['department']);
-    } elseif (isset($_POST['action']) && $_POST['action'] == 'remove'){
-        Misc::removeDepartment($db, $_POST['department']);
+    if (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'add'){
+        Misc::addDepartment($db, htmlspecialchars($_POST['department']));
+    } elseif (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'remove'){
+        Misc::removeDepartment($db, htmlspecialchars($_POST['department']));
     }
 
     die(header('Location: /../pages/departments.php'));
