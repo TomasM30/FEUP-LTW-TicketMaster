@@ -50,8 +50,7 @@ $agents = user::getAgentsInfo($db);
 
 <?php
 if (user::isAdmin($db, $username)) {
-    //todo add a button to make a agent be on a department
-    //todo style the button better
+
     ?>
     <div class="forms">
         <button type="button" id="showAgForm" name="showAgForm">Promote/Demote Users</button>

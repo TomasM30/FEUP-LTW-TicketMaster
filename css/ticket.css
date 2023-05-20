@@ -8,6 +8,7 @@
     display: none;
 }
 
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
@@ -28,10 +29,12 @@ body {
     border-radius: 17px;
     border: rgba(211, 211, 211, 0.79) solid 1px;
     margin-bottom: 1em;
+    background: #ececec;
 }
 .ticketDetails h2{
     font-size: 2rem;
-    margin: 0;
+    margin-bottom: 0.2em;
+    margin-top: 0;
 }
 
 .ticketDetails h3{
@@ -139,6 +142,7 @@ fieldset p{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 #responseForm #comment{
@@ -153,10 +157,8 @@ fieldset p{
     display: none;
 }
 
-#responseForm input[type="submit"]{
+#responseForm input[type="submit"], .toggleB{
     width: 100%;
-    height: 30px;
-    resize: none;
     font-size: 15px;
 }
 
@@ -172,4 +174,47 @@ fieldset p{
     margin: 1em 0;
     padding: 0;
 }
+.toggleB{
+    height: 30px;
+    width: 170px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    border: #252525 solid 3px;
+    border-radius: 17px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+label input{
+    display: none;
+}
+
+span{
+    font-size: 15px;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    margin: 0;
+}
+
+.responseToggle{
+    background: white;
+    color: #252525;
+
+}
+
+.logToggle{
+    background: #252525;
+    color: white;
+}
+
+#responseDiv{
+    display: none;
+}
+
 

@@ -38,7 +38,6 @@ $pfp = User::getPfp($db, $username);
     <?php drawNavBarTicket(); ?>
     <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
-        <!-- todo background on ticketcontainerBox -->
         <h2><?php echo strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject'] ?></h2>
         <div class="status-priority">
             <div class="editable">
@@ -56,9 +55,8 @@ $pfp = User::getPfp($db, $username);
                     <?php echo ticket::getStatusName($db, intval($ticket['status'])); ?>
                 </p>
                 <?php
-                if ($isAgent) { ?>
+                if (ticket::canModifyTicket($db, $username, $ticket)) { ?>
                     <button class="edit"> &#9998;</button>
-                    <!-- todo fix the double click not supposed -->
                     <form class="editForm" id="statusChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="status"></label>
@@ -80,22 +78,31 @@ $pfp = User::getPfp($db, $username);
             <?php
             if ($isAgent) { ?>
                 <div class="editable">
-                    <form class="editForm" id="priorityChangeForm" action="../actions/action_change_priority.php">
-                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
-                        <label for="priority"></label>
-                        <select id="priority" name="priority">
-                            <?php foreach ($priorities as $priority) {
-                                //todo ajax to update agents list
-                                $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
-                                <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
-                            <?php } ?>
-                        </select>
-                        <input type="submit" value="Submit">
-                    </form>
+                    <?php
+                    if (ticket::canModifyTicket($db, $username, $ticket)) {
+                        ?>
+                        <form class="editForm" id="priorityChangeForm" action="../actions/action_change_priority.php">
+                            <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                            <label for="priority"></label>
+                            <select id="priority" name="priority">
+                                <?php foreach ($priorities as $priority) {
+                                    $selected = ($priority['id'] === $ticket['priority']) ? 'selected' : ''; ?>
+                                    <option value="<?php echo $priority['name']; ?>" <?php echo $selected; ?>><?php echo $priority['name']; ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="submit" value="Submit">
+                        </form>
+                        <?php
+                    }
+                    ?>
                     <p id='ticketPriority'>
                         Priority: <?php echo ticket::getPriorityName($db, intval($ticket['priority'])); ?></p>
-                    <button class="edit"> &#9998;</button>
-
+                    <?php
+                    if (ticket::canModifyTicket($db, $username, $ticket)) { ?>
+                        <button class="edit"> &#9998;</button>
+                        <?php
+                    }
+                    ?>
                 </div>
                 <?php
             }
@@ -118,7 +125,7 @@ $pfp = User::getPfp($db, $username);
             <div class="editable" id="agentDivChange">
                 <p id="ticketAgent"><?php echo "Agent: " . $ticket['agent_username']; ?></p>
                 <?php
-                if ($isAgent) {
+                if (ticket::canModifyTicket($db, $username, $ticket)) {
                     ?>
                     <button class="edit" id='agentEdit'> &#9998;</button>
                     <form class="editForm" action="../actions/action_change_agent.php" id="agentChangeForm">
@@ -147,7 +154,7 @@ $pfp = User::getPfp($db, $username);
                     $ticketDep = ticket::getDepartmentName($db, intval($ticket['department_id']));
                     echo $ticketDep; ?></p>
                 <?php
-                if ($isAgent) {
+                if (ticket::canModifyTicket($db, $username, $ticket)) {
                     ?>
                     <button class="edit"> &#9998;</button>
                     <form class="editForm" action="../actions/action_change_department.php"
@@ -199,7 +206,7 @@ $pfp = User::getPfp($db, $username);
             </p>
         </div>
     </div>
-    <div class="ticketContainerBox">
+    <div class="ticketContainerBox" id="responseBox">
         <form action="../actions/action_add_response.php" id='responseForm'>
             <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
             <input type="hidden" name="imgPath" value="<?php echo $pfp; ?>">
@@ -214,9 +221,23 @@ $pfp = User::getPfp($db, $username);
             </div>
             <input type="submit" value="Submit">
         </form>
+        <label class="toggleB" id="response-logs" for="response-logs-checkbox">
+            <input type="checkbox" id="response-logs-checkbox" name="response-logs-checkbox" value="response-logs">
+            <span class="responseToggle" id ="responseToggle">Response</span>
+            <span class="logToggle" id = "logToggle">Log</span>
+        </label>
     </div>
-    <!--todo button toogle between log and comments-->
+    <?php
+    if (intval($ticket['status']) == 2) {
+        ?>
+        <script>
+            document.getElementById('responseForm').style.display = 'none';
+        </script>
+        <?php
+    }
+    ?>
     <div class="ticketContainerBox" id="responseDiv">
+        <h2>Responses</h2>
         <?php
         $responses = array_reverse(ticket::getTicketResponses($db, intval($ticket['id'])));
         if ($responses == null) {
@@ -249,7 +270,7 @@ $pfp = User::getPfp($db, $username);
         }
         ?>
     </div>
-    <div class="ticketContainerBox">
+    <div class="ticketContainerBox" id="logsDiv">
         <h2>Logs</h2>
         <ul class="log-list">
             <?php

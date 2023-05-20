@@ -6,5 +6,19 @@ function scrollHContainer(scrollAmount,direction,container) {
 }
 
 
+const filterBtn = document.getElementById('filter');
+const filterBox = document.getElementById('filterForm');
+const sortBox = document.getElementById('sortForm');
+let isFilterVisible = false;
+filterBtn.addEventListener('click', async () => {
+    if (isFilterVisible) {
+        filterBox.style.display = 'none';
+        sortBox.style.display = 'none';
+    } else {
+        filterBox.style.display = 'block';
+        sortBox.style.display = 'block';
+    }
+    isFilterVisible = !isFilterVisible;
+});
 
 
