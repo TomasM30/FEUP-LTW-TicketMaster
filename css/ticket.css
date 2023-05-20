@@ -123,10 +123,18 @@ fieldset p{
     flex-direction: row;
 }
 
-.hashtags p{
-    margin: 0 0.5em 0  0;
+.hashtags span{
+    margin-right: 0.5em;
+    width: auto;
     font-size: 12px;
     border-bottom: #252525 solid 1px;
+    border-radius: 0;
+}
+
+#hashtagEdit{
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 .fileName {
@@ -160,6 +168,9 @@ fieldset p{
 #responseForm input[type="submit"], .toggleB{
     width: 100%;
     font-size: 15px;
+    border-radius: 17px;
+    cursor: pointer;
+    border: #252525 solid 3px;
 }
 
 .log-item{
@@ -180,18 +191,15 @@ fieldset p{
     align-items: center;
     display: flex;
     flex-direction: row;
-    border: #252525 solid 3px;
-    border-radius: 17px;
     margin: 0;
     padding: 0;
-    cursor: pointer;
 }
 
 label input{
     display: none;
 }
 
-span{
+.responseToggle, .logToggle{
     font-size: 15px;
     width: 50%;
     height: 100%;
@@ -217,4 +225,23 @@ span{
     display: none;
 }
 
+.hashtags{
+    display: flex;
+    flex-wrap: wrap;
+}
 
+.tag{
+    display: inline-block;
+}
+
+#deleteTicket{
+    font-size: 25px;
+    color: red;
+}
+
+.auxDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

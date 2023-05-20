@@ -20,7 +20,6 @@ $isAgent = user::isAgent($db, $username);
 $statuses = ticket::getAllStatuses($db);
 $agents = user::getAgentsByTicketDepartment($db, $ticketId);
 $departments = ticket::getAllDepartments($db);
-$hashtags = ticket::getAllHashtags($db);
 $priorities = ticket::getAllPriorities($db);
 $files = ticket::getDocument($db, $ticketId);
 $pfp = User::getPfp($db, $username);
@@ -38,8 +37,10 @@ $pfp = User::getPfp($db, $username);
     <?php drawNavBarTicket(); ?>
     <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
-        <!-- todo background on ticketcontainerBox -->
-        <h2><?php echo htmlspecialchars(strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject']) ?></h2>
+        <div class ="auxDiv">
+            <h2><?php echo htmlspecialchars(strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject']) ?></h2>
+            <button class="edit" id="deleteTicket"> &#128465;</button>
+        </div>
         <div class="status-priority">
             <div class="editable">
                 <?php
@@ -57,7 +58,7 @@ $pfp = User::getPfp($db, $username);
                 </p>
                 <?php
                 if (ticket::canModifyTicket($db, $username, $ticket)) { ?>
-                    <button class="edit"> &#9998;</button>
+                    <button class="edit" id="statusEdit"> &#9998;</button>
                     <form class="editForm" id="statusChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="status"></label>
@@ -140,13 +141,7 @@ $pfp = User::getPfp($db, $username);
                         </select>
                         <input type="submit" value="Submit">
                     </form>
-                <?php
-                if ($ticket['status'] == 0) { ?>
-                    <script>
-                        document.getElementById('agentEdit').style.display = 'none';
-                    </script>
                     <?php
-                }
                 }
                 ?>
             </div>
@@ -158,8 +153,7 @@ $pfp = User::getPfp($db, $username);
                 if (ticket::canModifyTicket($db, $username, $ticket)) {
                     ?>
                     <button class="edit"> &#9998;</button>
-                    <form class="editForm" action="../actions/action_change_department.php"
-                          id="departmentChangeForm">
+                    <form class="editForm" action="../actions/action_change_department.php" id="departmentChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="department"></label>
                         <select id="department" name="department">
@@ -177,22 +171,34 @@ $pfp = User::getPfp($db, $username);
         </div>
         <?php
         $hashtags = ticket::getTicketHashtagNames($db, intval($ticket['id']));
-        if (!empty($hashtags)) {
             ?>
-            <div class="hashtags">
-                <?php
-                foreach ($hashtags as $hashtag) {
+            <div class="editable" id="hashtagDivChange">
+                <div class="hashtags" id="hashtagDiv">
+                    <?php
+                    foreach ($hashtags as $hashtag) {
+                        ?>
+                        <span class="tag" id="hashtagBox">
+                        <?php echo htmlspecialchars('#' . $hashtag); ?>
+                    </span>
+                        <?php
+                    }
                     ?>
-                    <p>
-                        <?php echo htmlspecialchars('#' .$hashtag); ?>
-                    </p>
+                </div>
+                <?php
+                if (ticket::canModifyTicket($db, $username, $ticket)) {
+                    ?>
+                    <button class="edit" id="hashtagEdit"> &#9998;</button>
+                    <form class="editForm"
+                          id="hashtagChangeForm">
+                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                        <label for="hashtagInput"></label>
+                        <input type="text" id="hashtagInput" name="hashtagInput">
+                        <input type="submit" value="Submit">
+                    </form>
                     <?php
                 }
                 ?>
             </div>
-            <?php
-        }
-        ?>
         <div class="fileDownload">
             <p>
                 <?php
@@ -206,12 +212,34 @@ $pfp = User::getPfp($db, $username);
                 ?>
             </p>
         </div>
+        <?php
+        if ($ticket['status'] == 0) { ?>
+            <script>
+                document.getElementById('agentEdit').style.display = 'none';
+            </script>
+        <?php
+        } elseif ($ticket['status'] == 1) { ?>
+            <script>
+                document.getElementById('agentEdit').style.display = 'block';
+            </script>
+        <?php
+        } else{
+        ?>
+            <script>
+                document.querySelectorAll('.edit:not(#statusEdit)').forEach(button => {
+                    button.style.display = 'none';
+                });
+            </script>
+            <?php
+        }
+        ?>
     </div>
     <div class="ticketContainerBox" id="responseBox">
         <form action="../actions/action_add_response.php" id='responseForm'>
             <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
             <input type="hidden" name="imgPath" value="<?php echo htmlspecialchars($pfp); ?>">
-            <input type="hidden" name="author_username" value="<?php echo htmlspecialchars($session->getUsername()); ?>">
+            <input type="hidden" name="author_username"
+                   value="<?php echo htmlspecialchars($session->getUsername()); ?>">
             <div class="contentBox">
                 <fieldset>
                     <legend>Response</legend>
@@ -224,8 +252,8 @@ $pfp = User::getPfp($db, $username);
         </form>
         <label class="toggleB" id="response-logs" for="response-logs-checkbox">
             <input type="checkbox" id="response-logs-checkbox" name="response-logs-checkbox" value="response-logs">
-            <span class="responseToggle" id ="responseToggle">Response</span>
-            <span class="logToggle" id = "logToggle">Log</span>
+            <span class="responseToggle" id="responseToggle">Response</span>
+            <span class="logToggle" id="logToggle">Log</span>
         </label>
     </div>
     <?php

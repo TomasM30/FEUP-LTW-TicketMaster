@@ -24,6 +24,12 @@
                 $hashId = $alrExists['id'];
             }
 
+            $verify = $db->prepare('SELECT * FROM Link_hashtags WHERE ticket_id = :ticket_id AND hashtag_id = :hashtag_id');
+            $verify->bindParam(':ticket_id', $ticketId);
+            $verify->bindParam(':hashtag_id', $hashId);
+            $verify->execute();
+            if ($verify->fetch()) return;
+
             $stmt = $db->prepare('INSERT INTO Link_hashtags (ticket_id, hashtag_id) VALUES (:ticket_id, :hashtag_id)');
             $stmt->bindParam(':ticket_id', $ticketId);
             $stmt->bindParam(':hashtag_id', $hashId);

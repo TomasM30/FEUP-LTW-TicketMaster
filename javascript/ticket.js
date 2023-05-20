@@ -1,4 +1,4 @@
-import { encodeForAjax } from "../utils/ajax.js";
+import {encodeForAjax} from "../utils/ajax.js";
 
 const statusForm = document.getElementById('statusChangeForm');
 const statusName = document.getElementById('ticketStatus');
@@ -21,7 +21,8 @@ form.addEventListener('submit', async function (e) {
     const comment = document.getElementById('comment').value;
     const ticket_id = document.getElementsByName('ticket_id')[0].value;
     const response = await fetch('../actions/action_add_response.php',
-        {method: "POST",
+        {
+            method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
             },
@@ -86,7 +87,7 @@ form.addEventListener('submit', async function (e) {
 
         ticketResponses.appendChild(responseDiv);
         document.getElementById('comment').value = '';
-        if(isResponseVisible){
+        if (isResponseVisible) {
             document.getElementById('responseDiv').style.display = 'block'
         }
     } else {
@@ -96,29 +97,41 @@ form.addEventListener('submit', async function (e) {
 
 statusForm.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const response = await fetch('../actions/action_change_status.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&ticket_status=' + document.getElementById('status').value);
+    const response = await fetch('../actions/action_change_status.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value + '&ticket_status=' + document.getElementById('status').value);
     const res = await response.json();
     if (res === '') {
         const agentButton = document.getElementById('agentEdit');
         const agentForm = document.getElementById('agentChangeForm');
         statusName.textContent = document.getElementById('status').value;
-        if(document.getElementById('status').value === 'Open'){
+        if (document.getElementById('status').value === 'Open') {
             document.getElementById('responseBox').style.display = 'block';
+            document.querySelectorAll('.edit:not(#agentEdit)').forEach(button => {
+                button.style.display = 'block';
+            });
             statusName.style.color = 'green';
             agentButton.style.display = 'none';
-            if(agentForm.style.display === 'block'){
+            if (agentForm.style.display === 'block') {
                 agentForm.style.display = 'none';
             }
-            const response2 = await fetch('../actions/action_change_agent.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&agent=None');
+            const response2 = await fetch('../actions/action_change_agent.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value + '&agent=None');
             const res2 = await response2.json();
-            if(res2 === ''){
+            if (res2 === '') {
                 agentName.textContent = 'Agent: ';
             }
         } else {
-            agentButton.style.display = 'block';
-            if(document.getElementById('status').value === 'Closed'){
+            document.querySelectorAll('.edit').forEach(button => {
+                button.style.display = 'block';
+            });
+            if (document.getElementById('status').value === 'Closed') {
                 document.getElementById('responseForm').style.display = 'none';
                 statusName.style.color = 'red';
+                document.querySelectorAll('.editForm').forEach(form => {
+                    form.style.display = 'none';
+                });
+                document.querySelectorAll('.edit:not(#statusEdit)').forEach(button => {
+                    button.style.display = 'none';
+                });
+
             } else {
                 document.getElementById('responseForm').style.display = 'block';
                 statusName.style.color = '#be9801';
@@ -131,7 +144,7 @@ statusForm.addEventListener('submit', async function (e) {
 
 agentForm.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const response = await fetch('../actions/action_change_agent.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&agent=' + document.getElementById('agent').value);
+    const response = await fetch('../actions/action_change_agent.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value + '&agent=' + encodeURIComponent(document.getElementById('agent').value));
     const res = await response.json();
     if (res === '') {
         agentName.textContent = "Agent: " + document.getElementById('agent').value;
@@ -143,54 +156,56 @@ agentForm.addEventListener('submit', async function (e) {
 
 departmentForm.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const response = await fetch('../actions/action_change_department.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&department=' + document.getElementById('department').value);
+    const response = await fetch('../actions/action_change_department.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value + '&department=' + encodeURIComponent(document.getElementById('department').value));
     const res = await response.json();
     console.log(res);
     if (res === '') {
         const selectedDepartment = document.getElementById('department').value;
-        departmentName.textContent = (selectedDepartment).length > 15 ?  (selectedDepartment).substring(0, 15) + "..." : selectedDepartment;
-        fetch('../api/get_agentsByDep.php?department=' + selectedDepartment + '&ticket_id=' + document.getElementsByName('ticket_id')[0].value)
+        departmentName.textContent = (selectedDepartment).length > 15 ? (selectedDepartment).substring(0, 15) + "..." : selectedDepartment;
+        fetch('../api/get_agentsByDep.php?department=' + encodeURIComponent(selectedDepartment) + '&ticket_id=' + document.getElementsByName('ticket_id')[0].value)
             .then(response => response.json())
             .then(data => {
-                if(data.length === 0){
-                    agentName.textContent = "Agent: ";
                     const agentButton = document.getElementById('agentEdit');
-                    agentButton.style.display = 'none';
                     const agentForm = document.getElementById('agentChangeForm');
-                    agentForm.style.display = 'none';
 
-                } else {
-                    agentName.textContent = "Agent: " + data[0]['agent_username'];
-                    const agentButton = document.getElementById('agentEdit');
-                    agentButton.style.display = 'block';
+                    statusName.textContent = 'Open';
+                    statusName.style.color = 'green';
+                    agentButton.style.display = 'none';
+                    if (agentForm.style.display === 'block') {
+                        agentForm.style.display = 'none';
+                    }
+                    agentName.textContent = "Agent: ";
+
+                    const agentSelect = document.getElementById('agent');
+                    agentSelect.innerHTML = '';
+                    for (const agent of data) {
+                        const option = document.createElement('option');
+                        option.value = agent['agent_username'];
+                        option.textContent = agent['agent_username'];
+                        agentSelect.appendChild(option);
+                    }
                 }
-                const agentSelect = document.getElementById('agent');
-                agentSelect.innerHTML = '';
-                for (const agent of data) {
-                    const option = document.createElement('option');
-                    option.value = agent['agent_username'];
-                    option.textContent = agent['agent_username'];
-                    agentSelect.appendChild(option);
-                }
-            }
-        );
+            );
         departmentForm.style.display = 'none';
     }
 
     updateLogs();
 });
 
-priorityForm.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const response = await fetch('../actions/action_change_priority.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value  + '&priority=' + document.getElementById('priority').value);
-    const res = await response.json();
-    console.log(res);
-    if (res === '') {
-        priorityName.textContent = 'Priority: ' + document.getElementById('priority').value;
-        priorityForm.style.display = 'none';
-    }
-    updateLogs();
-});
+if (priorityForm !== null) {
+    priorityForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const response = await fetch('../actions/action_change_priority.php?ticket_id=' + document.getElementsByName('ticket_id')[0].value + '&priority=' + document.getElementById('priority').value);
+        const res = await response.json();
+        console.log(res);
+        if (res === '') {
+            priorityName.textContent = 'Priority: ' + document.getElementById('priority').value;
+            priorityForm.style.display = 'none';
+        }
+        updateLogs();
+    });
+}
+
 
 async function updateLogs() {
     const logs = document.querySelector(".log-list");
@@ -205,7 +220,7 @@ async function updateLogs() {
         body: encodeForAjax({
             id: ticket_id,
         }),
-    }); 
+    });
 
     const data = await response.json();
 
@@ -216,7 +231,7 @@ async function updateLogs() {
     for (const log of data) {
         const logElement = document.createElement("li");
         logElement.classList.add("log-item");
-        
+
         const logDate = document.createElement("p");
         logDate.classList.add("log-date");
 
@@ -231,7 +246,7 @@ async function updateLogs() {
         logElement.appendChild(logDate);
 
         logs.prepend(logElement);
-        if(!isResponseVisible){
+        if (!isResponseVisible) {
             document.getElementById("logsDiv").style.display = "block";
         }
     }
@@ -268,16 +283,15 @@ responseForm.addEventListener('input', async () => {
         }
     }
 });
-    
-const editButton = document.querySelectorAll('.edit');
+
+const editButton = document.querySelectorAll('.edit:not(#hashtagEdit)');
 editButton.forEach(button => {
     button.addEventListener('click', async () => {
         const editForm = button.parentElement.querySelector('.editForm');
 
         if (editForm.style.display === 'none') {
             editForm.style.display = 'block';
-        }
-        else {
+        } else {
             editForm.style.display = 'none';
         }
     });
@@ -307,6 +321,68 @@ toggleB.addEventListener('change', async () => {
         rightP.style.background = 'white';
     }
 
-    // Toggle the flag variable
     isResponseVisible = !isResponseVisible;
 });
+
+const hashtags = document.querySelectorAll('.tag');
+const hashtagEdit = document.getElementById('hashtagEdit');
+const editForm = document.getElementById('hashtagChangeForm');
+
+hashtags.forEach(tag => {
+    tag.addEventListener('click', removeHashtag);
+});
+
+function removeHashtag(event) {
+    const hashtagText = event.target.innerText;
+    const ticketId = document.getElementsByName('ticket_id')[0].value;
+    if (editForm.style.display !== 'none') {
+        fetch('../api/get_ticket_hashtags.php?hashtag=' + encodeURIComponent(hashtagText) + '&ticket_id=' + ticketId + '&action=remove')
+            .then(response => response.json())
+            .then(data => {
+                if (data === '') {
+                    event.target.parentNode.removeChild(event.target);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+}
+
+hashtagEdit.addEventListener('click', async () => {
+    if (editForm.style.display === 'none') {
+        editForm.style.display = 'block';
+        hashtags.forEach(tag => {
+            tag.style.cursor = 'pointer';
+        });
+    } else {
+        editForm.style.display = 'none';
+        hashtags.forEach(tag => {
+            tag.style.cursor = 'default';
+        });
+    }
+});
+
+
+const hashtagDiv = document.getElementById('hashtagDiv');
+
+editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const ticketId = document.getElementsByName('ticket_id')[0].value;
+    let hashtag = document.getElementById('hashtagInput').value;
+    fetch('../api/get_ticket_hashtags.php?hashtag=' + encodeURIComponent(hashtag) + '&ticket_id=' + ticketId + '&action=add')
+        .then(response => response.json())
+        .then(data => {
+            if(data === 'alreadyExists') {
+                document.getElementById('hashtagInput').value = '';
+                return;
+            }
+            const tag = document.createElement('span');
+            tag.classList.add('tag');
+            tag.innerHTML = '#'+data;
+            tag.addEventListener('click', removeHashtag);
+            hashtagDiv.appendChild(tag);
+            document.getElementById('hashtagInput').value = '';
+        });
+});
+
