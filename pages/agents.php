@@ -5,6 +5,7 @@ require_once(__DIR__ . '/../database/connection.db.php');
 require_once(__DIR__ . '/../utils/session.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../database/users.php');
+require_once(__DIR__ . '/../utils/misc.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
@@ -52,13 +53,35 @@ if (user::isAdmin($db, $username)) {
     //todo add a button to make a agent be on a department
     //todo style the button better
     ?>
-    <button type="button" id="showAgForm" name="showAgForm">Promote/Demote Users</button>
-    <form id="modifyUsers" method="POST" action="../actions/action_prom_dem_users.php">
-        <input type="text" name="username" placeholder="Enter Username">
-        <button name="add-rm" id="promote-demote" type="button">Promote</button>
-        <input type="hidden" id="action_input" name="action" value="promote">
-        <input type="submit" value="Submit">
-    </form>
+    <div class="forms">
+        <button type="button" id="showAgForm" name="showAgForm">Promote/Demote Users</button>
+        <button type="button" id="showAssignDepForm" name="showAssignDepForm">Assign/Unassign Agent to Department</button>
+        
+        <form id="modifyUsers" method="POST" action="../actions/action_prom_dem_users.php">
+            <input type="text" name="username" placeholder="Enter Username">
+            <button name="add-rm" id="promote-demote" type="button">Promote</button>
+            <input type="hidden" id="action_input" name="action" value="promote">
+            <input type="submit" value="Submit">
+        </form>
+
+        <form id="modifyUserDeps" method="POST" action="../actions/action_assign_users.php">
+            <input type="text" name="username" placeholder="Enter Username">
+            <select name="department">
+            <?php
+                foreach (Misc::getDepartments($db) as $department){
+                    echo "<option value=";
+                    echo $department['id'];
+                    echo ">";
+                    echo $department['name'];
+                    echo "</option>";
+                }
+            ?>
+            </select>
+            <button name="add-rm" id="assign-unassign" type="button">Assign</button>
+            <input type="hidden" id="action_input_assign" name="action" value="assign">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
     <?php
 }
 ?>

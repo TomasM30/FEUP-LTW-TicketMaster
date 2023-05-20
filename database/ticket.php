@@ -80,9 +80,6 @@ class ticket
         });
 
         foreach($hashtagsArray as $ht){
-            if(substr($ht, 0, 1) !== '#'){
-                $ht = '#' . $ht;
-            }
             Misc::addHashtagToTicket($db, $ht, $id);
         }
 
