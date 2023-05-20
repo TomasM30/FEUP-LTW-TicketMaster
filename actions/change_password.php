@@ -12,6 +12,11 @@ require_once(__DIR__ . '/../utils/session.php');
 $db = getDatabaseConnection();
 $session = new Session();
 
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    echo "<script>alert('Invalid token')</script>";
+    die(header('Location: /../pages/departments.php'));
+}
+
 $errors = array();
 
 if (!user::checkPassword(htmlspecialchars($_POST['psw']), $errors)) {

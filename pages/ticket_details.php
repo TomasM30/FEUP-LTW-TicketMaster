@@ -91,6 +91,7 @@ $pfp = User::getPfp($db, $username);
                                     <option value="<?php echo htmlspecialchars($priority['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($priority['name']); ?></option>
                                 <?php } ?>
                             </select>
+                            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
                             <input type="submit" value="Submit">
                         </form>
                         <?php
@@ -138,6 +139,7 @@ $pfp = User::getPfp($db, $username);
                                 <option value="<?php echo htmlspecialchars($agent['agent_username']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($agent['agent_username']); ?></option>
                             <?php } ?>
                         </select>
+                        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
                         <input type="submit" value="Submit">
                     </form>
                 <?php
@@ -168,6 +170,7 @@ $pfp = User::getPfp($db, $username);
                                 <option value="<?php echo htmlspecialchars($department['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($department['name']); ?></option>
                             <?php } ?>
                         </select>
+                        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
                         <input type="submit" value="Submit">
                     </form>
                     <?php
@@ -220,6 +223,7 @@ $pfp = User::getPfp($db, $username);
                     <datalist id="faq"></datalist>
                 </fieldset>
             </div>
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <input type="submit" value="Submit">
         </form>
         <label class="toggleB" id="response-logs" for="response-logs-checkbox">

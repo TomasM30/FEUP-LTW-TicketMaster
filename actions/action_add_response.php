@@ -7,6 +7,12 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    echo "<script>alert('Invalid token')</script>";
+    die(header('Location: /../pages/departments.php'));
+}
+
 $content = htmlspecialchars($_POST['comment']);
 $ticketId = $_POST['ticket_id'];
 if (trim($content) == '') {

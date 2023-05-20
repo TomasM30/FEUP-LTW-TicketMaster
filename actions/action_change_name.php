@@ -12,6 +12,11 @@ $name = htmlspecialchars($_GET['name']);
 $session = new Session();
 $username = $session->getUsername();
 
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    echo "<script>alert('Invalid token')</script>";
+    die(header('Location: /../pages/departments.php'));
+}
+
 if(!user::checkName($name, $errors)){
     if (!empty($errors)) {
         $error_message = "";

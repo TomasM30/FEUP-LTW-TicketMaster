@@ -40,6 +40,7 @@
         <label for="documents" id ="annexDoc"> Annex documents: </label>
         <input type="file" id="documents" name="documents[]" multiple> 
         <input type="submit" id="submit" value="Create Ticket">
+        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
     </form>
 </div>
 

@@ -8,11 +8,6 @@
 
     $session = new Session();
 
-    if (!$session->isLoggedIn()) {
-        header('Location: ../pages/login.php');
-        die();
-    }
-
     $db = getDatabaseConnection();
 
     $faq = new FAQ();

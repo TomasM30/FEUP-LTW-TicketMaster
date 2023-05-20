@@ -54,6 +54,7 @@
                             echo '<label for="answer">Answer</label>';
                             echo '<input type="text" name="answer" id="answer" value="' . htmlspecialchars($row['answer']) . '" required>';
                             echo '<input type="submit" value="&#9998;">';
+                            echo '<input type="hidden" name="csrf" value="' . $_SESSION['csrf'] . '">';
                             echo '</form>';
                             
                             echo '<form action="../actions/action_delete_faq.php" method="post">';

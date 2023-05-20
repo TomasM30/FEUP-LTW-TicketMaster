@@ -10,6 +10,11 @@
     $session = new Session();
     $db = getDatabaseConnection();
 
+    if ($_SESSION['csrf'] !== $_POST['csrf']) {
+        echo "<script>alert('Invalid token')</script>";
+        die(header('Location: /../pages/departments.php'));
+    }
+
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);
     $hashtags = htmlspecialchars($_POST['hashtags']);

@@ -7,6 +7,11 @@
     $db = getDatabaseConnection();
     $session = new Session();
 
+    if ($_SESSION['csrf'] !== $_POST['csrf']) {
+        echo "<script>alert('Invalid token')</script>";
+        die(header('Location: /../pages/departments.php'));
+    }
+
     if (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'add'){
         Misc::addDepartment($db, htmlspecialchars($_POST['department']));
     } elseif (isset($_POST['action']) && htmlspecialchars($_POST['action']) == 'remove'){
