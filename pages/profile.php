@@ -8,12 +8,13 @@ require_once(__DIR__ . '/../utils/misc.php');
 
 $session = new Session();
 
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
+
 $db = getDatabaseConnection();
 $pfp = User::getPfp($db, $session->getUsername());
 $tickets = ticket::getTickets($db, $session->getUsername());
 $username = $session->getUsername();
-
-if ($username == null) die(header('Location: /../pages/login.php')); ?>
+ ?>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,6 +34,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                 <form action="/../actions/action_upload_pfp.php" method="post" enctype="multipart/form-data">
                         <label for="pfp"><img src="<?= $pfp ?>" alt="userImg" class="userImg"></label>
                         <input type="file" id="pfp" name="pfp" required="required" accept="image/*">
+                        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
                         <input type="submit" id="submit" value="Submit changes!" class="openButton">
                     </form>
                     <h5 class="usernameP">
@@ -104,6 +106,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                 <input type="email" placeholder="Enter Email" name="email" id="email" required>
             </div>
             <button type="submit" class="btn submit">Submit</button>
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     </div>
@@ -123,6 +126,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                 }
                 ?>
             </span>
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <button type="submit" class="btn submit">Submit</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
@@ -134,6 +138,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                 <label for="name">New name</label>
                 <input type="text" placeholder="Enter Name" name="name" id="name" required>
             </div>
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <button type="submit" class="btn submit">Submit</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
@@ -155,6 +160,7 @@ if ($username == null) die(header('Location: /../pages/login.php')); ?>
                 }
                 ?>
             </span>
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <button type="submit" class="btn submit">Submit</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>

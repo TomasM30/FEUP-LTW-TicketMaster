@@ -10,7 +10,13 @@ require_once(__DIR__ . '/../utils/session.php');
 $db = getDatabaseConnection();
 $name = htmlspecialchars($_GET['name']);
 $session = new Session();
+$session->generateToken();
 $username = $session->getUsername();
+
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    echo "<script>alert('Invalid token')</script>";
+    die(header('Location: /../pages/departments.php'));
+}
 
 if(!user::checkName($name, $errors)){
     if (!empty($errors)) {

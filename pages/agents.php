@@ -9,6 +9,10 @@ require_once(__DIR__ . '/../utils/misc.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+$session->generateToken();
+
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
+
 $username = $session->getUsername();
 
 if ($username == null) die(header('Location: /../pages/login.php'));
@@ -60,6 +64,7 @@ if (user::isAdmin($db, $username)) {
             <input type="text" name="username" placeholder="Enter Username">
             <button name="add-rm" id="promote-demote" type="button">Promote</button>
             <input type="hidden" id="action_input" name="action" value="promote">
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <input type="submit" value="Submit">
         </form>
 
@@ -78,6 +83,7 @@ if (user::isAdmin($db, $username)) {
             </select>
             <button name="add-rm" id="assign-unassign" type="button">Assign</button>
             <input type="hidden" id="action_input_assign" name="action" value="assign">
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <input type="submit" value="Submit">
         </form>
     </div>

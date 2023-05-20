@@ -7,11 +7,7 @@
     require_once '../database/users.php';
 
     $session = new Session();
-
-    if (!$session->isLoggedIn()) {
-        header('Location: ../pages/login.php');
-        die();
-    }
+    $session->generateToken();
 
     $db = getDatabaseConnection();
 

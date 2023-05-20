@@ -8,7 +8,13 @@
     require_once(__DIR__ . '/../utils/session.php');
 
     $session = new Session();
+    $session->generateToken();
     $db = getDatabaseConnection();
+
+    if ($_SESSION['csrf'] !== $_POST['csrf']) {
+        echo "<script>alert('Invalid token')</script>";
+        die(header('Location: /../pages/departments.php'));
+    }
 
     $title = htmlspecialchars($_POST['title']);
     $content = htmlspecialchars($_POST['content']);

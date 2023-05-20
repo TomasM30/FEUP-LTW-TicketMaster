@@ -7,6 +7,13 @@ require_once(__DIR__ . '/../database/connection.db.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+$session->generateToken();
+
+if (!$session->isLoggedIn()) {
+    echo json_encode('You must be logged in to add a response');
+    exit();
+}
+
 $content = htmlspecialchars($_POST['comment']);
 $ticketId = $_POST['ticket_id'];
 if (trim($content) == '') {

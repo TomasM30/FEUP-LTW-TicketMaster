@@ -10,11 +10,13 @@ require_once (__DIR__ . '/../templates/common.tpl.php');
 require_once (__DIR__ . '/../utils/misc.php');
 
 $session = new Session();
+$session->generateToken();
+
+if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
 
 $db = getDatabaseConnection();
 
 $username = $session->getUsername();
-if ($username == null) die(header('Location: /../pages/login.php'));
 $tickets = ticket::getTickets($db, $username);
 $statuses = ticket::getAllStatuses($db);
 $departments = ticket::getAllDepartments($db);

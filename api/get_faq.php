@@ -4,6 +4,7 @@ require_once "../database/faq.php";
 
 
 $session = new Session();
+$session->generateToken();
 
 if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
 

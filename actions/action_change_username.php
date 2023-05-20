@@ -9,6 +9,13 @@ require_once(__DIR__ . '/../utils/session.php');
 
 $db = getDatabaseConnection();
 $session = new Session();
+$session->generateToken();
+
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    echo "<script>alert('Invalid token')</script>";
+    die(header('Location: /../pages/departments.php'));
+}
+
 $user = User::getUser($db, htmlspecialchars($_POST['username']));
 
 if(user::sameUName($db,$session->getUsername(),htmlspecialchars($_POST['username']))){

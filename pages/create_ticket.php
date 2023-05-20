@@ -9,8 +9,9 @@
     require_once(__DIR__ . '/../database/ticket.php');
 
     $session = new Session();
-
-    if ($session->getUsername() == null) die(header('Location: /../pages/login.php'));
+    $session->generateToken();
+    
+    if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
 
     $db = getDatabaseConnection();
 
@@ -40,6 +41,7 @@
         <label for="documents" id ="annexDoc"> Annex documents: </label>
         <input type="file" id="documents" name="documents[]" multiple> 
         <input type="submit" id="submit" value="Create Ticket">
+        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
     </form>
 </div>
 

@@ -7,8 +7,13 @@
 
     $db = getDatabaseConnection();
     $session = new Session();
+    $session->generateToken();
     $username = $session->getUsername();
 
+    if ($_SESSION['csrf'] !== $_POST['csrf']) {
+        echo "<script>alert('Invalid token')</script>";
+        die(header('Location: /../pages/departments.php'));
+    }
     $path = Upload::uploadFile($username, true);
 
     $stmt = $db->prepare ('UPDATE User SET image_url = :url WHERE username = :username');

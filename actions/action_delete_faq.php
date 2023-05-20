@@ -7,6 +7,7 @@
     require_once '../database/users.php';
 
     $session = new Session();
+    $session->generateToken();
 
     if (!$session->isLoggedIn()) {
         header('Location: ../pages/login.php');
