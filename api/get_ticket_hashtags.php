@@ -19,6 +19,10 @@ if ($add == 'remove'){
     ticket::removeHashtagOfTicket($db, $ticketId, $hashtagName);
     echo json_encode('');
 } else {
+    if ($hashtagName == '') {
+        echo json_encode('empty');
+        exit();
+    }
     misc::addHashtagToTicket($db,$hashtagName,$ticketId);
     if (in_array($hashtagName, $hashtags)) {
         echo json_encode('alreadyExists');

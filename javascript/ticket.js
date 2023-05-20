@@ -368,12 +368,13 @@ const hashtagDiv = document.getElementById('hashtagDiv');
 
 editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    document.getElementById("result").style.display = "none";
     const ticketId = document.getElementsByName('ticket_id')[0].value;
     let hashtag = document.getElementById('hashtagInput').value;
     fetch('../api/get_ticket_hashtags.php?hashtag=' + encodeURIComponent(hashtag) + '&ticket_id=' + ticketId + '&action=add')
         .then(response => response.json())
         .then(data => {
-            if(data === 'alreadyExists') {
+            if(data === 'alreadyExists' || data === 'empty') {
                 document.getElementById('hashtagInput').value = '';
                 return;
             }

@@ -1,5 +1,6 @@
 let hashtags = [];
 let selectedHashtags = [];
+let details = document.getElementById("selectedHashtags") == null;
 let first_time = true;
 
 function autocompleteMatch(input, search_terms) {
@@ -15,6 +16,7 @@ function autocompleteMatch(input, search_terms) {
 }
 
 function showResults(value_to_search) {
+    document.getElementById("result").style.display = "block";
     let val = value_to_search[0] == '#' ? value_to_search.substring(1) : value_to_search;
     let res = document.getElementById("result");
     res.innerHTML = '';
@@ -35,13 +37,15 @@ function showResults(value_to_search) {
     res.innerHTML = '<ul id="list">' + list + '</ul>';
     let list1 = document.getElementById("list");
 
-    let selectedHashtagsHTML = document.getElementById("selectedHashtags");
+    let selectedHashtagsHTML = document.getElementById(details ? "hashtagInput" : "selectedHashtags");
 
     if (list1){
         list1.addEventListener('click', function(e) {
-            if (e.target && e.target.matches('li') && !selectedHashtags.includes(e.target.innerHTML) && e.target.innerHTML !== 'No results found') {
+            console.log(e.target.innerHTML);
+            if (e.target && e.target.matches('li') && (details || (!selectedHashtags.includes(e.target.innerHTML) && e.target.innerHTML !== 'No results found'))) {
                 selectedHashtags.push(e.target.innerHTML);
-                selectedHashtagsHTML.innerHTML += '<li>' + e.target.innerHTML + '</li>';
+                if(details) selectedHashtagsHTML.value = e.target.innerHTML;
+                else selectedHashtagsHTML.innerHTML += '<li>' + e.target.innerHTML + '</li>';
             }
         });
     }
@@ -68,5 +72,5 @@ document.getElementById("submit").addEventListener("click", function(){
     for (let i=0; i<selectedHashtags.length; i++){
         hashtagString += selectedHashtags[i].substring(1) + " ";
     }
-    document.getElementById("hashtags").value = hashtagString;
+    document.getElementById(details ? "hashtagInput" : "hashtags").value = hashtagString;
 });

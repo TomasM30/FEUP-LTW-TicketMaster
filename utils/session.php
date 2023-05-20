@@ -13,7 +13,7 @@
             $_SESSION['login'] = true;
         }
         public function isLoggedIn() : bool {
-            return isset($_SESSION['login']);
+            return isset($_SESSION['login']) && $_SESSION['username'] != null;
         }
         public function logout() {
             session_destroy();

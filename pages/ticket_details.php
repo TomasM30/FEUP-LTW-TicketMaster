@@ -71,7 +71,7 @@ $pfp = User::getPfp($db, $username);
                             }
                             ?>
                         </select>
-                        <input type="submit" value="Submit">
+                        <input type="submit" id="submit" value="Submit">
                     </form>
                     <?php
                 }
@@ -182,7 +182,7 @@ $pfp = User::getPfp($db, $username);
                         ?>
                         <span class="tag" id="hashtagBox">
                         <?php echo htmlspecialchars('#' . $hashtag); ?>
-                    </span>
+                        </span>
                         <?php
                     }
                     ?>
@@ -195,7 +195,9 @@ $pfp = User::getPfp($db, $username);
                           id="hashtagChangeForm">
                         <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
                         <label for="hashtagInput"></label>
-                        <input type="text" id="hashtagInput" name="hashtagInput">
+                        <script src="../javascript/autocomplete.js" defer></script>
+                        <input type="text" id="hashtagInput" name="hashtagInput" onkeyup="showResults(this.value)" onclick="setHashtags([<?php foreach (Ticket::getAllHashtags($db) as $hashtag){echo "'" . $hashtag['name'] . "',"; }?>]);">
+                        <div id="result"></div>
                         <input type="submit" value="Submit">
                     </form>
                     <?php
