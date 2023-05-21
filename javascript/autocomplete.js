@@ -34,14 +34,13 @@ function showResults(value_to_search) {
         res.style.backgroundColor = "red";
     }
 
-    res.innerHTML = '<ul id="list">' + list + '</ul>';
+    res.innerHTML = '<ul id="list" style="list-style-type: none; padding: 0; margin-bottom: 0.3em; font-size: 0.7em">' + list + '</ul>';
     let list1 = document.getElementById("list");
 
     let selectedHashtagsHTML = document.getElementById(details ? "hashtagInput" : "selectedHashtags");
 
     if (list1){
         list1.addEventListener('click', function(e) {
-            console.log(e.target.innerHTML);
             if (e.target && e.target.matches('li') && (details || (!selectedHashtags.includes(e.target.innerHTML) && e.target.innerHTML !== 'No results found'))) {
                 selectedHashtags.push(e.target.innerHTML);
                 if(details) selectedHashtagsHTML.value = e.target.innerHTML;

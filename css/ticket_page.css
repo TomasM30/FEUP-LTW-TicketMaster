@@ -15,7 +15,6 @@ body {
     flex-direction: column;
   }
   
-  /* Header styles */
   .header {
     background-color: #333;
     color: #fff;
@@ -126,6 +125,7 @@ input[type="submit"]:hover {
     background-color: #ddd;
     padding: 3px 8px;
     margin-right: 5px;
+    margin-bottom: 5px;
     border-radius: 4px;
 }
 

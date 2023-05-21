@@ -10,6 +10,8 @@ const filterBtn = document.getElementById('filter');
 const filterBox = document.getElementById('filterForm');
 const sortBox = document.getElementById('sortForm');
 let isFilterVisible = false;
+
+if(filterBox != null){
 filterBtn.addEventListener('click', async () => {
     if (isFilterVisible) {
         filterBox.style.display = 'none';
@@ -19,6 +21,6 @@ filterBtn.addEventListener('click', async () => {
         sortBox.style.display = 'block';
     }
     isFilterVisible = !isFilterVisible;
-});
+});}
 
 

@@ -38,7 +38,7 @@ $pfpResponse = User::getPfp($db, $username);
     <?php drawNavBarTicket(); ?>
     <input type="hidden" id="ticketId" value="<?php echo $ticket['id'] ?>">
     <div class="ticketContainerBox">
-        <div class ="auxDiv">
+        <div class="auxDiv">
             <h2><?php echo htmlspecialchars(strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject']) ?></h2>
             <button class="edit" id="deleteTicket"> &#128465;</button>
         </div>
@@ -93,7 +93,7 @@ $pfpResponse = User::getPfp($db, $username);
                                     <option value="<?php echo htmlspecialchars($priority['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($priority['name']); ?></option>
                                 <?php } ?>
                             </select>
-                            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
+                            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
                             <input type="submit" value="Submit">
                         </form>
                         <?php
@@ -141,7 +141,7 @@ $pfpResponse = User::getPfp($db, $username);
                                 <option value="<?php echo htmlspecialchars($agent['agent_username']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($agent['agent_username']); ?></option>
                             <?php } ?>
                         </select>
-                        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
+                        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
                         <input type="submit" value="Submit">
                     </form>
                     <?php
@@ -165,7 +165,7 @@ $pfpResponse = User::getPfp($db, $username);
                                 <option value="<?php echo htmlspecialchars($department['name']); ?>" <?php echo htmlspecialchars($selected); ?>><?php echo htmlspecialchars($department['name']); ?></option>
                             <?php } ?>
                         </select>
-                        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
+                        <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
                         <input type="submit" value="Submit">
                     </form>
                     <?php
@@ -175,36 +175,39 @@ $pfpResponse = User::getPfp($db, $username);
         </div>
         <?php
         $hashtags = ticket::getTicketHashtagNames($db, intval($ticket['id']));
-            ?>
-            <div class="editable" id="hashtagDivChange">
-                <div class="hashtags" id="hashtagDiv">
-                    <?php
-                    foreach ($hashtags as $hashtag) {
-                        ?>
-                        <span class="tag" id="hashtagBox">
+        ?>
+        <div class="editable" id="hashtagDivChange">
+            <div class="hashtags" id="hashtagDiv">
+                <?php
+                foreach ($hashtags as $hashtag) {
+                    ?>
+                    <span class="tag" id="hashtagBox">
                         <?php echo htmlspecialchars('#' . $hashtag); ?>
                         </span>
-                        <?php
-                    }
-                    ?>
-                </div>
-                <?php
-                if (ticket::canModifyTicket($db, $username, $ticket)) {
-                    ?>
-                    <button class="edit" id="hashtagEdit"> &#9998;</button>
-                    <form class="editForm"
-                          id="hashtagChangeForm">
-                        <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
-                        <label for="hashtagInput"></label>
-                        <script src="../javascript/autocomplete.js" defer></script>
-                        <input type="text" id="hashtagInput" name="hashtagInput" onkeyup="showResults(this.value)" onclick="setHashtags([<?php foreach (Ticket::getAllHashtags($db) as $hashtag){echo "'" . $hashtag['name'] . "',"; }?>]);">
-                        <div id="result"></div>
-                        <input type="submit" value="Submit">
-                    </form>
                     <?php
                 }
                 ?>
             </div>
+            <?php
+            if (ticket::canModifyTicket($db, $username, $ticket)) {
+                ?>
+                <button class="edit" id="hashtagEdit"> &#9998;</button>
+                <form class="editForm"
+                      id="hashtagChangeForm">
+                    <input type="hidden" name="ticket_id" value="<?php echo $ticket['id'] ?>">
+                    <label for="hashtagInput"></label>
+                    <script src="../javascript/autocomplete.js" defer></script>
+                    <input type="text" id="hashtagInput" name="hashtagInput" onkeyup="showResults(this.value)"
+                           onclick="setHashtags([<?php foreach (Ticket::getAllHashtags($db) as $hashtag) {
+                               echo "'" . $hashtag['name'] . "',";
+                           } ?>]);">
+                    <div id="result"></div>
+                    <input type="submit" value="Submit">
+                </form>
+                <?php
+            }
+            ?>
+        </div>
         <div class="fileDownload">
             <p>
                 <?php
@@ -232,7 +235,7 @@ $pfpResponse = User::getPfp($db, $username);
         } elseif (ticket::canModifyTicket($db, $username, $ticket)){
         ?>
             <script>
-                document.querySelectorAll('.edit:not(#statusEdit)').forEach(button => {
+                document.querySelectorAll('.edit:not(#statusEdit,#deleteTicket)').forEach(button => {
                     button.style.display = 'none';
                 });
             </script>
@@ -254,7 +257,7 @@ $pfpResponse = User::getPfp($db, $username);
                     <datalist id="faq"></datalist>
                 </fieldset>
             </div>
-            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
+            <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
             <input type="submit" value="Submit">
         </form>
         <label class="toggleB" id="response-logs" for="response-logs-checkbox">
