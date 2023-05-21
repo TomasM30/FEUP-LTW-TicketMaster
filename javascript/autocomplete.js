@@ -34,7 +34,7 @@ function showResults(value_to_search) {
         res.style.backgroundColor = "red";
     }
 
-    res.innerHTML = '<ul id="list">' + list + '</ul>';
+    res.innerHTML = '<ul id="list" style="list-style-type: none; padding: 0; margin-bottom: 0.3em; font-size: 0.7em">' + list + '</ul>';
     let list1 = document.getElementById("list");
 
     let selectedHashtagsHTML = document.getElementById(details ? "hashtagInput" : "selectedHashtags");
