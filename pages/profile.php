@@ -26,7 +26,8 @@ $username = $session->getUsername();
         <script src="../javascript/profile.js" defer></script>
         <script src="../javascript/scripts.js" defer></script>
     </head>
-    <?php drawHeader($username); ?>
+    <?php drawHeader($username);
+    if(isset($_GET['error']) && $_GET['error'] == 'invalid_file_type') echo "<script>alert('Uploaded file type is not supported for this operation');</script>";?>
     <div class="profileContainer" id="profilePage">
         <div class="settingsColumn">
             <div class="profileCard">
