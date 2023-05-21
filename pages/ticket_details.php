@@ -22,7 +22,8 @@ $agents = user::getAgentsByTicketDepartment($db, $ticketId);
 $departments = ticket::getAllDepartments($db);
 $priorities = ticket::getAllPriorities($db);
 $files = ticket::getDocument($db, $ticketId);
-$pfp = User::getPfp($db, $username);
+$pfp = User::getPfp($db, $ticket['author_username']);
+$pfpResponse = User::getPfp($db, $username);
 ?>
 <head>
     <meta charset="utf-8">
@@ -245,7 +246,7 @@ $pfp = User::getPfp($db, $username);
     <div class="ticketContainerBox" id="responseBox">
         <form action="../actions/action_add_response.php" id='responseForm'>
             <input type="hidden" name="ticket_id" value="<?php echo $ticket['id']; ?>">
-            <input type="hidden" name="imgPath" value="<?php echo htmlspecialchars($pfp); ?>">
+            <input type="hidden" name="imgPath" value="<?php echo htmlspecialchars($pfpResponse); ?>">
             <input type="hidden" name="author_username"
                    value="<?php echo htmlspecialchars($session->getUsername()); ?>">
             <div class="contentBox">
@@ -277,7 +278,7 @@ $pfp = User::getPfp($db, $username);
     <div class="ticketContainerBox" id="responseDiv">
         <h2>Responses</h2>
         <?php
-        $responses = array_reverse(ticket::getTicketResponses($db, intval($ticket['id'])));
+        $responses = ticket::getTicketResponses($db, intval($ticket['id']));
         if ($responses == null) {
             ?>
             <script>document.getElementById('responseDiv').style.display = 'none';</script>
@@ -288,7 +289,7 @@ $pfp = User::getPfp($db, $username);
                 ?>
                 <div class="infoHeading">
                     <div class="authorInfo">
-                        <img src="<?= $pfp ?>" alt="User" width="50" height="50">
+                        <img src="<?= user::getPfp($db, $response['username']) ?>" alt="User" width="50" height="50">
                         <h3><?php echo htmlspecialchars($response['username']) ?></h3>
                     </div>
                     <p><?php echo htmlspecialchars($response['date']); ?></p>

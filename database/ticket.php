@@ -173,6 +173,13 @@ class ticket
         return $stmt->fetchAll();
     }
 
+    static public function getAllFromLinkDepartment(PDO $db): array
+    {
+        $stmt = $db->prepare('SELECT * FROM link_departments');
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     static public function getAllHashtags(PDO $db): array
     {
         $stmt = $db->prepare("SELECT name FROM Hashtags");
@@ -220,6 +227,14 @@ class ticket
         $stmt->bindParam(':status', $status);
         $stmt->execute();
         ticket::ticketLog($db, $ticketId, "Status changed to " . ticket::getStatusName($db, $status));
+    }
+
+    static public function getTicketsByStatus($db, $status)
+    {
+        $stmt = $db->prepare('SELECT * FROM Ticket WHERE status = :status');
+        $stmt->bindParam(':status', $status);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     static public function changeAgent($db, $ticketId, $agent)

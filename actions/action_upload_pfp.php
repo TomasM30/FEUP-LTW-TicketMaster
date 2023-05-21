@@ -15,6 +15,7 @@
         die(header('Location: /../pages/departments.php'));
     }
     $path = Upload::uploadFile($username, true);
+    var_dump($path);
 
     $stmt = $db->prepare ('UPDATE User SET image_url = :url WHERE username = :username');
     $stmt->bindParam(':username', $username);

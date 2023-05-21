@@ -17,8 +17,9 @@ function drawTicketPreview(PDO $db, array $tickets)
                         <div class="card">
                             <div class="content">
                                 <header>
-                                    <h2 class="status"><?= htmlspecialchars(ticket::getStatus($db, $ticket['status'])) ?></h2>
                                     <h1><?= htmlspecialchars(strlen($ticket['subject']) > 10 ? substr($ticket['subject'], 0, 10) . "..." : $ticket['subject']) ?></h1>
+                                    <h2 class="status"><?= htmlspecialchars(ticket::getStatus($db, $ticket['status'])) ?></h2>
+
                                 </header>
                                 <p>
                                     <?= htmlspecialchars(strlen($ticket['content']) > 220 ? substr($ticket['content'], 0, 220) . "..." : $ticket['content']) ?>

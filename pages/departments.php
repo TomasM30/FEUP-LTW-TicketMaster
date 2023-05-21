@@ -5,6 +5,7 @@
     require_once(__DIR__ . '/../database/connection.db.php');
     require_once(__DIR__ . '/../utils/session.php');
     require_once(__DIR__ . '/../templates/common.tpl.php');
+    require_once(__DIR__ . '/../database/ticket.php');
 
     $db = getDatabaseConnection();
     $session = new Session();
@@ -13,12 +14,8 @@
     if (!$session->isLoggedIn()) die(header('Location: ../pages/login.php'));
     drawHeader($session->getUsername());
 
-    $stmt = $db->prepare('SELECT * FROM department');
-    $stmt->execute();
-    $departments = $stmt->fetchAll();
-    $stmt = $db->prepare('SELECT * FROM link_departments');
-    $stmt->execute();
-    $link_departments = $stmt->fetchAll();
+    $departments = ticket::getAllDepartments($db);
+    $link_departments = ticket::getAllFromLinkDepartment($db);
 
 ?>
     <head>
