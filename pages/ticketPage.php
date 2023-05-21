@@ -35,8 +35,7 @@ $priorities = ticket::getAllPriorities($db);
 </head>
 <?php drawHeader($username); ?>
 <div class="ticketPage">
-    <?php drawNavBarTicket();
-    if(user::isAgent($db, $username)){
+    <?php if(user::isAgent($db, $username)){
         ?>
         <div class = "filtering-box">
             <button id="filter">&#x1F50D;</button>
