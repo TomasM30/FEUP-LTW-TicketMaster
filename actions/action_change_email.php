@@ -7,11 +7,6 @@
     $session = new Session();
     $session->generateToken();
 
-    if ($_SESSION['csrf'] !== $_POST['csrf']) {
-        echo "<script>alert('Invalid token')</script>";
-        die(header('Location: /../pages/departments.php'));
-    }
-
     $email = htmlspecialchars($_GET['email']);
     $emailV = User::getEmail($db, $email);
     $username = $session->getUsername();

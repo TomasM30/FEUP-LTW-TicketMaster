@@ -28,7 +28,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FAQ</title>
         <link rel="stylesheet" href="../css/faq.css">
-        <script src="../javascript/faq.js"></script>
     </head>
     <body>
         <?php drawHeader($session->getUsername()); ?>

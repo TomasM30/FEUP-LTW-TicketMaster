@@ -40,7 +40,13 @@ $pfpResponse = User::getPfp($db, $username);
     <div class="ticketContainerBox">
         <div class="auxDiv">
             <h2><?php echo htmlspecialchars(strlen($ticket['subject']) > 33 ? substr($ticket['subject'], 0, 33) . "..." : $ticket['subject']) ?></h2>
-            <button class="edit" id="deleteTicket"> &#128465;</button>
+            <?php
+            if (ticket::canModifyTicket($db, $username, $ticket)) {
+                ?>
+                <button class="edit" id="deleteTicket"> &#128465;</button>
+                <?php
+            }
+            ?>
         </div>
         <div class="status-priority">
             <div class="editable">
@@ -301,7 +307,7 @@ $pfpResponse = User::getPfp($db, $username);
                             if (strpos($response['content'], '#') !== false) {
                                 $response['content'] = 'Answer: <a href="../pages/faq.php">' . $response['content'] . '</a>';
                             }
-                            echo $response['content']; ?></p>   
+                            echo $response['content']; ?></p>
                     </fieldset>
                 </div>
                 <?php

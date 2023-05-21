@@ -400,7 +400,9 @@ if(editForm !== null) {
 }
 
 const deleteButton = document.getElementById('deleteTicket');
-deleteButton.addEventListener('click', deleteTicket);
+
+
+if(deleteButton != null){deleteButton.addEventListener('click', deleteTicket);}
 
 function deleteTicket() {
     const ticketId = document.getElementsByName('ticket_id')[0].value;

@@ -8,6 +8,7 @@ emailForm.addEventListener('submit', async function (e) {
     const response = await fetch('../actions/action_change_email.php?email=' + document.getElementById('email').value);
     const res = await response.json();
     if (res === '') {
+        console.log(res);
         userEmail.textContent = document.getElementById('email').value;
         document.getElementById('email').value = '';
         closeForm();

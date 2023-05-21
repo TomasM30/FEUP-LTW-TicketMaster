@@ -4,6 +4,27 @@
     grid-template-columns: 25% 1fr;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    width: 85%;
+    margin: 50px auto;
+}
+
+header {
+    padding: 20px;
+}
+
+footer {
+    padding: 10px;
+}
+
+
 .settingsColumn{
     grid-column: 1/2;
     display: grid;

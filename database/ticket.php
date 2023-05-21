@@ -13,13 +13,6 @@ class ticket
         return $stmt->fetchAll();
     }
 
-    static public function getUnassignedTickets($db)
-    {
-        $stmt = $db->prepare('SELECT * FROM ticket WHERE agent_username IS NULL');
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
-
     static public function getTicketById($db, $id)
     {
         $stmt = $db->prepare('SELECT * FROM ticket WHERE id = :id');
@@ -28,18 +21,6 @@ class ticket
         return $stmt->fetch();
     }
 
-    static public function getAgentTickets($db, $username)
-    {
-        $stmt = $db->prepare('SELECT * FROM ticket WHERE agent_username = :username');
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
-
-    static public function shorten($string, $maxLength)
-    {
-        return substr($string, 0, $maxLength);
-    }
 
     static public function getStatus($db, $status)
     {

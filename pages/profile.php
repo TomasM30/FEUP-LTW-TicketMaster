@@ -22,7 +22,6 @@ $username = $session->getUsername();
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/userP.css">
         <link rel="stylesheet" href="../css/cards.css">
-        <link rel="stylesheet" href="../css/profile.css">
         <script src="../javascript/profile.js" defer></script>
         <script src="../javascript/scripts.js" defer></script>
     </head>
@@ -101,7 +100,7 @@ $username = $session->getUsername();
         </div>
     </div>
     <div class="changeInfoB" id="popupEmail">
-        <form action="../actions/action_change_email.php" id ="emailForm">
+        <form action="../actions/action_change_email.php" id ="emailForm" method="post">
             <div class="inputB">
                 <label for="email">New e-mail</label>
                 <input type="email" placeholder="Enter Email" name="email" id="email" required>
@@ -118,15 +117,6 @@ $username = $session->getUsername();
                 <label for="psw">New password</label>
                 <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
             </div>
-            <span id="password_error">
-                <?php
-                if (isset($_GET['error']) && $_GET['error'] == 2) {
-                    echo "Must contain at least 8 Char, 1 up/lowercase letter and 1 number";
-                } elseif (isset($_GET['error']) && $_GET['error'] == 3) {
-                    echo "Insert a different password!";
-                }
-                ?>
-            </span>
             <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <button type="submit" class="btn submit">Submit</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
