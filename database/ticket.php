@@ -287,7 +287,7 @@ class ticket
 
     static public function canModifyTicket($db, $username, $ticket): bool
     {
-        if ((user::isAgent($db, $username) && ($ticket['agent_username'] == $username) || ($ticket['agent_username'] == null)) || (user::isAdmin($db, $username))) {
+        if ((user::isAgent($db, $username) && (($ticket['agent_username'] == $username) || ($ticket['agent_username'] == null))) || (user::isAdmin($db, $username))) {
             return true;
         } else {
             return false;
