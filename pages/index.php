@@ -58,20 +58,6 @@ drawHeader($session->getUsername()); ?>
         </table>
         <table class="generalInfoTable">
             <tr>
-                <th>Departments</th>
-            </tr>
-            <?php
-            foreach ($departments as $department) {
-                ?>
-                <tr>
-                    <td><?= htmlspecialchars($department['name']) ?></td>
-                </tr>
-                <?php
-            }
-            ?>
-        </table>
-        <table class="generalInfoTable">
-            <tr>
                 <th>Open Tickets</th>
                 <th>Assigned Tickets</th>
                 <th>Closed Tickets</th>

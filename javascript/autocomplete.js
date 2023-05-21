@@ -41,7 +41,6 @@ function showResults(value_to_search) {
 
     if (list1){
         list1.addEventListener('click', function(e) {
-            console.log(e.target.innerHTML);
             if (e.target && e.target.matches('li') && (details || (!selectedHashtags.includes(e.target.innerHTML) && e.target.innerHTML !== 'No results found'))) {
                 selectedHashtags.push(e.target.innerHTML);
                 if(details) selectedHashtagsHTML.value = e.target.innerHTML;
