@@ -49,7 +49,7 @@
                         $upload_file = $user_dir . basename($files_array['name'][$key]);
                         
                         $upload_file = Upload::newName($upload_file);
-
+                        
                         $tmp_name =$files_array['tmp_name'][$key];
                         move_uploaded_file($tmp_name, $upload_file);
                         $file_paths[$key] = $path_to_save . $username . '_' . basename($files_array['name'][$key]);

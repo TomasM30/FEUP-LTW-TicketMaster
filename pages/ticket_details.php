@@ -296,9 +296,9 @@ $pfpResponse = User::getPfp($db, $username);
                         <legend>Answer</legend>
                         <p><?php
                             if (strpos($response['content'], '#') !== false) {
-                                $response['content'] = preg_replace('/#(\w+)/', '<a href="../pages/faq.php?faq=$1">#$1</a>', $response['content']);
+                                $response['content'] = 'Answer: <a href="../pages/faq.php">' . $response['content'] . '</a>';
                             }
-                            echo htmlspecialchars($response['content']); ?></p>
+                            echo $response['content']; ?></p>   
                     </fieldset>
                 </div>
                 <?php
