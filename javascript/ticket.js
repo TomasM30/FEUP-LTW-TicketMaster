@@ -129,7 +129,7 @@ if(statusForm !== null) {
                     document.querySelectorAll('.editForm').forEach(form => {
                         form.style.display = 'none';
                     });
-                    document.querySelectorAll('.edit:not(#statusEdit)').forEach(button => {
+                    document.querySelectorAll('.edit:not(#statusEdit,#deleteTicket)').forEach(button => {
                         button.style.display = 'none';
                     });
 

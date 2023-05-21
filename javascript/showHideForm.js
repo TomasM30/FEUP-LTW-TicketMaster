@@ -13,6 +13,9 @@ const actionInputAssign = depOrAg ? actionInput : document.getElementById('actio
 if(toggleBtn != null){
     toggleBtn.style.backgroundColor = 'green';
     toggleBtnAssign.style.backgroundColor = 'green';
+    currentForm.style.display = 'none';
+    assignForm.style.display = 'none';
+
 }
 
 

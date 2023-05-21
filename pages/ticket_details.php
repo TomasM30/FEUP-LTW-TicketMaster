@@ -235,7 +235,7 @@ $pfpResponse = User::getPfp($db, $username);
         } elseif (ticket::canModifyTicket($db, $username, $ticket)){
         ?>
             <script>
-                document.querySelectorAll('.edit:not(#statusEdit)').forEach(button => {
+                document.querySelectorAll('.edit:not(#statusEdit,#deleteTicket)').forEach(button => {
                     button.style.display = 'none';
                 });
             </script>
