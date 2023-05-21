@@ -10,30 +10,35 @@ const showBtnAssign = depOrAg ? showBtn : document.getElementById('showAssignDep
 const toggleBtnAssign = depOrAg ? toggleBtn : document.getElementById('assign-unassign');
 const actionInputAssign = depOrAg ? actionInput : document.getElementById('action_input_assign');
 
-currentForm.style.display = 'none';
-toggleBtn.style.backgroundColor = 'green';
-assignForm.style.display = 'none';
-toggleBtnAssign.style.backgroundColor = 'green';
+if(toggleBtn != null){
+    toggleBtn.style.backgroundColor = 'green';
+    toggleBtnAssign.style.backgroundColor = 'green';
+}
 
-showBtn.addEventListener('click', function(e){
-    e.preventDefault();
-    if(currentForm.style.display === 'none'){
-        currentForm.style.display = 'flex';
-        currentForm.style.justifyContent = 'center';
-        currentForm.style.alignItems = 'center';
-        currentForm.style.marginBottom = '20px';
-        showBtn.textContent = 'Hide form';
-    } else {
-        currentForm.style.display = 'none';
-        showBtn.textContent = depOrAg ? 'Add/Remove Departments' : 'Promote/Demote Users';
-    }
 
-    if(!depOrAg){
-        assignForm.style.display = 'none';
-        showBtnAssign.textContent = 'Assign/Unassign Agent to Department';
-    }
-});
+if(showBtn != null){
+    showBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        if(currentForm.style.display === 'none'){
+            currentForm.style.display = 'flex';
+            currentForm.style.justifyContent = 'center';
+            currentForm.style.alignItems = 'center';
+            currentForm.style.marginBottom = '20px';
+            showBtn.textContent = 'Hide form';
+        } else {
+            currentForm.style.display = 'none';
+            showBtn.textContent = depOrAg ? 'Add/Remove Departments' : 'Promote/Demote Users';
+        }
 
+        if(!depOrAg){
+            assignForm.style.display = 'none';
+            showBtnAssign.textContent = 'Assign/Unassign Agent to Department';
+        }
+    });
+
+}
+
+if(toggleBtn != null){
 toggleBtn.addEventListener('click', function(e){
     e.preventDefault();
     if(toggleBtn.textContent === 'Add'){
@@ -57,7 +62,9 @@ toggleBtn.addEventListener('click', function(e){
         actionInput.value = 'promote';
     }
 });
+}
 
+if(showBtnAssign != null){
 showBtnAssign.addEventListener('click', function(e){
     if(!depOrAg){
         e.preventDefault();
@@ -75,8 +82,9 @@ showBtnAssign.addEventListener('click', function(e){
         currentForm.style.display = 'none';
         showBtn.textContent = 'Promote/Demote Users';
     }
-});
+});}
 
+if(toggleBtnAssign != null){
 toggleBtnAssign.addEventListener('click', function(e){
     if(!depOrAg){
         e.preventDefault();
@@ -91,4 +99,4 @@ toggleBtnAssign.addEventListener('click', function(e){
             actionInputAssign.value = 'assign';
         }
     }
-});
+});}
