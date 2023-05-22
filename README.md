@@ -1,1 +1,20 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10588026&assignment_repo_type=AssignmentRepo)
+# Ticket Master
+
+## Group elements
+* António Azevedo (up202108689)
+* Duarte Gonçalves (up202108772)
+* Tomás Martins (up202108776)
+
+## Instructions
+```
+git clone https://github.com/FEUP-LTW-2023/project-ltw05g04.git
+cd project-ltw05g04/
+git checkout final-delivery-v1
+php -S localhost:9000
+```
+
+## Accounts
+
+* (client1) (client2) (client3) (client4) / Password: _Client123_
+* (agent1) (agent2) (agent3) / Password: _Agent123_
+* (admin1) (admin2) / Password: _Admin123_
