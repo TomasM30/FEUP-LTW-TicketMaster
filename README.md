@@ -8,6 +8,10 @@
 ## Instructions
 ```
 git clone https://github.com/FEUP-LTW-2023/project-ltw05g04.git
+OR
+git clone git@github.com:FEUP-LTW-2023/project-ltw05g04.git
+
+
 cd project-ltw05g04/
 git checkout final-delivery-v1
 php -S localhost:9000
